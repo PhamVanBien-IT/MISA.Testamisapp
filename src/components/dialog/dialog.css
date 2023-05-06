@@ -1,0 +1,88 @@
+.dialog{
+    position: absolute;
+    width: 400px;
+    background-color: #FFFFFF;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius:4px 4px 4px 4px;
+}
+.dialog_header{
+    width: (100% - 48px);
+    height: 26px;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px;
+}
+.dialog__title{
+    color: #1F1F1F;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #FFFFFF;
+
+}
+.close{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 10px;
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1178px -362px;
+}
+.dialog__content{
+    width: 100%;
+    height: 68px;
+    color: #1F1F1F;
+    padding: 24px;
+    line-height: 16px;
+    font-size: 14px;
+}
+.icondelete{
+    height: 40px;
+    width: 40px;
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -830px -460px;
+}
+.warning{
+    height: 40px;
+    width: 40px;
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -750px -462px;
+}
+.dialog__des{
+    margin-left: 12px;
+    font-size: 13px;
+}
+.btn-cancel-dialog{
+    position: absolute;
+    right: 104px;
+    height: 36px;
+    width: 80px;
+    border:1px solid #E0E0E0;
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    outline: none;
+    color: #111111;
+    margin-right: 8px;
+}
+.btn-dialog{
+    position: absolute;
+    width: 80px;
+    right: 24px;
+    border: unset;
+    height: 36px;
+    background-color: #EC5504;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0px 12px;
+    min-width: 50px; 
+    font-weight: 500;
+}
+.dialog__btn{
+    width: 400px;
+    background-color: #F2F2F2;
+    height: 68px;
+    padding-bottom: 24px;
+    border-radius:0px 0px 4px 4px ;
+    padding: 16px 24px;
+}

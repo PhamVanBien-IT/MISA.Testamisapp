@@ -1,0 +1,131 @@
+.nav{
+    width: 100%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    box-shadow:0 1px 3px 0 rgba(0,0,0,.16);
+}
+.nav-left{
+   display: flex;
+   width: 16%;
+}
+.nav-center{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    column-gap: 32px;
+    height: 100%;
+}
+.nav-right{
+    width: calc(100% - 63%);
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+    align-items: center;
+}
+.label-timekeeping{
+    font-size: 18px;
+    color: #000;
+    font-weight: 700;
+    text-align: center;
+    margin-left: 12px;
+    padding-top: 5px;
+}
+.icon-timekeeping{
+    display: flex;
+    justify-content: center;
+    margin-right: 44px;
+}
+.icon{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+.icon-nav{
+    background: url('../../assets/images/Sprites.64af8f61.svg') no-repeat -1157px -25px;
+    margin:0px 16px;
+}
+.icon-notify{
+    background: url('../../assets/images/Sprites.64af8f61.svg') no-repeat -788px -30px;
+}
+.icon-help{
+    background: url('../../assets/images/Sprites.64af8f61.svg') no-repeat -732px -31px;
+}
+.icon-other{
+    background: url('../../assets/images/Sprites.64af8f61.svg') no-repeat -568px -30px;
+}
+.icon-down{
+    background: url('../../assets/images/Sprites.64af8f61.svg') no-repeat -1118px -356px;
+
+}
+.title-nav{
+    color: #212121;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border-bottom: 4px solid #fff;
+    margin-bottom: 4px;
+    position: relative;
+}
+.title-nav:hover{
+    border-bottom: 4px solid #EC5504;
+    margin-bottom: 4px;
+}
+.sub-nav{
+    position: absolute;
+    top: 100%;
+    width: 380px;
+    padding: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 8px rgba(23, 27, 42, 0.24);
+    z-index: 100;
+    border-radius: 4px;
+}
+.item-nav{
+    height: 37px;
+    align-items: center;
+    padding: 0px 16px 0px 8px;
+    line-height: 37px;
+}
+.item-nav:hover{
+    background-color: #FFEDE2;
+    border-radius: 4px;
+}
+.logo-user{
+    height: 36px;
+    width: 36px;
+    background-color: #04ec1f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 24px;
+}
+.avatar-user{
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    background-color: #04ec1f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 24px;
+}
+.avatar-employee{
+    height: 38px;
+    width: 38px;
+    background-color: #04ec1f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 12px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600;
+    margin-left: 10px;
+}

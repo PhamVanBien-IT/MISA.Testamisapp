@@ -1,0 +1,1035 @@
+<template>
+  <div class="content-top">
+    <div class="tittle-content-top">
+      <div class="icon" style="margin-top: 5px" @click="btnCancelAddEmployee">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#666666"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-arrow-left"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </div>
+      {{ this.$parent.labeBusinessDetail }}
+    </div>
+    <div class="add-content-top" v-if="this.diy.state.isAddBussiness">
+      <m-button
+        class="btn-save-business"
+        label="Lưu"
+        @click="btnSaveBusiness"
+      ></m-button>
+      <m-button
+        class="btn-cancel"
+        label="Hủy"
+        @click="btnCancelAddEmployee"
+      ></m-button>
+    </div>
+    <div class="add-content-top" v-else>
+      <m-button
+        class="btn-save-business"
+        label="Sửa"
+        @click="btnBusinessEdit"
+      ></m-button>
+    </div>
+  </div>
+  <div class="content-detail-center">
+    <div class="content-detail-center-employee">
+      <div class="content-detail-center-top">
+        <div class="content-detail-center-top-left">
+          <div class="proponent">
+            <m-combobox
+              id="cbxSupplier"
+              title="Nguời đề nghị"
+              propName="FullName"
+              propValue="EmployeeId"
+              propCode="EmployeeCode"
+              propPositionName="PositionName"
+              v-model="business.EmployeeId"
+              tabindex="1"
+              :ref="'EmployeeId'"
+              :name="'EmployeeId'"
+              :isShowCombobox="isShowProponents"
+              required="*"
+              :labelValidate="validateList[`EmployeeId`].labelError"
+              :isValidate="validateList[`EmployeeId`].isStatus"
+              :disabled="isEdit"
+              :entity="this.$parent.employees"
+              v-if="this.diy.state.isBusinessEdit"
+            ></m-combobox>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Người đề nghị<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ business.FullName }}
+              </div>
+            </div>
+          </div>
+          <div class="department">
+            <m-input-text
+              type="text"
+              tabindex="2"
+              class="text-form"
+              label="Đơn vị công tác"
+              v-model="business.DepartmentName"
+              :disabled="true"
+              v-if="this.diy.state.isBusinessEdit"
+            >
+            </m-input-text>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">Đơn vị công tác</div>
+              <div class="combobox-value">
+                {{ business.DepartmentName }}
+              </div>
+            </div>
+          </div>
+          <div class="suggested-date">
+            <m-datepicker
+              label="Ngày đề nghị"
+              tabindex="3"
+              required="*"
+              v-model="business.RequestDate"
+              v-if="diy.state.isBusinessEdit"
+            ></m-datepicker>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Ngày đề nghị<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ this.$MISACommon.formatDate(business.RequestDate) }}
+              </div>
+            </div>
+          </div>
+          <div class="out-date">
+            <m-datepicker
+              label="Ngày đi"
+              tabindex="4"
+              required="*"
+              v-model="business.FromDate"
+              v-if="diy.state.isBusinessEdit"
+            ></m-datepicker>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Ngày đi<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ this.$MISACommon.formatDate(business.FromDate) }}
+              </div>
+            </div>
+          </div>
+          <div class="comeback-date">
+            <m-datepicker
+              label="Ngày về"
+              required="*"
+              v-model="business.ToDate"
+              v-if="diy.state.isBusinessEdit"
+            ></m-datepicker>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Ngày về<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ this.$MISACommon.formatDate(business.ToDate) }}
+              </div>
+            </div>
+          </div>
+          <div class="bussiness-day mg-t-7">
+            <m-input-text
+              type="text"
+              tabindex="5"
+              label="Số ngày đi công tác"
+              valueDefault="0"
+              v-model="business.LeaveDay"
+              :ref="'LeaveDay'"
+              :name="'LeaveDay'"
+              v-if="diy.state.isBusinessEdit"
+            >
+            </m-input-text>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">Số ngày công tác</div>
+              <div class="combobox-value">
+                {{ business.LeaveDay }}
+              </div>
+            </div>
+          </div>
+          <div class="address mg-t-7">
+            <m-input-text
+              type="text"
+              tabindex="6"
+              label="Địa điểm công tác"
+              required="*"
+              v-model="business.Location"
+              :labelValidate="validateList[`Location`].labelError"
+              :isValidate="validateList[`Location`].isStatus"
+              :ref="'Location'"
+              :name="'Location'"
+              v-if="diy.state.isBusinessEdit"
+            >
+            </m-input-text>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Địa điểm công tác<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ business.Location }}
+              </div>
+            </div>
+          </div>
+          <div class="reason-bussiness mg-t-7">
+            <m-textarea
+              tabindex="7"
+              label="Lý do công tác"
+              required="*"
+              v-model="business.Purpose"
+              :labelValidate="validateList[`Purpose`].labelError"
+              :isValidate="validateList[`Purpose`].isStatus"
+              :ref="'Purpose'"
+              :name="'Purpose'"
+              v-if="diy.state.isBusinessEdit"
+            >
+            </m-textarea>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Lý do công tác<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ business.Purpose }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-detail-center-top-right">
+          <div class="request-help">
+            <m-textarea
+              tabindex="8"
+              label="Yêu cầu hỗ trợ"
+              v-model="business.Request"
+              v-if="diy.state.isBusinessEdit"
+            >
+            </m-textarea>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">Yêu cầu hỗ trợ</div>
+              <div class="combobox-value">
+                {{ business.Request }}
+              </div>
+            </div>
+          </div>
+          <div class="employee-support">
+            <div class="dx-field-label">Người hỗ trợ</div>
+            <div class="dx-field-value">
+              <DxTagBox
+                v-model="selectedSupportIds"
+                :data-source="this.$parent.employees"
+                value-field="EmployeeId"
+                display-expr="FullName"
+                :search-enabled="true"
+                placeholder=""
+                :on-value-changed="onSelectionChanged"
+                tabindex="9"
+                item-template="item"
+                v-if="diy.state.isBusinessEdit"
+              >
+                <template #item="{ data }">
+                  <m-custom-item-vue :item-data="data"></m-custom-item-vue>
+                </template>
+              </DxTagBox>
+              <div class="base-combobox" v-else>
+                <div class="combobox-value" style="width: 100%">
+                  {{ business.SupportNames }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mg-t-7 employee-censor">
+            <m-combobox
+              id="cbxEmployeeCensor"
+              title="Nguời duyệt"
+              propName="FullName"
+              propValue="EmployeeId"
+              propCode="EmployeeCode"
+              propPositionName="PositionName"
+              tabindex="10"
+              :ref="'ApprovalIds'"
+              :name="'ApprovalIds'"
+              :isShowCombobox="isShowProponents"
+              required="*"
+              v-model="business.ApprovalIds"
+              :labelValidate="this.validateList[`ApprovalIds`].labelError"
+              :isValidate="this.validateList[`ApprovalIds`].isStatus"
+              :entity="this.$parent.employees"
+              :valueDefault="business.ApprovalIds"
+              v-if="diy.state.isBusinessEdit"
+            ></m-combobox>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Người duyệt<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                {{ business.ApprovalNames }}
+              </div>
+            </div>
+          </div>
+          <div class="mg-t-7 employee-support">
+            <div class="dx-field-label">Người liên quan</div>
+            <div class="dx-field-value">
+              <DxTagBox
+                v-model="selectedRelationShipIds"
+                :data-source="this.$parent.employees"
+                value-field="EmployeeId"
+                display-expr="FullName"
+                :search-enabled="true"
+                placeholder=""
+                :on-value-changed="onSelectionRelationShipIds"
+                tabindex="11"
+                v-if="diy.state.isBusinessEdit"
+              >
+                <template #item="{ data }">
+                  <m-custom-item-vue :item-data="data"></m-custom-item-vue>
+                </template>
+              </DxTagBox>
+              <div class="base-combobox" v-else>
+                <div class="combobox-value" style="width: 100%">
+                  {{ business.RelationShipNames }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mg-t-7">
+            <m-combobox-v-4
+              id="cbxStatus"
+              title="Trạng thái"
+              propName="value"
+              propValue="key"
+              v-model="business.Status"
+              tabindex="12"
+              :ref="'Status'"
+              :name="'Status'"
+              :isShowCombobox="isShowProponents"
+              required="*"
+              :entity="status"
+              :labelValidate="this.validateList[`Status`].labelError"
+              :isValidate="this.validateList[`Status`].isStatus"
+              v-if="diy.state.isBusinessEdit"
+            >
+            </m-combobox-v-4>
+            <div class="base-combobox" v-else>
+              <div class="title-cbb">
+                Trạng thái<sup style="color: red">*</sup>
+              </div>
+              <div class="combobox-value">
+                <div
+                  class="status-value"
+                  :style="{
+                    backgroundColor:
+                      business.Status == this.$MISAResource.STATUS.PENDING
+                        ? backgroundColors[0]
+                        : business.Status == this.$MISAResource.STATUS.APPROVED
+                        ? backgroundColors[1]
+                        : backgroundColors[2],
+                    color:
+                      business.Status == this.$MISAResource.STATUS.PENDING
+                        ? colors[0]
+                        : business.Status == this.$MISAResource.STATUS.APPROVED
+                        ? colors[1]
+                        : colors[2],
+                    border:
+                      business.Status == this.$MISAResource.STATUS.PENDING
+                        ? borders[0]
+                        : business.Status == this.$MISAResource.STATUS.APPROVED
+                        ? borders[1]
+                        : borders[2],
+                  }"
+                >
+                  {{ business.StatusName }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-detail-center-center">
+        <div class="tittle-employee">
+          <div class="tittle-epl">DANH SÁCH NHÂN VIÊN ĐI CÔNG TÁC</div>
+          <div
+            class="add-epl-detail"
+            v-if="diy.state.isBusinessEdit"
+            @click="diy.showFormBusiness()"
+          >
+            <div class="icon-add-detail">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ec5504"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-plus"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </div>
+            Thêm
+          </div>
+        </div>
+        <div
+          class="content-center-header-left"
+          v-if="!diy.state.isBusinessEdit"
+        >
+          <div class="icon icon-search-employee-missionallowances"></div>
+          <input
+            type="text"
+            class="input-search"
+            v-model="textSearchEmployeeMissionallowances"
+            placeholder="Tìm kiếm"
+            @input="searchEmployeeMissionallowances"
+          />
+        </div>
+        <div class="list-employee">
+          <m-data-grid
+            :entity="employees"
+            :dataGrid="dataGridEmployeeHeader"
+          ></m-data-grid>
+          <div class="total-epl">
+            Tổng số bản ghi:
+            <span style="font-weight: 600">{{
+              this.employees.length || 0
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="content-detail-center-footer"></div>
+    </div>
+    <div class="content-detail-center-note">
+      <div class="content-detail-center-note-title">Ghi chú</div>
+      <div class="content-detail-center-note-content">
+        <div class="emloyee-text-note">
+          <div class="logo-user" style="margin-right: 25px">BP</div>
+          <div class="input-note">
+            <input type="text" class="text-form" placeholder="Nhập ghi chú" />
+          </div>
+        </div>
+        <div class="cancel-note">
+          Nhấp Esc để
+          <span style="color: #fe6000; font-weight: 600; font-weight: 600"
+            >Hủy</span
+          >
+        </div>
+        <div class="nav-note">
+          <div class="all-note">Tất cả</div>
+          <div class="text-note">Ghi chú</div>
+          <div class="history-note">Nhật ký hoạt động</div>
+        </div>
+        <div class="list-no"></div>
+      </div>
+    </div>
+  </div>
+  <BusinessForm
+    v-if="diy.state.isFormBusiness"
+    @employeesDetail="addEmployees"
+  ></BusinessForm>
+</template>
+<script>
+import DxTagBox from "devextreme-vue/tag-box";
+import MButton from "@/components/button/MButton.vue";
+import MCombobox from "@/components/combobox/MCombobox.vue";
+import MComboboxV4 from "@/components/combobox/MComboboxV4.vue";
+import MDatepicker from "@/components/datepicker/MDatepicker.vue";
+import MTextarea from "@/components/input/MTextarea.vue";
+import MDataGrid from "@/components/datagrid/MDataGrid.vue";
+import BusinessForm from "./BusinessForm.vue";
+import MCustomItemVue from "@/components/combobox/MCustomItem.vue";
+import baseApi from "@/api/baseApi";
+import employeeMissionallowancesApi from "@/api/employeeMissionallowancesApi";
+import _ from "lodash";
+
+export default {
+  inject: ["diy"],
+  name: "BusinessDetail",
+  components: {
+    MButton,
+    MCombobox,
+    MDatepicker,
+    MTextarea,
+    MDataGrid,
+    BusinessForm,
+    DxTagBox,
+    MComboboxV4,
+    MCustomItemVue,
+  },
+  props: ["businessDetailId", "isEditBusiness"],
+  created() {
+    if (this.businessDetailId) {
+      this.businessId = this.businessDetailId;
+      this.getBusinessById("Missionallowances/", this.businessId);
+      this.isDisabled = true;
+      this.isEdit = this.isEditBusiness;
+    } else {
+      this.business = {};
+      this.isEdit = false;
+    }
+
+    this.getEmployeeCombobox(this.$parent.employees.length);
+  },
+  methods: {
+    /**
+     * Hàm xóa nhân viên đi công tác
+     * @param {Nhân viên đi công tác muốn xóa} employee
+     * CreatedBy: Bien (05/05/2023)
+     */
+    btnDeleteEmployeeMissionallowance(employee) {
+      console.log(this.employees);
+
+      const index = this.employees.findIndex(
+        (item) => item.EmployeeId === employee.row.data.EmployeeId
+      );
+
+      if (index !== -1) {
+        this.employees.splice(index, 1);
+      }
+
+      this.business.EmployeeMissionallowances = this.employees
+        .map((object) => object.EmployeeId)
+        .join(",");
+    },
+    /**
+     * Hàm thực hiện khi click nút sửa
+     * CreatedBy: Bien (04/05/2023)
+     */
+    btnBusinessEdit() {
+      this.$parent.labeBusinessDetail = this.$MISAResource.TITLEFORM.UPDATE;
+      this.diy.showBusinessEdit();
+      this.diy.showisAddBussiness();
+      this.isEdit = true;
+    },
+    /**
+     * Hàm tìm kiếm theo tên và mã nhân viên
+     * CreatedBy: Bien (27/04/2023)
+     */
+    searchEmployeeMissionallowances: _.debounce(function () {
+      this.search();
+    }, 500),
+
+    /**
+     * Hàm tìm kiếm nhân viên
+     * @param {Nội dung muốn tìm kiếm} value
+     * CreatedBy: Bien (19/1/2023)
+     */
+    async search() {
+      try {
+        // Nhận dữ liệu khi tìm kiếm
+        this.getEmployeeMissionallowances(
+          "EmployeeMissionallowances/",
+          this.businessId
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /**
+     * Lấy danh sách giá trị nhân viên hỗ trợ
+     * CreatedBy: Bien (30/04/2023)
+     */
+    onSelectionChanged() {
+      // this.selectedSupportIds = e.value;
+      console.log(this.selectedSupportIds);
+    },
+
+    /**
+     * Lấy danh sách giá trị nhân viên hỗ trợ
+     * CreatedBy: Bien (30/04/2023)
+     */
+    onSelectionRelationShipIds() {
+      // this.selectedRelationShipIds = e.value;
+      console.log(this.selectedRelationShipIds);
+    },
+    /**
+     * Hàm thay đổi kích thước khi scroll
+     * CreatedBy: Bien (30/04/2023)
+     */
+    handleScrollCombobox(e) {
+      console.log(e.scrollOffset);
+      this.numberEmp += this.numberEmp;
+      this.getEmployeeCombobox(this.numberEmp);
+    },
+    /**
+     * Hàm lấy danh sách nhân viên
+     * CreatedBy: Bien (23/04/2023)
+     */
+    getEmployeeCombobox(numberEmployee) {
+      for (let i = 0; i < numberEmployee; i++) {
+        this.employeeList.push(this.$parent.employees[i].FullName);
+      }
+    },
+    /**
+     * Hàm lấy giá trị được chọn trong dxtagbox
+     * CreatedBy: Bien (01/05/2023)
+     */
+    selectedDxtagbox() {
+      if (this.selectedSupportIds) {
+        this.business.SupportIds = this.selectedSupportIds
+          .map((object) => object.EmployeeId)
+          .join(",");
+        this.business.SupportNames = this.selectedSupportIds
+          .map((object) => object.FullName)
+          .join(",");
+      }
+      if (this.selectedRelationShipIds) {
+        this.business.RelationShipIds = this.selectedRelationShipIds
+          .map((object) => object.EmployeeId)
+          .join(",");
+
+        this.business.RelationShipNames = this.selectedRelationShipIds
+          .map((object) => object.FullName)
+          .join(",");
+      }
+
+      if (this.business.ApprovalIds) {
+        this.$parent.employees.map((object) =>
+          object.EmployeeId == this.business.ApprovalIds
+            ? (this.business.ApprovalNames = object.FullName)
+            : ""
+        );
+      }
+
+      if (this.business.Status) {
+        this.status.map((object) =>
+          object.key == this.business.Status
+            ? (this.business.StatusName = object.value)
+            : ""
+        );
+      }
+
+      let employeeFind = this.$parent.employees.find(item => item.EmployeeId === this.business.EmployeeId);
+
+      this.business.DepartmentId = employeeFind.DepartmentId;
+    },
+    /**
+     * Hàm thêm đơn công tác
+     * CreatedBy: Bien (25/04/2023)
+     */
+    btnSaveBusiness() {
+      this.selectedDxtagbox();
+
+      this.validateBusiness();
+      if (this.isValidate) {
+        if (this.isEdit) {
+          this.updateBusiness();
+        } else {
+          this.createdBusiness("Missionallowances/", this.business);
+          this.employeeMissionallowances.EmployeeId =
+            this.business.EmployeeMissionallowances;
+        }
+      }
+
+      console.log(this.business);
+    },
+    /**
+     * Hàm cập nhập đơn công tác
+     * CreatedBy: Bien (05/05/2023)
+     */
+    async updateBusiness() {
+      const response = await baseApi.update(
+        "Missionallowances/",
+        this.businessId,
+        this.business
+      );
+
+      if (response.IsSuccess) {
+        this.$parent.labelNotify = this.$MISAResource.NOTIFY.UPDATE;
+        this.diy.showNotify();
+        this.$parent.getPaging(1, this.$parent.pageSize, "Missionallowances/");
+        this.diy.clearBusinessDetail();
+      }
+    },
+    /**
+     * Hàm kiểm tra giá trị không được để trống
+     * @param {Tên trường muốn kiểm tra} nameInput
+     * @param {Gía trị muốn kiểm tra} valueInput
+     * @param {Trường thông báo lỗi} labelName
+     * CreatedBy: Bien (27/04/202)
+     */
+    validateRequired(nameInput, valueInput, labelName) {
+      if (valueInput) {
+        this.validateList[nameInput].isStatus = false;
+      } else {
+        this.validateList[nameInput].isStatus = true;
+        this.validateList[nameInput].labelError =
+          this.$MISAResource.ERRORVALIDATE.REQUIRED(labelName);
+
+        this.isValidate = false;
+      }
+    },
+    /**
+     * Hàm kiểm tra giá trị nhập vào của đơn công tác
+     * CreatedBy: Bien (27/04/202)
+     */
+    validateBusiness() {
+      this.isValidate = true;
+      this.validateRequired(
+        "EmployeeId",
+        this.business.EmployeeId,
+        "Nguời đề nghị"
+      );
+      this.validateRequired(
+        "Location",
+        this.business.Location,
+        "Địa điểm công tác"
+      );
+      this.validateRequired("Purpose", this.business.Purpose, "Lý do công tác");
+      this.validateRequired(
+        "ApprovalIds",
+        this.business.ApprovalIds,
+        "Nguời duyệt"
+      );
+      this.validateRequired("Status", this.business.Status, "Trạng thái");
+    },
+    /**
+     * API thêm mới đơn công tác
+     * @param {Đường dẫn} baseUrl
+     * @param {Đối tượng đơn} business
+     * CreaetedBy: Bien (26/04/2023)
+     */
+    async createdBusiness(baseUrl, business) {
+      const response = await baseApi.createEntity(baseUrl, business);
+
+      console.log(response);
+
+      if (response.IsSuccess) {
+        this.diy.clearBusinessDetail();
+        this.$parent.labelNotify = this.$MISAResource.NOTIFY.ADD;
+        this.diy.showNotify();
+        this.$parent.getPaging(1, this.$parent.pageSize, "Missionallowances/");
+      } else {
+        this.handleErrorValidate(response);
+      }
+    },
+    /**
+     * Hàm handle lỗi validate khi gọi API
+     * @param {Kết quả gọi API} res
+     * CreatedBy: Bien (24/02/2023)
+     */
+    handleErrorValidate(res) {
+      switch (res.response.status) {
+        case this.$MISAEnum.STATUSCODE.OK:
+          this.validateList[`isActive`] = false;
+          break;
+        case this.$MISAEnum.STATUSCODE.BADREQUEST:
+          var moreInfo = res.response.data.MoreInfo;
+          if (
+            res.response.data.ErrorCode == this.$MISAEnum.ERRORCODE.VALIDATERROR
+          ) {
+            this.validateList[`isActive`] = true;
+            if (this.validateList[`isActive`] && moreInfo) {
+              moreInfo.forEach((item) => {
+                this.validateList[`${item.Key}`].labelError = item.Value;
+                this.validateList[`${item.Key}`].isStatus = true;
+              });
+            }
+          }
+          break;
+        // case this.$MISAEnum.STATUSCODE.INTERNALSERVER:
+        //   if (
+        //     res.response.data.errorCode == this.$MISAEnum.ERRORCODE.UNKNOWNERROR
+        //   ) {
+        //     // this.showErrorValidate(
+        //     //   this.$MISAResource.ERRORVALIDATE.REQUIRED("Đơn vị")
+        //     // );
+        //   }
+        //   break;
+        default:
+          break;
+      }
+    },
+    /**
+     * Hàm lấy đơn công tác theo id
+     * CreatedBy: Bien (24/04/2023)
+     */
+    async getBusinessById(baseUrl, id) {
+      if (this.businessId) {
+        // Nhận dữ liệu sau khi lấy nhân viên theo id
+        const response = await baseApi.getById(baseUrl, id);
+
+        console.log(response);
+
+        if (response.IsSuccess) {
+          this.business = response.Data[0];
+          this.employeeMissionallowances =
+            response.Data[0].EmployeeMissionallowances;
+          this.getEmployeeMissionallowances(
+            "EmployeeMissionallowances/",
+            this.businessId
+          );
+          this.business.SupportIds = this.business.SupportIds.split(",");
+          this.business.RelationShipIds =
+            this.business.RelationShipIds.split(",");
+
+            this.diy.clearLoading();
+        }
+      }
+    },
+    /**
+     * Hàm cập nhật danh sách nhân viên đi công tác
+     * @param {Danh sách nhân viên được chọn} list
+     * CreatedBy: Bien (25/04/2023)
+     */
+    addEmployees(list) {
+      this.employees = list;
+
+      this.business.EmployeeMissionallowances = list
+        .map((object) => object.EmployeeId)
+        .join(",");
+    },
+
+    /**
+     * Hàm lấy sanh sách nhân viên công tác
+     * CreatedBy: Bien (28/04/2023)
+     */
+    async getEmployeeMissionallowances(baseUrl, id) {
+      const response =
+        await employeeMissionallowancesApi.getEmployeeMissionallowances(
+          baseUrl,
+          id
+        );
+
+      if (response != null) {
+        this.employees = response.Data;
+      }
+    },
+    /**
+     * Hàm thực hiện khi click thêm đơn hàng
+     * CreatedBy: Bien (28/04/2023)
+     */
+    btnCancelAddEmployee() {
+      this.diy.clearBusinessDetail();
+    },
+  },
+  watch: {
+    /**
+     * Lắng nghe có phải sự kiện sửa
+     * CreatedBy: Bien (05/05/2023)
+     */
+    isEdit: function (newValue) {
+      if (newValue) {
+        this.business.SupportNames = this.business.SupportNames?.split(",");
+        for (let i = 0; i < this.business.SupportIds?.length; i++) {
+          this.selectedSupportIds.push({
+            EmployeeId: this.business.SupportIds[i],
+            FullName: this.business.SupportNames[i],
+          });
+        }
+        this.business.RelationShipNames =
+          this.business.RelationShipNames?.split(",");
+        for (let i = 0; i < this.business.RelationShipIds?.length; i++) {
+          this.selectedRelationShipIds.push({
+            EmployeeId: this.business.RelationShipIds[i],
+            FullName: this.business.RelationShipNames[i],
+          });
+        }
+        // Hiển thị nút bỏ chọn nhân viên
+        // let endColum = this.dataGridEmployeeHeader.slice(-1);
+        // endColum.visible = true;
+        // this.dataGridEmployeeHeader[4] = endColum;
+      } else {
+        // Hiển ẩn nút bỏ chọn nhân viên
+        // let endColum = this.dataGridEmployeeHeader.slice(-1);
+        // endColum.visible = false;
+        // this.dataGridEmployeeHeader[4] = endColum;
+      }
+    },
+    /**
+     * Hàm tìm kiếm nhân viên đi công tác tìm kiếm thay đổi
+     * CreatedBy: Bien (18/1/2023)
+     */
+    textSearchEmployee: async function () {
+      await this.searchEmployeeMissionallowances(
+        this.textSearchEmployeeMissionallowances
+      );
+    },
+  },
+  data() {
+    return {
+      // Random màu background
+      backgroundColors: ["#ebe9fb", "#B9F8E4", "#fee8e7"],
+
+      // Random màu chữ
+      colors: ["#6153DF", "#11aa7a", "#ef292f"],
+
+      // Random màu border
+      borders: ["1px solid #6153DF", "1px solid #11aa7a", "1px solid #ef292f"],
+
+      // Kiểm tra có phải form sửa hay không
+      isEdit: false,
+
+      // Danh sách nhân viên liên quan đã chọn
+      selectedEmployeesRelationShipIds: [],
+
+      // Danh sách nhân viên hỗ trợ đã chọn
+      selectedEmployeesSupportIds: [],
+
+      // Ngày hiện tại
+      now: new Date(),
+
+      // Tìm kiếm nhân viên đi công tác
+      textSearchEmployeeMissionallowances: null,
+
+      // Danh sách nhân viên được chọn
+      selectedSupportIds: [],
+
+      // Danh sách nhân viên được chọn
+      selectedRelationShipIds: [],
+
+      // Số nhân viên muốn lấy
+      numberEmp: 20,
+
+      // Không cho chỉnh sửa
+      isDisabled: null,
+
+      // Kích thước nhân viên
+      pageSize: 10,
+
+      // Danh sách nhân viên tên nhân viên
+      employeeList: [],
+
+      // Dánh sách nhân viên đi công tác
+      employeeMissionallowances: {},
+
+      // Thông tin đơn công tác
+      business: {},
+
+      // Id đơn công tác
+      businessId: null,
+
+      // Nội dung tìm kiếm nhân viên
+      textSearchEmployee: null,
+
+      // Tổng số trang
+      totalPage: null,
+
+      // Tổng số bản ghi
+      totalRecord: null,
+
+      // Số trang hiện tại
+      indexPage: 1,
+
+      // Danh sách nhân viên
+      employees: [],
+
+      // Danh sách id nhân viên
+      employeesId: {},
+
+      // Hiển thị combobox list
+      isShowProponents: false,
+
+      // Khai báo mảng số lượng bản ghi trên 1 trang
+      status: [
+        {
+          key: 1,
+          value: "Chờ duyệt",
+        },
+        {
+          key: 2,
+          value: "Đã duyệt",
+        },
+        {
+          key: 3,
+          value: "Từ chối",
+        },
+      ],
+
+      // Danh sách bảng nhân viên
+      dataGridEmployeeHeader: [
+        {
+          caption: "Mã nhân viên",
+          dataField: "EmployeeCode",
+        },
+        {
+          caption: "Họ và tên",
+          dataField: "FullName",
+        },
+        {
+          caption: "Vị trí công việc",
+          dataField: "PositionName",
+        },
+        {
+          caption: "Đơn vị công tác",
+          dataField: "DepartmentName",
+        },
+        {
+          type: "buttons",
+          // fixed: true,
+          buttons: [
+            {
+              name: "Edit",
+              text: "Edit",
+              icon: "close",
+              onClick: (e) => {
+                this.btnDeleteEmployeeMissionallowance(e);
+              },
+            },
+          ],
+          visible: true,
+        },
+      ],
+
+      // Kiểm tra giá trị nhập vào
+      isValidate: true,
+
+      // Khai báo biến nhận giá trị lỗi validate
+      validateList: {
+        isActive: false,
+        EmployeeId: {
+          labelError: null,
+          isStatus: false,
+        },
+        Location: {
+          labelError: null,
+          isStatus: false,
+        },
+        Purpose: {
+          labelError: null,
+          isStatus: false,
+        },
+        ApprovalIds: {
+          labelError: null,
+          isStatus: false,
+        },
+        Status: {
+          labelError: null,
+          isStatus: false,
+        },
+        FromDate: {
+          labelError: null,
+          isStatus: false,
+        },
+        RequestDate: {
+          labelError: null,
+          isStatus: false,
+        },
+        ToDate: {
+          labelError: null,
+          isStatus: false,
+        },
+      },
+    };
+  },
+};
+</script>
+
+<style scoped>
+@import url(./business.css);
+.dx-datagrid .dx-link:first-child {
+  color: red;
+}
+</style>

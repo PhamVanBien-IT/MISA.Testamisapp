@@ -1,0 +1,247 @@
+.base-input {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.label-input {
+  width: 43%;
+  font-size: 14px;
+  font-weight: 600;
+}
+.input-search {
+  position: relative;
+  width: 500px;
+  height: 100%;
+  line-height: 32px;
+  outline: none;
+  color: #000 !important;
+  font-size: 14px;
+  opacity: 60%;
+  border-radius: 4px;
+  padding-left: 40px;
+  border: 1px solid #e0e0e0;
+}
+.input-search-employee-missionallowances{
+  padding-left: 0px !important;
+
+}
+.input-search:hover,
+.input-search:focus{
+  border: 1px solid #ec5504;
+}
+.input-v2{
+  width: 100% !important;
+}
+.textarea-container,
+.input-container {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+.input-cb {
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+}
+
+.text-form {
+  width: 100%;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  margin-top: 8px;
+  padding: 0px 12px;
+}
+.input-combobox-v2 {
+  width: 100%;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  padding: 0px 12px;
+}
+.text-textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  margin-top: 8px;
+  padding: 0px 12px;
+  padding-top: 8px;
+}
+
+.text-form::placeholder {
+  color: #9e9e9e;
+  font-size: 14px;
+}
+
+.input-search:focus .content-center-header-left,
+.text-form:focus,
+.input-combobox-v2:focus,
+.text-textarea:focus {
+  border: 1px solid #ec5504;
+  outline: none;
+}
+
+.bd-red {
+  border: 1px solid red;
+}
+
+.text-date {
+  width: calc(100% - 24px);
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid #949090;
+  margin-top: 8px;
+  padding: 0px 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.text-date:focus {
+  border: 1px solid #50b83c;
+}
+
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(--form-background);
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: #50b83c;
+  width: 1.3em;
+  height: 1.3em;
+  border: 1px solid #9e9e9e;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.85em;
+  height: 0.85em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: #50b83c;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+  border: 1px solid #50b83c;
+}
+
+label {
+  display: inline-block;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+}
+
+label .check-box-effect {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: transparent;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #aea6a6;
+  border-radius: 10%;
+  border-radius: 4px;
+}
+
+label .check-box-effect:before {
+  content: "";
+  width: 0px;
+  height: 2px;
+  border-radius: 2px;
+  background: #fe6000;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 5px;
+  left: 3px;
+  transition: width 50ms ease 50ms;
+  transform-origin: 0% 0%;
+}
+
+label .check-box-effect:after {
+  content: "";
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: #fe6000;
+  position: absolute;
+  transform: rotate(305deg);
+  top: 9px;
+  left: 3px;
+  transition: width 50ms ease;
+  transform-origin: 0% 0%;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]:checked + .check-box-effect {
+  background-color: #fe6000 !important;
+  border: 2px solid #fe6000;
+}
+
+input[type="checkbox"]:checked + .check-box-effect:after {
+  width: 10px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+
+input[type="checkbox"]:checked + .check-box-effect:before {
+  width: 5px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+
+.text-gray::-webkit-datetime-edit {
+  color: #aaa;
+}
+
+.text-gray:focus::-webkit-datetime-edit {
+  color: #000;
+}
+
+.text-gray::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+}
+
+input[type="date"]:required:invalid::-webkit-datetime-edit {
+  color: transparent;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit {
+  color: black !important;
+}
+.icon-validate-textarea{
+  background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1696px -312px;
+  position: absolute;
+  top: 45%;
+  right: 10px;
+}
+.tags-textarea {
+  display: inline;
+  border-radius: 5px;
+  font-size: 13px;
+  bottom: -30px;
+  color: #fff;
+  content: attr(data-gloss);
+  padding: 5px;
+  position: absolute;
+  z-index: 98;
+  text-align: center;
+}

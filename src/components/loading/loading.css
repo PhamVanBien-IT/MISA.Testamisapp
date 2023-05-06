@@ -1,0 +1,19 @@
+.loading{
+    background: transparent url('../../assets/images/loading.svg') no-repeat center;
+    animation: rotateInfinite 1s linear infinite;
+    position: absolute;
+    top: calc(50% - 25px);
+    left: 50%;
+    display: block;
+    height: 50px;
+    width: 50px;
+    z-index: 10;
+}
+@keyframes rotateInfinite {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

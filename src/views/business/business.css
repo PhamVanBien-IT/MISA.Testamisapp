@@ -1,0 +1,342 @@
+.dx-datagrid-columns-separator .dx-datagrid-columns-separator-transparent {
+    height: 0px !important;
+}
+.dx-datagrid-tracker .dx-state-invisible {
+    height: 0px !important;
+}
+.icon-cancel-add-employee {
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -368px -308px;
+    filter: grayscale(100%);
+}
+.content-detail-center {
+    margin-top: 16px;
+    width: 100%;
+    height: calc(100% - 64px);
+    overflow-y: scroll;
+}
+.content-detail-center-employee {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 24px;
+}
+.content-detail-center-top {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 85px;
+}
+.content-detail-center-center {
+    height: 100%;
+    width: 100%;
+}
+.list-employee {
+    width: 100%;
+    height: 252px;
+    margin-top: 16px;
+}
+.request-help {
+    margin-bottom: 15px;
+}
+.tittle-employee {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 46px;
+    height: 38px;
+    align-items: center;
+}
+.add-epl-detail {
+    font-size: 16px;
+    cursor: pointer;
+    color: #fa6000;
+    display: flex;
+    column-gap: 3px;
+    align-items: center;
+}
+.icon-add-detail {
+    margin-top: 3px;
+}
+.total-epl {
+    font-size: 14px;
+    text-align: end;
+}
+.tittle-epl {
+    font-size: 16px;
+    font-weight: 600;
+}
+.input-search:focus .content-center-header-left {
+    border: 1px solid #ec5504;
+    outline: none;
+}
+
+.content-detail-center-top-left {
+    width: 100%;
+    height: 100%;
+}
+.department {
+    margin-top: 5px;
+}
+.base-combobox {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.content-detail-center-top-right {
+    width: 100%;
+    height: 100%;
+}
+.content-detail-center-note {
+    width: 100%;
+    height: 260px;
+    margin-top: 16px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 24px;
+}
+.content-detail-center-note-title {
+    width: 100%;
+    height: 36px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 36px;
+}
+.content-detail-center-note-content {
+    width: 100%;
+    height: calc(100% - 52px);
+}
+.emloyee-text-note {
+    width: 100%;
+    display: flex;
+    height: 38px;
+    align-items: center;
+}
+.input-note {
+    width: 100%;
+}
+.cancel-note {
+    width: 100%;
+    height: 38px;
+    font-size: 14px;
+    line-height: 38px;
+    color: #9ea7a3;
+    text-align: end;
+}
+.nav-note {
+    font-size: 14px;
+    margin-top: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    column-gap: 40px;
+    height: 38px;
+    line-height: 38px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.all-note {
+    border-bottom: 3px solid #fe6000;
+    color: #fa6000;
+}
+.text-note:hover,
+.history-note:hover {
+    color: #fa6000;
+}
+.mg-t-7 {
+    margin-top: 7px;
+}
+.business-form {
+    width: 900px;
+    /* padding: 24px 24px 0px 24px; */
+    background-color: aqua;
+    box-shadow: 0 6px 14px rgba(23, 27, 42, 0.24);
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}
+.business-form-top {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 24px 0px 24px;
+}
+.tittle-business-form {
+    font-size: 24px;
+    color: #212121;
+    font-weight: 600;
+}
+
+.icon-close-business-form {
+    background: url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1176px -350px;
+}
+.icon-close-high-filter {
+    background: url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1176px -356px;
+}
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.386);
+    z-index: 999;
+}
+.business-form-center {
+    margin-top: 24px;
+    width: 100%;
+    height: calc(100% - 121px);
+    padding: 24px;
+}
+.business-form-footer {
+    height: 36px;
+    width: 100%;
+}
+.input-business-form {
+    height: 36px;
+    width: 240px;
+    padding: 0px 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+}
+.business-form-center-table {
+    width: 100%;
+    margin-top: 14px;
+    height: 100%;
+}
+.table-employee-form {
+    width: 100%;
+    height: 389px;
+}
+.paging-table-form {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+    background-color: #f5f5f5;
+    align-items: center;
+}
+.business-form-footer {
+    width: 100%;
+    height: 68px;
+    padding: 16px 0px;
+    background-color: #f5f5f5;
+}
+.business-form-center-nav {
+    display: flex;
+    column-gap: 9px;
+    align-items: center;
+}
+.cobobox-business-form {
+    width: 314px;
+    align-items: center;
+    height: 100%;
+}
+.select-row-length {
+    font-size: 14px;
+    color: #212121;
+    margin-left: 10px;
+}
+.select-row-unselect {
+    font-size: 14px;
+    color: red;
+    cursor: pointer;
+}
+.employee-support {
+    height: 27px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.employee-censor {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 13px;
+}
+.business-list {
+    width: 100%;
+    height: 100%;
+}
+.number-select {
+    margin-right: 24px;
+}
+.un-select {
+    color: #ff6161;
+    margin-right: 24px;
+    cursor: pointer;
+}
+.btn-delete,
+.btn-export,
+.btn-approve,
+.btn-refuse {
+    height: 36px;
+    background-color: #fff !important;
+    padding: 0px 16px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+.btn-refuse {
+    border: 1px solid #f44336 !important;
+    color: #f44336 !important;
+}
+.btn-delete {
+    border: 1px solid #ef292f !important;
+    color: #ef292f !important;
+}
+.btn-approve {
+    border: 1px solid #00c853 !important;
+    color: #00c853 !important;
+}
+
+.btn-export {
+    border: 1px solid #ddddeb !important;
+    color: #212121 !important;
+}
+.btn-approve:hover {
+    background-color: #b9f8e4 !important;
+}
+.btn-delete:hover {
+    background-color: #fee8e7 !important;
+}
+.btn-export:hover {
+    background-color: #eae6ff !important;
+}
+.btn-refuse:hover {
+    background-color: #fee8e7 !important;
+}
+.status-value {
+    text-align: center;
+    width: 100px;
+    height: 36px;
+    line-height: 36px;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+.icon-btn-export,
+.icon-btn-delete,
+.icon-btn-approve,
+.icon-btn-refuse {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+.text-btn-refuse {
+    font-weight: 500;
+    white-space: nowrap;
+}
+.icon-add {
+    position: absolute;
+    top: 22%;
+    left: 18px;
+}
+.tooltip-refresh {
+    width: 20px;
+    height: 20px;
+}

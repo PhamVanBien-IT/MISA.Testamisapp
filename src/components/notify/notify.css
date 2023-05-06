@@ -1,0 +1,53 @@
+.notify-main{
+    position: absolute;
+    right: 1%;
+    font-size: 14px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.078);
+    border-radius: 4px;
+    animation: showNotify 2s infinite;
+    z-index: 999;
+}
+.notify-content{
+    padding: 8px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.notify-right{
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+}
+.notify-left{
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+}
+.notify-cancel{
+    color: #1F1F1F;
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.notify-icon{
+    height: 25px;
+    width: 25px;
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1600px -256px;
+}
+.notify-error-icon{
+    height: 25px;
+    width: 25px;
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -536px -144px;
+}
+.notify-close{
+    height: 16px;
+    width: 16px;
+    background: transparent url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1175px -360px;
+
+}
+@keyframes showNotify {
+    from {bottom: 0px}
+    to {bottom: 2%}
+  }
