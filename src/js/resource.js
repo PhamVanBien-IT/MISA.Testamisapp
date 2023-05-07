@@ -34,6 +34,9 @@ const MISAResource = {
 		APPROVED:2,// Đã duyệt
 		REFUSE:3// Từ chối
 	},
+	SELECTLIST:{
+		selectedRowKeys:[]
+	}
 };
 
 export default MISAResource;

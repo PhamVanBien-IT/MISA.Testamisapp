@@ -40,8 +40,8 @@
         <div class="content-center-header">
           <div class="content-center-header-left">
             <div
-              class="content-center-header-left"
-              v-if="diy.state.isSearchBusiness"
+              class="content-center-header-left mg-l10"
+              v-if="this.diy.state.isSearchBusiness"
             >
               <div class="icon icon-search-list"></div>
               <input
@@ -399,7 +399,6 @@ export default {
     this.getPaging(1, this.pageSize, "Missionallowances/");
 
     this.getEmployees("Employees/");
-
   },
   methods: {
     /**
@@ -437,6 +436,8 @@ export default {
         this.diy.showNotify();
         this.getPaging(1, this.pageSize, "Missionallowances/");
         this.diy.clearDialog();
+        this.diy.showSearchBusiness();
+        this.selectedList = [];
       }
     },
     /**
@@ -552,9 +553,11 @@ export default {
      * CreatedBy: Bien (24/04/2023)
      */
     btnUnselectedList() {
-      this.selectedList = [];
+      /* eslint-disable */
+      // debugger;
       this.diy.showSearchBusiness();
       this.isShowSelected = false;
+      this.selectedList = [];
     },
 
     /**
@@ -563,14 +566,15 @@ export default {
      * CreatedBy: Bien (24/04/2023)
      */
     selectAll(selectedRows) {
+      /* eslint-disable */
+      debugger;
+
       this.selectedList = selectedRows;
 
       if (this.selectedList.length > 0) {
         this.diy.clearSearchBusiness();
-        this.isShowSelected = true;
       } else {
         this.diy.showSearchBusiness();
-        this.isShowSelected = false;
       }
     },
     /**
@@ -715,7 +719,7 @@ export default {
       this.businessDetailId = null;
       this.labeBusinessDetail = this.$MISAResource.TITLEFORM.ADD;
       this.diy.showBusinessDetail();
-      this.diy.showIsBusinessEdit();
+      this.diy.showBusinessEdit();
       this.diy.showisAddBussiness();
     },
     /**
@@ -745,21 +749,26 @@ export default {
       };
     },
   },
-  watch:{
+  watch: {
     /**
      * Hàm lắng nghe sự thay đổi checkall
      * CreatedBy: Bien (18/1/2023)
      */
      selectedList: function () {
+      /* eslint-disable */
+      // debugger
       if (this.selectedList.length > 0) {
-        this.diy.clearSearchBusiness();
+        this.isShowSelected = true;
       } else {
-        this.diy.showSearchBusiness();
+        this.isShowSelected = false;
       }
     },
   },
   data() {
     return {
+      // Hiển thị khi chọn nhiều
+      // isSelectList:true,
+
       // Lọc theo đơn vị
       misaCode: "",
 
@@ -773,7 +782,7 @@ export default {
       selectedListIds: [],
 
       // Hủy chọn tất cả
-      isShowSelected: false,
+      isShowSelected: true,
 
       // Danh sách đơn công tác được chọn
       selectedList: [],
@@ -855,15 +864,15 @@ export default {
         {
           caption: "Mã nhân viên",
           dataField: "EmployeeCode",
-          fixed: false,
+          fixed: true,
           dataType: "string",
         },
         {
           caption: "Người đề nghị",
           dataField: "FullName",
-          fixed: false,
+          fixed: true,
           dataType: "string",
-          width: "300",
+          width: "200",
           cellTemplate: "cell-name",
         },
         {
@@ -959,7 +968,7 @@ export default {
         {
           caption: "Chức năng",
           type: "buttons",
-          // fixed: true,
+          fixed: true,
           buttons: [
             {
               name: "Edit",

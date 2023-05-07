@@ -6,14 +6,17 @@
 }
 .combobox-value{
     position: relative;
-    height: 46px;
     outline: none;
     width: 70%;
-    line-height: 52px;
+    line-height: 40px;
     font-size: 14px;
     color: #212121;
     border-bottom: 1px solid #e3e5ee;
     padding-left: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 500px;
 }
 .combobox-v2{
     position: relative;

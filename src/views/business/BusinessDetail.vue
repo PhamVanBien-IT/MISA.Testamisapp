@@ -97,7 +97,7 @@
               tabindex="3"
               required="*"
               v-model="business.RequestDate"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
@@ -114,7 +114,7 @@
               tabindex="4"
               required="*"
               v-model="business.FromDate"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
@@ -130,7 +130,7 @@
               label="Ngày về"
               required="*"
               v-model="business.ToDate"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
@@ -150,7 +150,7 @@
               v-model="business.LeaveDay"
               :ref="'LeaveDay'"
               :name="'LeaveDay'"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             >
             </m-input-text>
             <div class="base-combobox" v-else>
@@ -171,7 +171,7 @@
               :isValidate="validateList[`Location`].isStatus"
               :ref="'Location'"
               :name="'Location'"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             >
             </m-input-text>
             <div class="base-combobox" v-else>
@@ -193,7 +193,7 @@
               :isValidate="validateList[`Purpose`].isStatus"
               :ref="'Purpose'"
               :name="'Purpose'"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             >
             </m-textarea>
             <div class="base-combobox" v-else>
@@ -212,7 +212,7 @@
               tabindex="8"
               label="Yêu cầu hỗ trợ"
               v-model="business.Request"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             >
             </m-textarea>
             <div class="base-combobox" v-else>
@@ -227,6 +227,8 @@
             <div class="dx-field-value">
               <DxTagBox
                 v-model="selectedSupportIds"
+                :items="selectedSupportIds"
+                :value="selectedSupportIds"
                 :data-source="this.$parent.employees"
                 value-field="EmployeeId"
                 display-expr="FullName"
@@ -235,14 +237,15 @@
                 :on-value-changed="onSelectionChanged"
                 tabindex="9"
                 item-template="item"
-                v-if="diy.state.isBusinessEdit"
+                @valueChanged="console.log(event)"
+                v-if="this.diy.state.isBusinessEdit"
               >
                 <template #item="{ data }">
                   <m-custom-item-vue :item-data="data"></m-custom-item-vue>
                 </template>
               </DxTagBox>
               <div class="base-combobox" v-else>
-                <div class="combobox-value" style="width: 100%">
+                <div class="combobox-value" style="width: 100%" :title="business.SupportNames">
                   {{ business.SupportNames }}
                 </div>
               </div>
@@ -266,7 +269,7 @@
               :isValidate="this.validateList[`ApprovalIds`].isStatus"
               :entity="this.$parent.employees"
               :valueDefault="business.ApprovalIds"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             ></m-combobox>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
@@ -289,14 +292,14 @@
                 placeholder=""
                 :on-value-changed="onSelectionRelationShipIds"
                 tabindex="11"
-                v-if="diy.state.isBusinessEdit"
+                v-if="this.diy.state.isBusinessEdit"
               >
                 <template #item="{ data }">
                   <m-custom-item-vue :item-data="data"></m-custom-item-vue>
                 </template>
               </DxTagBox>
               <div class="base-combobox" v-else>
-                <div class="combobox-value" style="width: 100%">
+                <div class="combobox-value" style="width: 100%" :title="business.RelationShipNames">
                   {{ business.RelationShipNames }}
                 </div>
               </div>
@@ -317,7 +320,7 @@
               :entity="status"
               :labelValidate="this.validateList[`Status`].labelError"
               :isValidate="this.validateList[`Status`].isStatus"
-              v-if="diy.state.isBusinessEdit"
+              v-if="this.diy.state.isBusinessEdit"
             >
             </m-combobox-v-4>
             <div class="base-combobox" v-else>
@@ -360,8 +363,8 @@
           <div class="tittle-epl">DANH SÁCH NHÂN VIÊN ĐI CÔNG TÁC</div>
           <div
             class="add-epl-detail"
-            v-if="diy.state.isBusinessEdit"
-            @click="diy.showFormBusiness()"
+            v-if="this.diy.state.isBusinessEdit"
+            @click="btnAddBusiness"
           >
             <div class="icon-add-detail">
               <svg
@@ -384,8 +387,8 @@
           </div>
         </div>
         <div
-          class="content-center-header-left"
-          v-if="!diy.state.isBusinessEdit"
+          class="content-center-header-left mg-left"
+          v-if="!this.diy.state.isBusinessEdit"
         >
           <div class="icon icon-search-employee-missionallowances"></div>
           <input
@@ -484,6 +487,13 @@ export default {
   },
   methods: {
     /**
+     * Hàm thực hiện thêm nhân viên công tác
+     * CreatedBy: Bien (07/05/2023)
+     */
+    btnAddBusiness(){
+      this.diy.showFormBusiness();
+    },
+    /**
      * Hàm xóa nhân viên đi công tác
      * @param {Nhân viên đi công tác muốn xóa} employee
      * CreatedBy: Bien (05/05/2023)
@@ -543,6 +553,8 @@ export default {
      */
     onSelectionChanged() {
       // this.selectedSupportIds = e.value;
+      /* eslint-disable */ 
+      // debugger
       console.log(this.selectedSupportIds);
     },
 
@@ -612,8 +624,9 @@ export default {
       }
 
       let employeeFind = this.$parent.employees.find(item => item.EmployeeId === this.business.EmployeeId);
-
-      this.business.DepartmentId = employeeFind.DepartmentId;
+      if(employeeFind != null){
+        this.business.DepartmentId = employeeFind.DepartmentId;
+      }
     },
     /**
      * Hàm thêm đơn công tác
@@ -633,7 +646,6 @@ export default {
         }
       }
 
-      console.log(this.business);
     },
     /**
      * Hàm cập nhập đơn công tác
@@ -813,6 +825,7 @@ export default {
      */
     btnCancelAddEmployee() {
       this.diy.clearBusinessDetail();
+      this.diy.clearBusinessEdit();
     },
   },
   watch: {

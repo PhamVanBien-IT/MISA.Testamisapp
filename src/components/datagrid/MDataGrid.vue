@@ -3,6 +3,7 @@
     <DxDataGrid
       id="gridContainer"
       ref="dataGrid"
+      v-model="selectedRowKeys"
       :data-source="entitis"
       :allow-column-resizing="true"
       :show-borders="false"
@@ -15,10 +16,12 @@
       :sorting="{ mode: 'none' }"
       :paging="{ enabled: false }"
       :preserveSelection="true"
+      :selectedRowKeys="selectedRowKeys"
       @selectionChanged="onSelectionChanged"
       @rowClick="onRowClick"
       @mouseover="showDeleteButton = true"
       @mouseleave="showDeleteButton = false"
+      :header-cell-template="headerCellTemplate"
     >
       <DxColumn
         v-for="(item, index) in dataSource"
@@ -33,7 +36,8 @@
         :cell-template="item.cellTemplate"
         :format="item.format"
         :visible="item.visible"
-      ></DxColumn>
+        ></DxColumn>
+
       <DxSelection
         select-all-mode="page"
         mode="multiple"
@@ -56,6 +60,7 @@
 import { DxColumn, DxDataGrid, DxSelection } from "devextreme-vue/data-grid";
 import MCustomColumVue from "./MCustomColum.vue";
 import MCustomColumnStatus from "./MCustomColumnStatus.vue";
+// import _ from "lodash";
 export default {
   inject: ["diy"],
   name: "MDataGrid",
@@ -74,17 +79,18 @@ export default {
     }
 
     this.dataSource = this.dataGrid;
+
+    this.isChecked = this.isShowSelectedRows;
   },
   mounted() {
     this.dataTable = this.$refs.dataGrid.instance;
-    // Sử dụng biến dataGrid ở đây
   },
   updated() {
     this.entitis = this.entity;
 
-    if (!this.isShowSelectedRows) {
-      this.clearSelection();
-    }
+    this.isChecked = this.isShowSelectedRows;
+
+    console.log(this.isChecked);
   },
   methods: {
     /**
@@ -103,45 +109,61 @@ export default {
      */
     clearSelection() {
       const dataGrid = this.$refs.dataGrid.instance;
+
       dataGrid.clearSelection();
+      // this.selectedRowKeys = [];
     },
     /**
      * Hàm thêm nhân viên vào danh sách được chọn
      * @param {Thêm danh sách bản ghi đã chọn} selectedItems
      * CreatedBy: Bien (24/04/2023)
      */
-    onSelectionChanged(event) {
-  
-      if (
-        event.currentDeselectedRowKeys.length > 0 &&
-        event.selectedRowKeys.length > 0
-      ) {
-        if (this.$parent.selectedList.length < event.selectedRowsData.length) {
-          this.$parent.selectedList = event.selectedRowsData;
-        }
-      } else {
-        if (this.$parent.selectedList.length > 0) {
-          let selectCol = event.selectedRowsData;
-          if (selectCol.length > 0) {
-            selectCol.map((item) => {
-              if(!this.$parent.selectedList.includes(item)){
-                this.$parent.selectedList.push(item);
-              }
-            });
-          } else {
-            this.$parent.selectedList = event.currentDeselectedRowKeys;
-          }
-        } else {
-          if (event.currentDeselectedRowKeys.length > 0) {
-            this.$parent.selectedList = event.currentDeselectedRowKeys;
-          } else {
-            this.$parent.selectedList = event.selectedRowKeys;
-          }
-        }
-      }
+    onSelectionChanged() {
       /* eslint-disable */
-      // debugger
-      this.$emit("selectedList", this.$parent.selectedList);
+      debugger;
+
+      // console.log(this.selectedRowKeys);
+      // let listSelect = this.$parent.selectedList;
+
+      // if (event.currentSelectedRowKeys.length == 0) {
+      //   if (
+      //     event.currentDeselectedRowKeys.length > 0 &&
+      //     event.selectedRowKeys.length > 0
+      //   ) {
+      //     listSelect = event.selectedRowKeys;
+      //   }else if(event.currentDeselectedRowKeys.length != 50){
+      //     listSelect = [];
+      //   }
+      //   // listSelect = event.currentDeselectedRowKeys;
+      // } else if (
+      //   event.currentSelectedRowKeys.length > 0 &&
+      //   listSelect.length > 0
+      // ) {
+      //   const isObjectInArray = listSelect.some((item) => {
+      //     _.isEqual(item, event.currentSelectedRowKeys); 
+      //   });
+      //   event.currentSelectedRowKeys.map(item =>{
+      //   if(!isObjectInArray && event.currentSelectedRowKeys.length != 50){
+      //       listSelect.push(item);
+      //   }
+      // }) 
+      // } else {
+      //   event.currentSelectedRowKeys.map((item) => {
+      //     listSelect.push(item);
+      //   });
+      // }
+
+      // this.selectedRowKeys = listSelect;
+        // const selectRowKeys = this.$MISAResource.SELECTLIST.selectedRowKeys;
+
+        // let seletList = e.selectedRowKeys;
+
+        // seletList.map(iten =>{
+        //   if(JSON.stringify(item))
+        // })
+        // selectRowKeys = e.selectedRowKeys;
+
+      this.$emit("selectedList", this.$MISAResource.SELECTLIST.selectedRowKeys);
     },
   },
   watch: {
@@ -152,9 +174,16 @@ export default {
     entity: {
       handler() {
         if (this.dataTable) {
+          debugger;
           const dataGrid = this.$refs.dataGrid.instance;
+          if(!this.isShowSelectedRows){
+            this.selectedRowKeys = [];
+          }
+          dataGrid.selectRows(this.selectedRowKeys, false);
           this.dataTable.refresh();
-          dataGrid.selectRows(this.$parent.selectedList, false);
+
+          // if(this.$parent.selectedList > 0){
+          // }
         }
       },
       deep: true,
@@ -188,7 +217,12 @@ export default {
       // Danh sách bản ghi đã chọn
       selectedRows: [],
 
+      // Biến bảng
       dataTable: null,
+
+      // Kiểm tra checkall
+      isChecked: null,
+      
     };
   },
 };

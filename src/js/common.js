@@ -23,8 +23,10 @@ const MISACommon = {
           let year = datatime.getFullYear();
 
           let hours = datatime.getHours();
+          hours = hours < 10 ? `0${hours}` : hours;
 
           let minutes = datatime.getMinutes();
+          minutes = minutes < 10 ? `0${minutes}` : minutes;
   
           return `${date}/${month}/${year} ${hours}:${minutes}`;
         } else {

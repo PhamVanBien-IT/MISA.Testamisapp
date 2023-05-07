@@ -216,6 +216,10 @@
     font-size: 14px;
     align-items: center;
     border-radius: 4px;
+    margin-left: -12px;
+}
+.mg-left{
+    margin-left: -36px;
 }
 .content-center-header-left-select{
     height: 36px;
@@ -373,7 +377,7 @@
     position: absolute;
     background: url("../../assets/images/Sprites.64af8f61.svg") no-repeat -312px -144px;
     margin-right: 8px;
-    left: 66px;
+    left: 40px;
 }
 .icon-refresh,
 .icon-filter,

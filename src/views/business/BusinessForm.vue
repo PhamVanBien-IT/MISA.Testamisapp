@@ -22,16 +22,17 @@
           </div>
           <div class="cobobox-business-form">
             <m-combobox-v-2
-              id="cbxDepartments"
-              propName="text"
-              propValue="id"
-              v-model="treeDepartment.id"
-              :entity="treeDepartment"
-              :isShowCombobox="isShowDepartment"
-              placeholderDefault="Tât cả đơn vị"
-              :isShowFooter="false"
-            >
-            </m-combobox-v-2>
+                id="cbxDepartments"
+                propName="text"
+                propValue="id"
+                v-model="this.diy.state.treeDepartment.id"
+                :entity="this.diy.state.treeDepartment"
+                :isShowCombobox="isShowDepartment"
+                placeholderDefault="Tât cả đơn vị"
+                :isShowFooter="true"
+                @misaCode="getMisaCode"
+              >
+              </m-combobox-v-2>
           </div>
           <div class="select-row-length" v-if="isShowSelectedLength">
             Đã chọn:
@@ -63,11 +64,11 @@
               <div class="page-size">
                 <m-dropdown
                   id="pagination-size"
-                  :pageNumverRecord="pagination"
-                  valueDefault="50"
+                  :entity="pagination"
+                  :valueDefault="50"
                   :isShow="isShowPagesize"
                   @click="togglePageSize"
-                  @pageSize="setPageSize"
+                  @valueItem="setPageSize"
                 ></m-dropdown>
               </div>
               <div class="paging">
@@ -100,8 +101,8 @@
 <script>
 import MDataGrid from "@/components/datagrid/MDataGrid.vue";
 import MButton from "@/components/button/MButton.vue";
-import baseApi from "@/api/baseApi";
 import _ from "lodash";
+import employeeApi from "@/api/employeeApi";
 
 export default {
   inject: ["diy"],
@@ -112,6 +113,17 @@ export default {
     this.getEmployeePaging(1, this.pageSize, "Employees/");
   },
   methods: {
+      /**
+     * Hàm lọc theo đơn vị
+     * @param {Đơn vị muốn lọc} value
+     * CreatedBy: Bien (05/05/2023)
+     */
+     getMisaCode(value) {
+       /* eslint-disable */ 
+      debugger
+      this.misaCode = value;
+      this.getEmployeePaging(1, this.pageSize, "Missionallowances/");
+    },
     /**
      * Hàm thêm danh sách nhân viên đi công tác
      * CreatedBy: Bien (25/04/2023)
@@ -240,11 +252,12 @@ export default {
     async getEmployeePaging(pageNumber, pageSize, baseUrl) {
       try {
         // Nhận dữ liệu khi tìm kiếm
-        const response = await baseApi.getPaging(
+        const response = await employeeApi.getPaging(
           pageNumber,
           pageSize,
           baseUrl,
-          this.textSearchEmployee
+          this.textSearchEmployee,
+          this.misaCode
         );
         this.employees = response.Data;
         // Xóa nhân viên đã chọn
@@ -285,6 +298,8 @@ export default {
   },
   data() {
     return {
+      // Lọc theo đơn vị
+      misaCode: "",
       // Dánh sách nhân viên đi công tác
       employeeBusiness: [],
 
@@ -350,18 +365,6 @@ export default {
           value: "100",
         },
       ],
-      // Danh sách đơn vị
-      departments: [
-        {
-          DepartmentId: "26dbaa27-509b-4fe0-b143-d49347e1f5d6",
-          DepartmentName: "CTY ROBOCAR",
-        },
-        {
-          DepartmentId: "0c5b06fe-621c-4f14-bcc6-a7c99cf16525",
-          DepartmentName: "CTY Test",
-        },
-      ],
-
       // Danh sách bảng nhân viên
       dataGridEmployees: [
         {
@@ -371,6 +374,7 @@ export default {
         {
           caption: "Họ và tên",
           dataField: "FullName",
+          cellTemplate: "cell-name",
         },
         {
           caption: "Vị trí công việc",

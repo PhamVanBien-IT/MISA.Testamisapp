@@ -57,6 +57,10 @@
     margin-right: 8px;
     right: 104px;
 }
+.btn-save-business:hover{
+    background-color: #fa6000;
+
+}
 .btn-save-business{
     position: absolute;
     height: 36px;

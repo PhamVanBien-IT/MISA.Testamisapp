@@ -123,13 +123,6 @@ const clearDialog = function(){
   state.isShowDialog = false;
 }; 
 /**
- * Hàm hiển thị trang sửa đơn công tác
- * CreatedBy: Bien (20/1/2023)
- */
-const showIsBusinessEdit = function(){
-  state.isBusinessEdit = true;
-}; 
-/**
  * Hàm ẩn trang sửa đơn công tác
  * CreatedBy: Bien (20/1/2023)
  */
@@ -264,7 +257,6 @@ export default {
   toggleisAddBussiness,
   clearIsAddBussiness,
   clearBusinessEdit,
-  showIsBusinessEdit,
   showisAddBussiness,
   showBusinessDetail,
   showDialog,
