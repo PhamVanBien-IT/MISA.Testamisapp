@@ -54,6 +54,7 @@
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 0 6px #ccc;
+    z-index: 999999999;
 }
 .high-filter-header {
     padding: 14px 16px 0px;
@@ -78,12 +79,9 @@
     padding: 0px 8px;
     display: flex;
     align-items: center;
-    border: 1px solid #e1e1e1;
     border-radius: 4px;
 }
-.high-filter-header-left:hover {
-    border: 1px solid #ec5504;
-}
+
 .high-filter-center {
     width: 100%;
     padding: 0px 16px;
@@ -249,6 +247,13 @@
     border: none !important;
     padding-right: 10px;
     margin-bottom: 8px;
+}
+.custom-dropdown-language{
+    width: 110px !important;
+    border: none !important;
+    padding-right: 10px;
+    margin-bottom: 8px;
+    line-height: 20px;
 }
 .combobox-list-department {
     width: 320px;

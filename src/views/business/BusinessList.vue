@@ -1,7 +1,7 @@
 <template>
   <div class="business-list" v-if="!diy.state.isShowBusinessDetail">
     <div class="content-top">
-      <div class="tittle-content-top">Đề nghị đi công tác</div>
+      <div class="tittle-content-top">{{ $t('TITLEFORM.BUSSINESS') }}</div>
       <div class="add-content-top">
         <div class="icon-add">
           <svg
@@ -432,7 +432,7 @@ export default {
       console.log(response);
 
       if (response.IsSuccess) {
-        this.labelNotify = this.$MISAResource.NOTIFY.DELETE;
+        this.labelNotify = this.$t('NOTIFY.DELETE');
         this.diy.showNotify();
         this.getPaging(1, this.pageSize, "Missionallowances/");
         this.diy.clearDialog();
@@ -445,7 +445,7 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     btnDeletedeleteMissionallowanceList() {
-      this.lableDialog = this.$MISAResource.CONTENTDIALOG.DELETES;
+      this.lableDialog = this.$t('CONTENTDIALOG.DELETES');
       this.diy.showDialog();
       this.selectedListIds = this.selectedList.map(
         (object) => object.MissionallowanceId
@@ -458,7 +458,7 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     btnDeleteBusiness(id) {
-      this.lableDialog = this.$MISAResource.CONTENTDIALOG.DELETE;
+      this.lableDialog = this.$t('CONTENTDIALOG.DELETE');
       this.diy.showDialog();
       this.businessId = id;
     },
@@ -470,7 +470,7 @@ export default {
       this.businessDetailId = business.MissionallowanceId;
       this.diy.showBusinessDetail();
       this.diy.showIsBusinessEdit();
-      this.labeBusinessDetail = this.$MISAResource.TITLEFORM.UPDATE;
+      this.labeBusinessDetail = this.$t('TITLEFORM.UPDATE');
       this.isEditBusiness = true;
     },
     /**
@@ -488,7 +488,7 @@ export default {
       console.log(response);
 
       if (response.IsSuccess) {
-        this.labelNotify = this.$MISAResource.NOTIFY.DELETE;
+        this.labelNotify = this.$t('NOTIFY.DELETE');
         this.diy.showNotify();
         this.getPaging(1, this.pageSize, "Missionallowances/");
         this.diy.clearDialog();
@@ -504,7 +504,7 @@ export default {
       this.diy.showBusinessDetail();
       this.diy.clearBusinessEdit();
       this.diy.clearIsAddBussiness();
-      this.labeBusinessDetail = this.$MISAResource.TITLEFORM.DETAIL;
+      this.labeBusinessDetail = this.$t('TITLEFORM.DETAIL');
     },
     /**
      * Hàm kiểm tra lấy danh sách nhân viên
@@ -717,7 +717,7 @@ export default {
      */
     btnAddEmployee() {
       this.businessDetailId = null;
-      this.labeBusinessDetail = this.$MISAResource.TITLEFORM.ADD;
+      this.labeBusinessDetail = this.$t('TITLEFORM.ADD');
       this.diy.showBusinessDetail();
       this.diy.showBusinessEdit();
       this.diy.showisAddBussiness();

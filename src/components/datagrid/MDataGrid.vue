@@ -12,7 +12,7 @@
       :column-min-width="160"
       :show-column-lines="false"
       :show-row-lines="true"
-      :noDataText="this.$MISAResource.DATA.NULL"
+      :noDataText="$t('DATA.NULL')"
       :sorting="{ mode: 'none' }"
       :paging="{ enabled: false }"
       :preserveSelection="true"
@@ -21,7 +21,6 @@
       @rowClick="onRowClick"
       @mouseover="showDeleteButton = true"
       @mouseleave="showDeleteButton = false"
-      :header-cell-template="headerCellTemplate"
     >
       <DxColumn
         v-for="(item, index) in dataSource"
@@ -120,7 +119,7 @@ export default {
      */
     onSelectionChanged() {
       /* eslint-disable */
-      debugger;
+      // debugger;
 
       // console.log(this.selectedRowKeys);
       // let listSelect = this.$parent.selectedList;
@@ -163,7 +162,7 @@ export default {
         // })
         // selectRowKeys = e.selectedRowKeys;
 
-      this.$emit("selectedList", this.$MISAResource.SELECTLIST.selectedRowKeys);
+      // this.$emit("selectedList", this.$MISAResource.SELECTLIST.selectedRowKeys);
     },
   },
   watch: {
@@ -174,7 +173,6 @@ export default {
     entity: {
       handler() {
         if (this.dataTable) {
-          debugger;
           const dataGrid = this.$refs.dataGrid.instance;
           if(!this.isShowSelectedRows){
             this.selectedRowKeys = [];

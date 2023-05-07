@@ -19,6 +19,7 @@ const state = reactive({
   isShowNotify:false,
   isSearchBusiness:true,
   isShowLoading:false,
+  isLaguage:false,
   treeDepartment: [
     {
       id: "5e6695e2-5aad-3241-6c1a-bb545470e80c",
@@ -68,6 +69,27 @@ const state = reactive({
     },
   ],
 });
+/**
+ * Hàm ẩm chọn ngôn ngữ
+ * CreatedBy: Bien (20/1/2023)
+ */
+ const toggleLaguage = function(){
+  state.isLaguage = !state.isLaguage;
+}; 
+/**
+ * Hàm ẩm chọn ngôn ngữ
+ * CreatedBy: Bien (20/1/2023)
+ */
+ const clearLaguage = function(){
+  state.isLaguage = true;
+}; 
+/**
+ * Hàm hiển thị chọn ngôn ngữ
+ * CreatedBy: Bien (20/1/2023)
+ */
+ const showLaguage = function(){
+  state.isLaguage = true;
+}; 
 /**
  * Hàm ẩn loading
  * CreatedBy: Bien (20/1/2023)
@@ -266,6 +288,10 @@ export default {
   showSearchBusiness,
   clearBusinessDetail,
   clearLoading,
-  showLoading
+  showLoading,
+  showLaguage,
+  clearLaguage,
+  toggleLaguage
+  
 
 };

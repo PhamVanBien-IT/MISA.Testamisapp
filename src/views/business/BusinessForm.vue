@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="business-form">
       <div class="business-form-top">
-        <div class="tittle-business-form">Chọn nhân viên</div>
+        <div class="tittle-business-form">{{ $t('TITLEFORM.HOME') }}</div>
         <div
           class="icon icon-close-business-form"
           @click="btnCloseFormBusiness"

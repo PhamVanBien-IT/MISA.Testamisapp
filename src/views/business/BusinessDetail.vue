@@ -237,7 +237,6 @@
                 :on-value-changed="onSelectionChanged"
                 tabindex="9"
                 item-template="item"
-                @valueChanged="console.log(event)"
                 v-if="this.diy.state.isBusinessEdit"
               >
                 <template #item="{ data }">
@@ -332,21 +331,21 @@
                   class="status-value"
                   :style="{
                     backgroundColor:
-                      business.Status == this.$MISAResource.STATUS.PENDING
+                      business.Status == this.$t('STATUSPENDING')
                         ? backgroundColors[0]
-                        : business.Status == this.$MISAResource.STATUS.APPROVED
+                        : business.Status == this.$t('STATUSAPPROVED')
                         ? backgroundColors[1]
                         : backgroundColors[2],
                     color:
-                      business.Status == this.$MISAResource.STATUS.PENDING
+                      business.Status == this.$t('STATUSPENDING')
                         ? colors[0]
-                        : business.Status == this.$MISAResource.STATUS.APPROVED
+                        : business.Status == this.$t('STATUSAPPROVED')
                         ? colors[1]
                         : colors[2],
                     border:
-                      business.Status == this.$MISAResource.STATUS.PENDING
+                      business.Status == this.$t('STATUSPENDING')
                         ? borders[0]
-                        : business.Status == this.$MISAResource.STATUS.APPROVED
+                        : business.Status == this.$t('STATUSAPPROVED')
                         ? borders[1]
                         : borders[2],
                   }"
@@ -518,7 +517,7 @@ export default {
      * CreatedBy: Bien (04/05/2023)
      */
     btnBusinessEdit() {
-      this.$parent.labeBusinessDetail = this.$MISAResource.TITLEFORM.UPDATE;
+      this.$parent.labeBusinessDetail = this.$t('TITLEFORM.UPDATE');
       this.diy.showBusinessEdit();
       this.diy.showisAddBussiness();
       this.isEdit = true;
@@ -659,7 +658,7 @@ export default {
       );
 
       if (response.IsSuccess) {
-        this.$parent.labelNotify = this.$MISAResource.NOTIFY.UPDATE;
+        this.$parent.labelNotify = this.$t('NOTIFY.UPDATE');
         this.diy.showNotify();
         this.$parent.getPaging(1, this.$parent.pageSize, "Missionallowances/");
         this.diy.clearBusinessDetail();
@@ -720,7 +719,7 @@ export default {
 
       if (response.IsSuccess) {
         this.diy.clearBusinessDetail();
-        this.$parent.labelNotify = this.$MISAResource.NOTIFY.ADD;
+        this.$parent.labelNotify = this.$t('NOTIFY.ADD');
         this.diy.showNotify();
         this.$parent.getPaging(1, this.$parent.pageSize, "Missionallowances/");
       } else {

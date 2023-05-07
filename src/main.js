@@ -14,7 +14,15 @@ import MInputTextV2 from "./components/input/MInputTextV2.vue";
 import MDataGrid from "./components/datagrid/MDataGrid.vue";
 import MComboboxV2 from "./components/combobox/MComboboxV2.vue";
 import MLoading from "./components/loading/MLoading";
+import { createI18n } from 'vue-i18n'
+  
+const messages = MISAResource.messages;
 
+  const i18n = createI18n({
+    locale: 'vi', // Ngôn ngữ mặc định
+    messages // Dữ liệu ngôn ngữ
+  })
+  
 
 const app = createApp(App);
 
@@ -31,7 +39,7 @@ app.component("MDataGrid",MDataGrid);
 app.component("MComboboxV2",MComboboxV2);
 app.component("MLoading",MLoading);
 
-
+app.use(i18n);
 app.use(router);
 
 app.mount('#app');
