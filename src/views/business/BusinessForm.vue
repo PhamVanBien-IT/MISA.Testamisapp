@@ -16,7 +16,7 @@
               type="text"
               class="input-search"
               v-model="textSearchEmployee"
-              placeholder="Tìm kiếm"
+              :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
               @input="searchEmployee"
             />
           </div>
@@ -28,14 +28,14 @@
                 v-model="this.diy.state.treeDepartment.id"
                 :entity="this.diy.state.treeDepartment"
                 :isShowCombobox="isShowDepartment"
-                placeholderDefault="Tât cả đơn vị"
+                :placeholderDefault="$t('BUSINESSFORM.PLACEHOLDER.DEPARTMENT')"
                 :isShowFooter="true"
                 @misaCode="getMisaCode"
               >
               </m-combobox-v-2>
           </div>
           <div class="select-row-length" v-if="isShowSelectedLength">
-            Đã chọn:
+            {{ $t('BUSINESSFORM.SELECTLIST.SELECTED') }}
             <span style="font-weight: 600">{{ this.selectedList.length }}</span>
           </div>
           <div
@@ -43,7 +43,7 @@
             v-if="isShowSelectedLength"
             @click="btnUnselectedList"
           >
-            Bỏ chọn
+          {{ $t('BUSINESSFORM.SELECTLIST.UNSELECTED') }}
           </div>
         </div>
         <div class="business-form-center-table">
@@ -57,7 +57,8 @@
           </div>
           <div class="paging-table-form">
             <div class="total-recort">
-              Tổng số bản ghi:
+              {{ $t('BUSINESSFORM.TOTALRECORD') }}
+
               <span style="font-weight: 600">{{ this.totalRecord }}</span>
             </div>
             <div class="paging-content-footer">
@@ -73,8 +74,8 @@
               </div>
               <div class="paging">
                 <div class="recort">
-                  Từ <span style="font-weight: 600">{{ startPage }}</span> đến
-                  <span style="font-weight: 600">{{ endPage }}</span> bản ghi
+                  {{ $t('BUSINESSFORM.PAGING.FROM') }} <span style="font-weight: 600">{{ startPage }}</span> {{ $t('BUSINESSFORM.PAGING.TO') }}
+                  <span style="font-weight: 600">{{ endPage }}</span> {{ $t('BUSINESSFORM.PAGING.RECORD') }}
                 </div>
                 <div class="icon icon-prevent" @click="preventPage"></div>
                 <div class="icon icon-next" @click="nextPage"></div>

@@ -317,6 +317,7 @@
     top: 38px;
     width: 100%;
     cursor: pointer;
+    z-index: 99;
 }
 .title-import {
     height: 36px;

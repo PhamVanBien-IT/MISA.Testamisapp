@@ -47,7 +47,7 @@
           <div class="proponent">
             <m-combobox
               id="cbxSupplier"
-              title="Nguời đề nghị"
+              :title="$t('BUSINESSDETAIL.TITLEFORM.EMPLOYEE')"
               propName="FullName"
               propValue="EmployeeId"
               propCode="EmployeeCode"
@@ -78,14 +78,14 @@
               type="text"
               tabindex="2"
               class="text-form"
-              label="Đơn vị công tác"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME')"
               v-model="business.DepartmentName"
               :disabled="true"
               v-if="this.diy.state.isBusinessEdit"
             >
             </m-input-text>
             <div class="base-combobox" v-else>
-              <div class="title-cbb">Đơn vị công tác</div>
+              <div class="title-cbb">{{ $t('BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME') }}</div>
               <div class="combobox-value">
                 {{ business.DepartmentName }}
               </div>
@@ -93,7 +93,7 @@
           </div>
           <div class="suggested-date">
             <m-datepicker
-              label="Ngày đề nghị"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.REQUESDATE')"
               tabindex="3"
               required="*"
               v-model="business.RequestDate"
@@ -101,7 +101,7 @@
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Ngày đề nghị<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.REQUESDATE') }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ this.$MISACommon.formatDate(business.RequestDate) }}
@@ -110,7 +110,7 @@
           </div>
           <div class="out-date">
             <m-datepicker
-              label="Ngày đi"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.FORMDATE')"
               tabindex="4"
               required="*"
               v-model="business.FromDate"
@@ -118,7 +118,7 @@
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Ngày đi<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.FORMDATE') }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ this.$MISACommon.formatDate(business.FromDate) }}
@@ -127,14 +127,14 @@
           </div>
           <div class="comeback-date">
             <m-datepicker
-              label="Ngày về"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.TODATE')"
               required="*"
               v-model="business.ToDate"
               v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Ngày về<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.TODATE') }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ this.$MISACommon.formatDate(business.ToDate) }}
@@ -145,7 +145,7 @@
             <m-input-text
               type="text"
               tabindex="5"
-              label="Số ngày đi công tác"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.LEAVEDAY')"
               valueDefault="0"
               v-model="business.LeaveDay"
               :ref="'LeaveDay'"
@@ -154,7 +154,7 @@
             >
             </m-input-text>
             <div class="base-combobox" v-else>
-              <div class="title-cbb">Số ngày công tác</div>
+              <div class="title-cbb">{{ $t('BUSINESSDETAIL.TITLEFORM.LEAVEDAY') }}</div>
               <div class="combobox-value">
                 {{ business.LeaveDay }}
               </div>
@@ -164,7 +164,7 @@
             <m-input-text
               type="text"
               tabindex="6"
-              label="Địa điểm công tác"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.LOCATION')"
               required="*"
               v-model="business.Location"
               :labelValidate="validateList[`Location`].labelError"
@@ -176,7 +176,7 @@
             </m-input-text>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Địa điểm công tác<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.LOCATION') }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ business.Location }}
@@ -186,7 +186,7 @@
           <div class="reason-bussiness mg-t-7">
             <m-textarea
               tabindex="7"
-              label="Lý do công tác"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.PURPOSE')"
               required="*"
               v-model="business.Purpose"
               :labelValidate="validateList[`Purpose`].labelError"
@@ -198,7 +198,7 @@
             </m-textarea>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Lý do công tác<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.PURPOSE') }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ business.Purpose }}
@@ -210,20 +210,20 @@
           <div class="request-help">
             <m-textarea
               tabindex="8"
-              label="Yêu cầu hỗ trợ"
+              :label="$t('BUSINESSDETAIL.TITLEFORM.REQUEST')"
               v-model="business.Request"
               v-if="this.diy.state.isBusinessEdit"
             >
             </m-textarea>
             <div class="base-combobox" v-else>
-              <div class="title-cbb">Yêu cầu hỗ trợ</div>
+              <div class="title-cbb">{{ $t('BUSINESSDETAIL.TITLEFORM.REQUEST') }}</div>
               <div class="combobox-value">
                 {{ business.Request }}
               </div>
             </div>
           </div>
           <div class="employee-support">
-            <div class="dx-field-label">Người hỗ trợ</div>
+            <div class="dx-field-label">{{ $t('BUSINESSDETAIL.TITLEFORM.SUPPORT') }}</div>
             <div class="dx-field-value">
               <DxTagBox
                 v-model="selectedSupportIds"
@@ -253,7 +253,7 @@
           <div class="mg-t-7 employee-censor">
             <m-combobox
               id="cbxEmployeeCensor"
-              title="Nguời duyệt"
+              :title="$t('BUSINESSDETAIL.TITLEFORM.APPROVAL')"
               propName="FullName"
               propValue="EmployeeId"
               propCode="EmployeeCode"
@@ -272,7 +272,7 @@
             ></m-combobox>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Người duyệt<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.APPROVAL') }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ business.ApprovalNames }}
@@ -280,7 +280,7 @@
             </div>
           </div>
           <div class="mg-t-7 employee-support">
-            <div class="dx-field-label">Người liên quan</div>
+            <div class="dx-field-label">{{ $t('BUSINESSDETAIL.TITLEFORM.RELATIONSHIP')  }}</div>
             <div class="dx-field-value">
               <DxTagBox
                 v-model="selectedRelationShipIds"
@@ -307,7 +307,7 @@
           <div class="mg-t-7">
             <m-combobox-v-4
               id="cbxStatus"
-              title="Trạng thái"
+              :title="$t('BUSINESSDETAIL.TITLEFORM.STATUS')"
               propName="value"
               propValue="key"
               v-model="business.Status"
@@ -324,7 +324,7 @@
             </m-combobox-v-4>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                Trạng thái<sup style="color: red">*</sup>
+                {{ $t('BUSINESSDETAIL.TITLEFORM.STATUS')  }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 <div
@@ -359,7 +359,7 @@
       </div>
       <div class="content-detail-center-center">
         <div class="tittle-employee">
-          <div class="tittle-epl">DANH SÁCH NHÂN VIÊN ĐI CÔNG TÁC</div>
+          <div class="tittle-epl">{{ $t("BUSINESSDETAIL.TITLETABLE") }}</div>
           <div
             class="add-epl-detail"
             v-if="this.diy.state.isBusinessEdit"
@@ -382,7 +382,7 @@
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
             </div>
-            Thêm
+            {{ $t('BUSINESSDETAIL.ADDEMPLOYEE') }}
           </div>
         </div>
         <div
@@ -394,7 +394,7 @@
             type="text"
             class="input-search"
             v-model="textSearchEmployeeMissionallowances"
-            placeholder="Tìm kiếm"
+            :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
             @input="searchEmployeeMissionallowances"
           />
         </div>
@@ -404,7 +404,7 @@
             :dataGrid="dataGridEmployeeHeader"
           ></m-data-grid>
           <div class="total-epl">
-            Tổng số bản ghi:
+            {{ $t('BUSINESSFORM.TOTALRECORD')}}
             <span style="font-weight: 600">{{
               this.employees.length || 0
             }}</span>
@@ -414,24 +414,24 @@
       <div class="content-detail-center-footer"></div>
     </div>
     <div class="content-detail-center-note">
-      <div class="content-detail-center-note-title">Ghi chú</div>
+      <div class="content-detail-center-note-title">{{ $t('BUSINESSDETAIL.NOTES') }}</div>
       <div class="content-detail-center-note-content">
         <div class="emloyee-text-note">
           <div class="logo-user" style="margin-right: 25px">BP</div>
           <div class="input-note">
-            <input type="text" class="text-form" placeholder="Nhập ghi chú" />
+            <input type="text" class="text-form" :placeholder="$t('BUSINESSFORM.PLACEHOLDER.NOTES')" />
           </div>
         </div>
         <div class="cancel-note">
-          Nhấp Esc để
+          {{ $t('BUSINESSDETAIL.ESC') }}
           <span style="color: #fe6000; font-weight: 600; font-weight: 600"
-            >Hủy</span
+            >{{ $t('BUSINESSDETAIL.CANCEL') }}</span
           >
         </div>
         <div class="nav-note">
-          <div class="all-note">Tất cả</div>
-          <div class="text-note">Ghi chú</div>
-          <div class="history-note">Nhật ký hoạt động</div>
+          <div class="all-note">{{ $t('BUSINESSDETAIL.ALL') }}</div>
+          <div class="text-note">{{ $t('BUSINESSDETAIL.TEXTNOTE') }}</div>
+          <div class="history-note">{{ $t('BUSINESSDETAIL.HISTORY') }}</div>
         </div>
         <div class="list-no"></div>
       </div>
@@ -969,6 +969,7 @@ export default {
         {
           caption: "Họ và tên",
           dataField: "FullName",
+          cellTemplate:"cell-name"
         },
         {
           caption: "Vị trí công việc",
@@ -980,7 +981,6 @@ export default {
         },
         {
           type: "buttons",
-          // fixed: true,
           buttons: [
             {
               name: "Edit",

@@ -9,27 +9,27 @@
           width="32px"
           alt="Logo"
         />
-        <span class="label-timekeeping">Chấm công</span>
+        <span class="label-timekeeping">{{ $t('THENAV.APP') }}</span>
       </div>
     </div>
     <div class="nav-center">
-      <div class="title-nav">Tổng quan</div>
+      <div class="title-nav">{{ $t('THENAV.OVERVIEW') }}</div>
       <div class="title-nav" @click="this.diy.toggleSubnavTimekeeping()">
-        Chấm công
+        {{ $t('THENAV.APP') }}
         <div class="icon icon-down"></div>
         <div class="sub-nav" v-if="diy.state.isSubnavTimekeeping">
-          <div class="item-nav">Bảng chấm công chi tiết</div>
-          <div class="item-nav">Bảng chấm công tổng hợp</div>
-          <div class="item-nav">Dữ liệu chấm công</div>
+          <div class="item-nav">{{ $t('THENAV.TIMEKEEPING1') }}</div>
+          <div class="item-nav">{{ $t('THENAV.TIMEKEEPING2') }}</div>
+          <div class="item-nav">{{ $t('THENAV.TIMEKEEPING3') }}</div>
         </div>
       </div>
       <div class="title-nav" @click="this.diy.toggleSubnavShift()">
-        Ca làm việc
+        {{ $t('THENAV.SHIFTWORK') }}
         <div class="icon icon-down"></div>
         <div class="sub-nav" v-if="diy.state.isSubnavShift">
-          <div class="item-nav">Bảng phân ca tổng hợp</div>
-          <div class="item-nav">Phân ca chi tiết</div>
-          <div class="item-nav">Ca làm việc</div>
+          <div class="item-nav">{{ $t('THENAV.SHIFTWORK1') }}</div>
+          <div class="item-nav">{{ $t('THENAV.SHIFTWORK2') }}</div>
+          <div class="item-nav">{{ $t('THENAV.SHIFTWORK') }}</div>
         </div>
       </div>
       <div
@@ -37,42 +37,40 @@
         style="border-bottom: 5px solid #ec5504"
         @click="this.diy.toggleSubnavOrder()"
       >
-        <span style="font-weight: 600"> Quản lý đơn </span>
+        <span style="font-weight: 600"> {{ $t('THENAV.ORDER') }} </span>
         <div class="icon icon-down"></div>
         <div class="sub-nav" v-if="diy.state.isSubnavOrder">
-          <div class="item-nav">Đơn xin nghỉ</div>
-          <div class="item-nav">Đăng ký đi muộn, về sớm</div>
-          <div class="item-nav">Đăng ký làm thêm</div>
-          <div class="item-nav">Đề nghị đi công tác</div>
-          <div class="item-nav">Đề nghị cập nhật công</div>
-          <div class="item-nav">Đề nghị đổi ca</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER1') }}</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER2') }}</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER3') }}</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER4') }}</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER5') }}</div>
           <div class="item-nav" style="border-bottom: 1px solid #e7e7e7">
-            Phê duyệt chấm công
+            {{ $t('THENAV.ORDER6') }}
           </div>
-          <div class="item-nav">Bảng tổng hợp nghỉ phép</div>
-          <div class="item-nav">Bảng tổng hợp nghỉ bù</div>
-          <div class="item-nav">Kế hoạch nghỉ phép</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER7') }}</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER8') }}</div>
+          <div class="item-nav">{{ $t('THENAV.ORDER9') }}</div>
         </div>
       </div>
       <div class="title-nav" @click="this.diy.toggleSubnavReport()">
-        Báo cáo
+        {{ $t('THENAV.REPORT') }}
         <div class="icon icon-down"></div>
         <div class="sub-nav" v-if="diy.state.isSubnavReport">
-          <div class="item-nav">Báo cáo nhân viên đi muộn, về sớm, nghỉ</div>
-          <div class="item-nav">Tổng hợp tình hình đi muộn, về sớm</div>
-          <div class="item-nav">Tình hình nghỉ phép theo kế hoạch</div>
-          <div class="item-nav">Danh sách nhân viên đi công tác</div>
-          <div class="item-nav">Báo cáo danh sách nhân viên làm thêm giờ</div>
-          <div class="item-nav">Phân tích tình hình làm thêm</div>
+          <div class="item-nav"> {{ $t('THENAV.REPORT1') }}</div>
+          <div class="item-nav"> {{ $t('THENAV.REPORT2') }}</div>
+          <div class="item-nav"> {{ $t('THENAV.REPORT3') }}</div>
+          <div class="item-nav"> {{ $t('THENAV.REPORT4') }}</div>
+          <div class="item-nav"> {{ $t('THENAV.REPORT5') }}</div>
           <div class="item-nav" style="border-bottom: 1px solid #e7e7e7">
-            Báo cáo tổng hợp tình hình làm thêm của nhân viên
+            {{ $t('THENAV.REPORT6') }}
           </div>
           <div class="item-nav">
-            Báo cáo tổng hợp tình hình nhân viên đi công tác
+            {{ $t('THENAV.REPORT7') }}
           </div>
         </div>
       </div>
-      <div class="title-nav">Thiết lập</div>
+      <div class="title-nav">{{ $t('THENAV.SETTING') }}</div>
     </div>
     <div class="nav-right">
       <div class="icon icon-notify"></div>
@@ -83,7 +81,7 @@
         <div class="user-avatar">
           <div class="avatar-user-user">BP</div>
         </div>
-        <div class="user-name">Phạm Văn Biển</div>
+        <div class="user-name">{{ $t('THENAV.NAMEUSER') }}</div>
         <div class="user-game">Pvb0204@gmail.com</div>
         <!-- <div class="user-company">CTY MISA</div> -->
         <div class="user-password col-user">
@@ -105,7 +103,7 @@
               ></path>
             </svg>
           </div>
-          <div class="text-password">Đổi mật khẩu</div>
+          <div class="text-password">{{ $t('THENAV.PASSWORD') }}</div>
         </div>
         <div class="user-accout col-user">
           <div class="icon-accout">
@@ -125,7 +123,7 @@
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </div>
-          <div class="text-accout">Thiết lập tài khoản</div>
+          <div class="text-accout">{{ $t('THENAV.SETACCOUNT') }}</div>
         </div>
         <div class="user-security col-user">
           <div class="icon-security">
@@ -144,7 +142,7 @@
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
           </div>
-          <div class="text-security">Thiết lập bảo mật</div>
+          <div class="text-security">{{ $t('THENAV.SETSECURITY') }}</div>
         </div>
         <div class="user-point col-user">
           <div class="icon-point">
@@ -167,16 +165,16 @@
               <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
             </svg>
           </div>
-          <div class="text-point">Giới thiệu - Tích điểm</div>
+          <div class="text-point">{{ $t('THENAV.POINT') }}</div>
         </div>
         <div class="user-language col-user">
           <div class="icon-language"></div>
           <div class="text-language">
-            Ngôn ngữ:
+            {{ $t('THENAV.LANGUAGE') }}:
             <m-dropdown
               id="pagination-size"
               :entity="listLaguage"
-              :valueDefault="'vi'"
+              :valueDefault="valueDefault"
               :isShow="isLaguage"
               @click="toggleLaguage"
               @valueItem="setLaguage"
@@ -204,7 +202,7 @@
               <line x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
           </div>
-          <div class="text-logut">Đăng xuất</div>
+          <div class="text-logut">{{ $t('THENAV.LOGOUT') }}</div>
         </div>
       </div>
     </div>
@@ -217,6 +215,10 @@ export default {
   name: "TheNav",
   components: {},
   methods: {
+    /**
+     * Hiển thị chuyển đổi ngôn ngữ
+     * CreatedBy: Bien (08/05/2023)
+     */
     toggleLaguage() {
       this.isLaguage = !this.isLaguage;
     },
@@ -226,14 +228,20 @@ export default {
      * CreatedBy: Bien (05/05/2023)
      */
     setLaguage(value) {
+      this.valueDefault = value;
       this.$i18n.locale = value;
-
-      console.log(value);
+      this.diy.clearLaguage();
     },
   },
   data() {
     return {
+      // Gía trị ngôn ngữ muốn chuyển
+      valueDefault:'vi',
+
+      // Hiển thị chuyển ngôn ngữ
       isLaguage: false,
+
+      // Danh sách các loại ngôn ngữ
       listLaguage: [
         {
           key: "vi",

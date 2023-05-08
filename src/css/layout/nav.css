@@ -159,8 +159,9 @@
     background-color: #04ec1f;
 }
 .custom-user{
-    /* height: 500px; */
+    right: 8px;
     top: 65px;
+    overflow: hidden;
 }
 .form-language{
     height: 80px;

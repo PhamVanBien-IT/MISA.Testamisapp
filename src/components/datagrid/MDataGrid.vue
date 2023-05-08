@@ -117,7 +117,7 @@ export default {
      * @param {Thêm danh sách bản ghi đã chọn} selectedItems
      * CreatedBy: Bien (24/04/2023)
      */
-    onSelectionChanged() {
+    onSelectionChanged(e) {
       /* eslint-disable */
       // debugger;
 
@@ -160,9 +160,9 @@ export default {
         // seletList.map(iten =>{
         //   if(JSON.stringify(item))
         // })
-        // selectRowKeys = e.selectedRowKeys;
+        let selectRowKeys = e.selectedRowKeys;
 
-      // this.$emit("selectedList", this.$MISAResource.SELECTLIST.selectedRowKeys);
+      this.$emit("selectedList", selectRowKeys);
     },
   },
   watch: {

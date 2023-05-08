@@ -23,7 +23,7 @@
         <m-button
           class="btn-add"
           @click="btnAddEmployee"
-          label="Thêm"
+          :label="$t('BUTTON.ADD')"
         ></m-button>
         <div class="btn-add-down"></div>
         <button class="down-list" @click="this.diy.toggleImport()">
@@ -31,7 +31,7 @@
         </button>
         <div class="add-import" v-if="diy.state.isImport">
           <div class="icon icon-import"></div>
-          <div class="title-import">Nhập khẩu</div>
+          <div class="title-import">{{ $t('BUTTON.IMPORT')}}</div>
         </div>
       </div>
     </div>
@@ -48,18 +48,18 @@
                 type="text"
                 class="input-search"
                 v-model="textSearch"
-                placeholder="Tìm kiếm"
+                :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
                 @input="searchBusiness"
               />
             </div>
             <div class="content-center-header-left-select" v-else>
               <div class="number-select">
-                Đã chọn
+                {{ $t('BUSINESSFORM.SELECTLIST.SELECTED') }}
                 <span style="font-weight: 600">{{
                   this.selectedList.length
                 }}</span>
               </div>
-              <div class="un-select" @click="btnUnselectedList">Bỏ chọn</div>
+              <div class="un-select" @click="btnUnselectedList">{{ $t('BUSINESSFORM.SELECTLIST.UNSELECTED') }}</div>
               <div class="btn-refuse">
                 <div class="icon-btn-refuse">
                   <svg
@@ -78,7 +78,7 @@
                     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
                   </svg>
                 </div>
-                <div class="text-btn-refuse">Từ chối</div>
+                <div class="text-btn-refuse">{{ $t('BUTTON.REFUSE') }}</div>
               </div>
               <div class="btn-approve">
                 <div class="icon-btn-approve">
@@ -98,7 +98,7 @@
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                   </svg>
                 </div>
-                <div class="text-btn-approve">Duyệt</div>
+                <div class="text-btn-approve">{{ $t('BUTTON.APPROVE') }}</div>
               </div>
               <div class="btn-export">
                 <div class="icon-btn-export">
@@ -119,7 +119,7 @@
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                   </svg>
                 </div>
-                <div class="text-btn-export">Xuất khẩu</div>
+                <div class="text-btn-export">{{ $t('BUTTON.EXPORT') }}</div>
               </div>
               <div
                 class="btn-delete"
@@ -144,13 +144,13 @@
                     ></path>
                   </svg>
                 </div>
-                <div class="text-btn-delete">Xóa</div>
+                <div class="text-btn-delete">{{ $t('BUTTON.DELETE') }}</div>
               </div>
             </div>
           </div>
           <div class="content-center-header-right">
             <div class="content-center-header-status">
-              <div class="title-status">Trạng thái:</div>
+              <div class="title-status">{{ $t('BUSINESSDETAIL.TITLEFORM.STATUS') }}:</div>
               <m-dropdown
                 id="status"
                 :entity="status"
@@ -170,7 +170,7 @@
                 v-model="this.diy.state.treeDepartment.id"
                 :entity="this.diy.state.treeDepartment"
                 :isShowCombobox="isShowDepartment"
-                placeholderDefault="Tât cả đơn vị"
+                :placeholderDefault="$t('BUSINESSFORM.PLACEHOLDER.DEPARTMENT')"
                 :isShowFooter="true"
                 @misaCode="getMisaCode"
               >
@@ -207,7 +207,7 @@
         </div>
         <div class="content-footer">
           <div class="total-recort">
-            Tổng số bản ghi:
+           {{ $t('BUSINESSFORM.TOTALRECORD') }}
             <span style="font-weight: 600">{{ totalRecord }}</span>
           </div>
           <div class="paging-content-footer">
@@ -223,8 +223,8 @@
             </div>
             <div class="paging">
               <div class="recort">
-                Từ <span style="font-weight: 600">{{ startPage }}</span> đến
-                <span style="font-weight: 600">{{ endPage }}</span> bản ghi
+                {{ $t('BUSINESSFORM.PAGING.FROM') }} <span style="font-weight: 600">{{ startPage }}</span> {{ $t('BUSINESSFORM.PAGING.TO') }}
+                <span style="font-weight: 600">{{ endPage }}</span>{{ $t('BUSINESSFORM.PAGING.RECORD') }}
               </div>
               <div class="icon icon-prevent" @click="preventPage"></div>
               <div class="icon icon-next" @click="nextPage"></div>
@@ -235,7 +235,7 @@
       <div class="high-filter" v-if="isShowListFilter">
         <div class="high-filter-header">
           <div class="filter-header-top">
-            <div class="high-filter-header-title">Bộ lọc</div>
+            <div class="high-filter-header-title">{{ $t('BUTTON.FILTER') }}</div>
             <div
               class="icon icon-close-high-filter"
               @click="toggleListFilter"
@@ -247,7 +247,7 @@
               type="text"
               class="input-search"
               v-model="textSearchHighFilter"
-              placeholder="Tìm kiếm"
+              :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
               @input="searchHighFilter"
             />
           </div>
@@ -295,10 +295,10 @@
           </div>
         </div>
         <div class="high-filter-footer">
-          <m-button class="btn-save-filter" label="Áp dụng"></m-button>
+          <m-button class="btn-save-filter" :label="$t('BUTTON.APPLY')"></m-button>
           <m-button
             class="btn-cancel-filter"
-            label="Bỏ lọc"
+            :label="$t('BUTTON.FILTER')"
             @click="toggleListFilter"
           ></m-button>
         </div>
@@ -312,7 +312,7 @@
         >
           <div class="high-filter-header">
             <div class="filter-header-top">
-              <div class="high-filter-header-title">Tùy chỉnh cột</div>
+              <div class="high-filter-header-title">{{ $t('BUTTON.SETCOLUMN') }}</div>
               <div
                 class="icon icon-close-high-filter"
                 @click="toggleEditColumn"
@@ -324,7 +324,7 @@
                 type="text"
                 class="input-search"
                 v-model="textSearchHighFilter"
-                placeholder="Tìm kiếm"
+                :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
                 @input="searchHighFilter"
               />
             </div>
@@ -356,10 +356,10 @@
             </div>
           </div>
           <div class="edit-column-footer">
-            <m-button class="btn-save-edit-colummn" label="Lưu"></m-button>
+            <m-button class="btn-save-edit-colummn" :label="$t('BUTTON.SAVE')"></m-button>
             <m-button
               class="btn-cancel btn-default-edit-colummn"
-              label="Mặc định"
+              :label="$t('BUTTON.DEFAULT')"
             ></m-button>
           </div>
         </div>
@@ -467,9 +467,10 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     btnEditBusiness(business) {
+      console.log(business.MissionallowanceId);
       this.businessDetailId = business.MissionallowanceId;
       this.diy.showBusinessDetail();
-      this.diy.showIsBusinessEdit();
+      this.diy.showBusinessEdit();
       this.labeBusinessDetail = this.$t('TITLEFORM.UPDATE');
       this.isEditBusiness = true;
     },
@@ -1037,17 +1038,6 @@ export default {
       // Danh sách nhân viên
       employeesBusiness: [],
 
-      // Danh sách đơn vị
-      departments: [
-        {
-          DepartmentId: "26dbaa27-509b-4fe0-b143-d49347e1f5d6",
-          DepartmentName: "CTY ROBOCAR",
-        },
-        {
-          DepartmentId: "0c5b06fe-621c-4f14-bcc6-a7c99cf16525",
-          DepartmentName: "CTY Test",
-        },
-      ],
       // Danh sách chức năng lọc nâng cao
       listFilter: [
         {
