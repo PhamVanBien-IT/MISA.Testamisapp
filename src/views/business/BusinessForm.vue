@@ -121,7 +121,7 @@ export default {
      */
      getMisaCode(value) {
        /* eslint-disable */ 
-      debugger
+      // debugger
       this.misaCode = value;
       this.getEmployeePaging(1, this.pageSize, "Missionallowances/");
     },

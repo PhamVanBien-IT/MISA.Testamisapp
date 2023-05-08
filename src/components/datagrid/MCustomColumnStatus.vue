@@ -29,8 +29,10 @@
        * CreatedBy: Bien (08/05/2023) 
        */
       handleColor(statusKey) {
+         /* eslint-disable */
+        // debugger
         switch (statusKey.toString()) {
-          case this.$t('STATUSPENDING'):
+          case this.$t('STATUS.PENDING'):
             this.background = this.backgroundColors[0];
             this.colorText = this.colors[0];
             this.borderColor = this.borders[0];

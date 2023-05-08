@@ -53,7 +53,8 @@ const MISAResource = {
 				APPLY:"Áp dụng",
 				SETCOLUMN:"Tùy chỉnh cột",
 				SAVE:"Lưu",
-				DEFAULT:"Mặc định"
+				DEFAULT:"Mặc định",
+				CANCEL:"Hủy"
 			},
 			ERRORVALIDATE: {
 				FORMATCODE: "Mã nhân viên không đúng định dạng <NV-XXXXX>",
@@ -82,6 +83,9 @@ const MISAResource = {
 			},
 			DATA: {
 				NULL: 'Không có dữ liệu'
+			},
+			STATUS:{
+				PENDING:'1'
 			},
 			STATUSPENDING: '1',
 			STATUSAPPROVED: '2',
@@ -177,7 +181,8 @@ const MISAResource = {
 				APPLY: "Apply",
 				SETCOLUMN:"Customize columns",
 				SAVE: "Save",
-				DEFAULT: "Default"
+				DEFAULT: "Default",
+				CANCEL:"Cancel"
 				},
 			ERRORVALIDATE: {
 				FORMATCODE: "Invalid employee ID <NV-XXXXX>",
@@ -251,7 +256,6 @@ const MISAResource = {
 				TEXTNOTE: "Note",
 				HISTORY: "Activity Log",
 				ADDEMPLOYEE:"Add"
-
 			}
 
 		}

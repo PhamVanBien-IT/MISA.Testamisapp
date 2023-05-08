@@ -23,12 +23,12 @@
     <div class="add-content-top" v-if="this.diy.state.isAddBussiness">
       <m-button
         class="btn-save-business"
-        label="Lưu"
+        :label="$t('BUTTON.SAVE')"
         @click="btnSaveBusiness"
       ></m-button>
       <m-button
         class="btn-cancel"
-        label="Hủy"
+        :label="$t('BUTTON.CANCEL')"
         @click="btnCancelAddEmployee"
       ></m-button>
     </div>
@@ -226,15 +226,12 @@
             <div class="dx-field-label">{{ $t('BUSINESSDETAIL.TITLEFORM.SUPPORT') }}</div>
             <div class="dx-field-value">
               <DxTagBox
-                v-model="selectedSupportIds"
-                :items="selectedSupportIds"
-                :value="selectedSupportIds"
+                v-model:value="selectedSupportIds"
                 :data-source="this.$parent.employees"
-                value-field="EmployeeId"
+                value-expr="EmployeeId"
                 display-expr="FullName"
                 :search-enabled="true"
                 placeholder=""
-                :on-value-changed="onSelectionChanged"
                 tabindex="9"
                 item-template="item"
                 v-if="this.diy.state.isBusinessEdit"
@@ -283,13 +280,12 @@
             <div class="dx-field-label">{{ $t('BUSINESSDETAIL.TITLEFORM.RELATIONSHIP')  }}</div>
             <div class="dx-field-value">
               <DxTagBox
-                v-model="selectedRelationShipIds"
+                v-model:value="selectedRelationShipIds"
                 :data-source="this.$parent.employees"
                 value-field="EmployeeId"
                 display-expr="FullName"
                 :search-enabled="true"
                 placeholder=""
-                :on-value-changed="onSelectionRelationShipIds"
                 tabindex="11"
                 v-if="this.diy.state.isBusinessEdit"
               >
@@ -589,21 +585,22 @@ export default {
      */
     selectedDxtagbox() {
       if (this.selectedSupportIds) {
-        this.business.SupportIds = this.selectedSupportIds
-          .map((object) => object.EmployeeId)
-          .join(",");
-        this.business.SupportNames = this.selectedSupportIds
-          .map((object) => object.FullName)
-          .join(",");
+        this.business.SupportIds = this.selectedSupportIds.join(',');
+          // .map((object) => object.EmployeeId)
+          // .join(",");
+        this.business.SupportNames = this.$parent.employees.filter(item =>
+        this.selectedSupportIds.includes(item.EmployeeId)).map(item => item.FullName).join(',');
+        //  this.selectedSupportIds.join(',');
+          // .map((object) => object.FullName)
+          // .join(",");
       }
       if (this.selectedRelationShipIds) {
-        this.business.RelationShipIds = this.selectedRelationShipIds
-          .map((object) => object.EmployeeId)
-          .join(",");
+        this.business.RelationShipIds = this.selectedRelationShipIds.join(',');
+          // .map((object) => object.EmployeeId)
+          // .join(",");
 
-        this.business.RelationShipNames = this.selectedRelationShipIds
-          .map((object) => object.FullName)
-          .join(",");
+        this.business.RelationShipNames = this.$parent.employees.filter(item =>
+        this.selectedRelationShipIds.includes(item.EmployeeId)).map(item => item.FullName).join(',');
       }
 
       if (this.business.ApprovalIds) {
@@ -633,17 +630,18 @@ export default {
      */
     btnSaveBusiness() {
       this.selectedDxtagbox();
-
-      this.validateBusiness();
-      if (this.isValidate) {
-        if (this.isEdit) {
-          this.updateBusiness();
-        } else {
-          this.createdBusiness("Missionallowances/", this.business);
-          this.employeeMissionallowances.EmployeeId =
-            this.business.EmployeeMissionallowances;
-        }
-      }
+      
+      console.log(this.business);
+      // this.validateBusiness();
+      // if (this.isValidate) {
+      //   if (this.isEdit) {
+      //     this.updateBusiness();
+      //   } else {
+      //     this.createdBusiness("Missionallowances/", this.business);
+      //     this.employeeMissionallowances.EmployeeId =
+      //       this.business.EmployeeMissionallowances;
+      //   }
+      // }
 
     },
     /**
@@ -836,18 +834,12 @@ export default {
       if (newValue) {
         this.business.SupportNames = this.business.SupportNames?.split(",");
         for (let i = 0; i < this.business.SupportIds?.length; i++) {
-          this.selectedSupportIds.push({
-            EmployeeId: this.business.SupportIds[i],
-            FullName: this.business.SupportNames[i],
-          });
+          this.selectedSupportIds.push(this.business.SupportIds[i]);
         }
         this.business.RelationShipNames =
           this.business.RelationShipNames?.split(",");
         for (let i = 0; i < this.business.RelationShipIds?.length; i++) {
-          this.selectedRelationShipIds.push({
-            EmployeeId: this.business.RelationShipIds[i],
-            FullName: this.business.RelationShipNames[i],
-          });
+          this.selectedRelationShipIds.push(this.business.RelationShipIds[i]);
         }
         // Hiển thị nút bỏ chọn nhân viên
         // let endColum = this.dataGridEmployeeHeader.slice(-1);

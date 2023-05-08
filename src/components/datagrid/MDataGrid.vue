@@ -3,7 +3,7 @@
     <DxDataGrid
       id="gridContainer"
       ref="dataGrid"
-      v-model="selectedRowKeys"
+      v-model:selected-row-keys="selectedRowKeys"
       :data-source="entitis"
       :allow-column-resizing="true"
       :show-borders="false"
@@ -16,12 +16,9 @@
       :sorting="{ mode: 'none' }"
       :paging="{ enabled: false }"
       :preserveSelection="true"
-      :selectedRowKeys="selectedRowKeys"
-      @selectionChanged="onSelectionChanged"
       @rowClick="onRowClick"
-      @mouseover="showDeleteButton = true"
-      @mouseleave="showDeleteButton = false"
     >
+      <!-- @selectionChanged="onSelectionChanged" -->
       <DxColumn
         v-for="(item, index) in dataSource"
         :key="index"
@@ -35,7 +32,7 @@
         :cell-template="item.cellTemplate"
         :format="item.format"
         :visible="item.visible"
-        ></DxColumn>
+      ></DxColumn>
 
       <DxSelection
         select-all-mode="page"
@@ -88,8 +85,6 @@ export default {
     this.entitis = this.entity;
 
     this.isChecked = this.isShowSelectedRows;
-
-    console.log(this.isChecked);
   },
   methods: {
     /**
@@ -120,68 +115,69 @@ export default {
     onSelectionChanged(e) {
       /* eslint-disable */
       // debugger;
+      this.selectedRowKeys = this.$parent.selectedList;
 
-      // console.log(this.selectedRowKeys);
-      // let listSelect = this.$parent.selectedList;
+      let selectRowKeys = e.selectedRowKeys;
 
-      // if (event.currentSelectedRowKeys.length == 0) {
-      //   if (
-      //     event.currentDeselectedRowKeys.length > 0 &&
-      //     event.selectedRowKeys.length > 0
-      //   ) {
-      //     listSelect = event.selectedRowKeys;
-      //   }else if(event.currentDeselectedRowKeys.length != 50){
-      //     listSelect = [];
-      //   }
-      //   // listSelect = event.currentDeselectedRowKeys;
-      // } else if (
-      //   event.currentSelectedRowKeys.length > 0 &&
-      //   listSelect.length > 0
-      // ) {
-      //   const isObjectInArray = listSelect.some((item) => {
-      //     _.isEqual(item, event.currentSelectedRowKeys); 
-      //   });
-      //   event.currentSelectedRowKeys.map(item =>{
-      //   if(!isObjectInArray && event.currentSelectedRowKeys.length != 50){
-      //       listSelect.push(item);
-      //   }
-      // }) 
-      // } else {
-      //   event.currentSelectedRowKeys.map((item) => {
-      //     listSelect.push(item);
-      //   });
-      // }
+      selectRowKeys.forEach((element) => {
+        let index = this.selectedRowKeys.findIndex((item) => {
+          JSON.stringify(item) == JSON.stringify(element);
+        });
+        if (!(index > -1)) {
+          this.selectedRowKeys.push(element);
+        }
+      });
 
-      // this.selectedRowKeys = listSelect;
-        // const selectRowKeys = this.$MISAResource.SELECTLIST.selectedRowKeys;
-
-        // let seletList = e.selectedRowKeys;
-
-        // seletList.map(iten =>{
-        //   if(JSON.stringify(item))
-        // })
-        let selectRowKeys = e.selectedRowKeys;
-
-      this.$emit("selectedList", selectRowKeys);
+      // this.$emit("selectedList", this.selectedRowKeys);
     },
   },
   watch: {
+    selectedRowKeys: {
+      handler(newValue) {
+        // debugger;
+        this.selectedRowKeys = this.$parent.map((item) => item);
+
+        if (newValue.length != this.$parent.selectedList.length) {
+          newValue.forEach((element) => {
+            let index = this.selectedRowKeys.findIndex((item) => {
+              item.MissionallowanceId === element.MissionallowanceId;
+            });
+            if (index === -1) {
+              this.selectedRowKeys.push(element);
+            }else{
+              this.selectRowKeys.splice(index, 1);
+            }
+          });
+
+          this.$emit("selectedList", this.selectedRowKeys);
+        }
+
+      },
+      deep: true,
+    },
     /**
      * Tải lại bảng khi dữ liệu trong bảng thay đổi
      * CreatedBy: Bien (06/05/2023)
      */
     entity: {
       handler() {
+        // debugger;
         if (this.dataTable) {
           const dataGrid = this.$refs.dataGrid.instance;
-          if(!this.isShowSelectedRows){
-            this.selectedRowKeys = [];
-          }
-          dataGrid.selectRows(this.selectedRowKeys, false);
-          this.dataTable.refresh();
-
-          // if(this.$parent.selectedList > 0){
+          // if (!this.isShowSelectedRows) {
+          //   this.selectedRowKeys = [];
           // }
+          this.dataTable.refresh();
+          if (this.selectedRowKeys.length > 0) {
+            this.selectedRowKeys.forEach((element) => {
+              let index = this.entity.findIndex((item) => {
+                JSON.stringify(item) === JSON.stringify(element);
+              });
+              if (index > -1) {
+                this.selectedRowKeys.push(element);
+              }
+            });
+          }
         }
       },
       deep: true,
@@ -220,7 +216,6 @@ export default {
 
       // Kiểm tra checkall
       isChecked: null,
-      
     };
   },
 };

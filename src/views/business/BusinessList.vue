@@ -568,7 +568,7 @@ export default {
      */
     selectAll(selectedRows) {
       /* eslint-disable */
-      debugger;
+      // debugger;
 
       this.selectedList = selectedRows;
 
