@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" :key="appKey">
     <the-nav></the-nav>
     <the-content></the-content>
   </div>
@@ -14,6 +14,11 @@ export default {
   components: {
     TheNav,
     TheContent
+  },
+  data(){
+    return{
+      appKey:1
+    }
   }
 }
 </script>

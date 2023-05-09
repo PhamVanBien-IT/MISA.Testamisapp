@@ -214,7 +214,29 @@ export default {
   inject: ["diy"],
   name: "TheNav",
   components: {},
+  created(){
+    if (JSON.parse(localStorage.getItem("language")) != null) {
+      this.valueDefault = JSON.parse(
+        localStorage.getItem("language")
+      );
+      this.$i18n.locale = this.valueDefault;
+
+    } else {
+      this.setLocalStorage(this.valueDefault);
+      this.$i18n.locale = this.valueDefault;
+    }
+  },
   methods: {
+    /**
+     * Hàm lưu biến trên localStorage
+     * @param {Đối tượng muốn lưu} listColumn
+     * CreatedBy: Bien (09/05/2023)
+     */
+     setLocalStorage(listColumn) {
+      localStorage.setItem("language", JSON.stringify(listColumn));
+      localStorage.setItem("dataGridEmployee", JSON.stringify(this.dataGridBussiness));
+
+    },
     /**
      * Hiển thị chuyển đổi ngôn ngữ
      * CreatedBy: Bien (08/05/2023)
@@ -228,11 +250,23 @@ export default {
      * CreatedBy: Bien (05/05/2023)
      */
     setLaguage(value) {
+      /* eslint-disable */
+      debugger
       this.valueDefault = value;
       this.$i18n.locale = value;
       this.diy.clearLaguage();
+      this.setLocalStorage(this.valueDefault);
+      localStorage.setItem("dataGridEmployee", JSON.stringify(this.dataGridBussiness));
     },
-  },
+    
+ },
+ watch:{
+  isLaguage: function(neweValue){
+    if(!neweValue){
+      this.$parent.appKey += 1;
+    }
+  }
+ },
   data() {
     return {
       // Gía trị ngôn ngữ muốn chuyển
@@ -250,6 +284,152 @@ export default {
         {
           key: "en",
           value: "English",
+        },
+      ],
+       // Danh sách tiêu đề bảng nhân viên
+       dataGridBussiness: [
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEECODE"),
+          dataField: "EmployeeCode",
+          fixed: true,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE"),
+          dataField: "FullName",
+          fixed: true,
+          dataType: "string",
+          width: "200",
+          cellTemplate: "cell-name",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.POSITIONNAME"),
+          dataField: "PositionName",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME"),
+          dataField: "DepartmentName",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE"),
+          dataField: "RequestDate",
+          fixed: false,
+          dataType: "date",
+          format: "dd/MM/yyyy hh:MM",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE"),
+          dataField: "FromDate",
+          fixed: false,
+          dataType: "date",
+          format: "dd/MM/yyyy hh:MM",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.TODATE"),
+          dataField: "ToDate",
+          fixed: false,
+          dataType: "date",
+          format: "dd/MM/yyyy hh:MM",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.LEAVEDAY"),
+          dataField: "LeaveDay",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.LOCATION"),
+          dataField: "Location",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.PURPOSE"),
+          dataField: "Purpose",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.REQUEST"),
+          dataField: "Request",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.SUPPORT"),
+          dataField: "SupportNames",
+          fixed: false,
+          dataType: "string",
+          width: "300",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.APPROVAL"),
+          dataField: "ApprovalNames",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.RELATIONSHIP"),
+          dataField: "RelationShipNames",
+          fixed: false,
+          dataType: "string",
+          width: "300",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.NOTES"),
+          dataField: "Notes",
+          fixed: false,
+          dataType: "string",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.STATUS"),
+          dataField: "StatusName",
+          fixed: false,
+          dataType: "string",
+          cellTemplate: "cell-status",
+          visible: true,
+        },
+        {
+          type: "buttons",
+          fixed: true,
+          buttons: [
+            {
+              name: "Edit",
+              text: "Edit",
+              icon: "edit",
+              onClick: (e) => {
+                this.btnEditBusiness(e.row.data);
+              },
+            },
+            {
+              name: "Delete",
+              text: "Delete",
+              icon: "trash",
+              onClick: (e) => {
+                this.btnDeleteBusiness(e.row.data.MissionallowanceId);
+              },
+            },
+          ],
+          visible: true,
         },
       ],
     };

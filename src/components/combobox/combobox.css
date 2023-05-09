@@ -193,6 +193,7 @@ button {
 .custom-show {
     position: absolute;
     bottom: -152px !important;
+    width: 150px;
 }
 .dropdown-item {
     height: 32px;

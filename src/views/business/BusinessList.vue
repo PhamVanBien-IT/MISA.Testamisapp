@@ -631,7 +631,7 @@ export default {
      */
     selectAll(selectedRows) {
       /* eslint-disable */
-      // debugger;
+      debugger;
 
       this.selectedList = selectedRows;
 
@@ -814,6 +814,11 @@ export default {
     },
   },
   watch: {
+    /**
+     * Thay đổi cột trong bảng đơn khi lưu tùy chỉnh cột
+     * @param {Gía trị có thay đổi cột hay không} newValue 
+     * CreatedBy: Bien (09/05/2023)
+     */
     isShowEditColumn:function(newValue){
       if(!newValue){
         this.businessListKey += 1;
@@ -1107,19 +1112,19 @@ export default {
       status: [
         {
           key: 0,
-          value: "Tất cả",
+          value: this.$t('STATUSNAME.ALL'),
         },
         {
           key: 1,
-          value: "Chờ duyệt",
+          value: this.$t('STATUSNAME.PENDING'),
         },
         {
           key: 2,
-          value: "Đã duyệt",
+          value: this.$t('STATUSNAME.APPROVED'),
         },
         {
           key: 3,
-          value: "Từ chối",
+          value: this.$t('STATUSNAME.REFUSE'),
         },
       ],
 

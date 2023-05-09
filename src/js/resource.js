@@ -85,6 +85,12 @@ const MISAResource = {
 			DATA: {
 				NULL: 'Không có dữ liệu'
 			},
+			STATUSNAME: {
+				ALL: "Tất cả",
+				PENDING: "Chờ duyệt",
+				APPROVED: "Đã duyệt",
+				REFUSE: "Từ chối"
+			},
 			STATUSPENDING: '1',
 			STATUSAPPROVED: '2',
 			STATUSREFUSE: '3',
@@ -213,6 +219,12 @@ const MISAResource = {
 			},
 			DATA: {
 				NULL: 'No data'
+			},
+			STATUSNAME: {
+				ALL: "All",
+				PENDING: "Waiting for approval",
+				APPROVED: "Approved",
+				REFUSE: "Reject"
 			},
 			STATUSPENDING: '1',
 			STATUSAPPROVED: '2',

@@ -61,7 +61,7 @@ export default {
   inject: ["diy"],
   name: "MDataGrid",
   emits: ["selectedList", "rowClick"],
-  props: ["entity", "dataGrid", "isShowSelectedRows","isEditColumn"],
+  props: ["entity", "dataGrid", "isShowSelectedRows", "isEditColumn"],
   components: {
     DxDataGrid,
     MCustomColumVue,
@@ -70,7 +70,6 @@ export default {
     DxSelection,
   },
   created() {
-  
     if (this.entity) {
       this.entitis = this.entity;
     }
@@ -91,6 +90,7 @@ export default {
 
     this.isEditCol = this.isEditColumn;
 
+    this.dataSource = this.dataGrid;
   },
   methods: {
     /**
@@ -107,57 +107,65 @@ export default {
      * Loại bỏ tất cả phần tử đã chọn
      * CreatedBy: Bien (24/04/2023)
      */
-    clearSelection() {
-      const dataGrid = this.$refs.dataGrid.instance;
+    // clearSelection() {
+    //   const dataGrid = this.$refs.dataGrid.instance;
 
-      dataGrid.clearSelection();
-      // this.selectedRowKeys = [];
-    },
-    /**
-     * Hàm thêm nhân viên vào danh sách được chọn
-     * @param {Thêm danh sách bản ghi đã chọn} selectedItems
-     * CreatedBy: Bien (24/04/2023)
-     */
-    onSelectionChanged(e) {
-      /* eslint-disable */
-      // debugger;
-      this.selectedRowKeys = this.$parent.selectedList;
+    //   dataGrid.clearSelection();
+    //   // this.selectedRowKeys = [];
+    // },
+    // /**
+    //  * Hàm thêm nhân viên vào danh sách được chọn
+    //  * @param {Thêm danh sách bản ghi đã chọn} selectedItems
+    //  * CreatedBy: Bien (24/04/2023)
+    //  */
+    // onSelectionChanged(e) {
+    //   /* eslint-disable */
+    //   // debugger;
+    //   this.selectedRowKeys = this.$parent.selectedList;
 
-      let selectRowKeys = e.selectedRowKeys;
+    //   let selectRowKeys = e.selectedRowKeys;
 
-      selectRowKeys.forEach((element) => {
-        let index = this.selectedRowKeys.findIndex((item) => {
-          JSON.stringify(item) == JSON.stringify(element);
-        });
-        if (!(index > -1)) {
-          this.selectedRowKeys.push(element);
-        }
-      });
+    //   selectRowKeys.forEach((element) => {
+    //     let index = this.selectedRowKeys.findIndex((item) => {
+    //       JSON.stringify(item) == JSON.stringify(element);
+    //     });
+    //     if (!(index > -1)) {
+    //       this.selectedRowKeys.push(element);
+    //     }
+    //   });
 
-      // this.$emit("selectedList", this.selectedRowKeys);
-    },
+    //   // this.$emit("selectedList", this.selectedRowKeys);
+    // },
   },
   watch: {
     selectedRowKeys: {
-      handler(newValue) {
-        // debugger;
-        this.selectedRowKeys = this.$parent.map((item) => item);
+      handler(newValue, oldValue) {
+        if (newValue.length > 0) {
+          let selectedEBusinessId = oldValue.map(
+            (item) => item.MissionallowanceId
+          );
 
-        if (newValue.length != this.$parent.selectedList.length) {
-          newValue.forEach((element) => {
-            let index = this.selectedRowKeys.findIndex((item) => {
-              item.MissionallowanceId === element.MissionallowanceId;
+          let selectedNew = newValue.map((item) => item.MissionallowanceId);
+          /* eslint-disable */
+          debugger;
+
+          if (selectedNew.length != selectedEBusinessId.length) {
+            selectedNew.forEach((item) => {
+              if (!selectedEBusinessId.includes(item)) {
+                selectedEBusinessId.push(item);
+              } else {
+                selectedEBusinessId = selectedEBusinessId.filter(
+                  (elelemt) => elelemt != item
+                );
+              }
             });
-            if (index === -1) {
-              this.selectedRowKeys.push(element);
-            }else{
-              this.selectRowKeys.splice(index, 1);
-            }
-          });
-
-          this.$emit("selectedList", this.selectedRowKeys);
+            this.selectedRowKeys = selectedEBusinessId;
+            this.$emit("selectedList", this.selectedRowKeys);
+          } else {
+            this.$emit("selectedList", selectedEBusinessId);
+          }
         }
-
+        // this.selectedRowKeys = this.$parent.selectedList.map((item) => item);
       },
       deep: true,
     },
@@ -169,7 +177,7 @@ export default {
       handler() {
         // debugger;
         if (this.dataTable) {
-          const dataGrid = this.$refs.dataGrid.instance;
+          // const dataGrid = this.$refs.dataGrid.instance;
           // if (!this.isShowSelectedRows) {
           //   this.selectedRowKeys = [];
           // }
@@ -197,7 +205,7 @@ export default {
       handler() {
         // debugger
         if (this.dataTable) {
-          if(!this.isEditColumn){
+          if (!this.isEditColumn) {
             // const dataGrid = this.$refs.dataGrid.instance;
             this.dataTable.refresh();
           }
@@ -227,7 +235,7 @@ export default {
       // Kiểm tra checkall
       isChecked: null,
 
-      isEditCol:null,
+      isEditCol: null,
     };
   },
 };
