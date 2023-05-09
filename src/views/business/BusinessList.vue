@@ -1,7 +1,7 @@
 <template>
-  <div class="business-list" v-if="!diy.state.isShowBusinessDetail">
+  <div :key="businessListKey" class="business-list" v-if="!diy.state.isShowBusinessDetail">
     <div class="content-top">
-      <div class="tittle-content-top">{{ $t('TITLEFORM.BUSSINESS') }}</div>
+      <div class="tittle-content-top">{{ $t("TITLEFORM.BUSSINESS") }}</div>
       <div class="add-content-top">
         <div class="icon-add">
           <svg
@@ -31,7 +31,7 @@
         </button>
         <div class="add-import" v-if="diy.state.isImport">
           <div class="icon icon-import"></div>
-          <div class="title-import">{{ $t('BUTTON.IMPORT')}}</div>
+          <div class="title-import">{{ $t("BUTTON.IMPORT") }}</div>
         </div>
       </div>
     </div>
@@ -54,12 +54,14 @@
             </div>
             <div class="content-center-header-left-select" v-else>
               <div class="number-select">
-                {{ $t('BUSINESSFORM.SELECTLIST.SELECTED') }}
+                {{ $t("BUSINESSFORM.SELECTLIST.SELECTED") }}
                 <span style="font-weight: 600">{{
                   this.selectedList.length
                 }}</span>
               </div>
-              <div class="un-select" @click="btnUnselectedList">{{ $t('BUSINESSFORM.SELECTLIST.UNSELECTED') }}</div>
+              <div class="un-select" @click="btnUnselectedList">
+                {{ $t("BUSINESSFORM.SELECTLIST.UNSELECTED") }}
+              </div>
               <div class="btn-refuse">
                 <div class="icon-btn-refuse">
                   <svg
@@ -78,7 +80,7 @@
                     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
                   </svg>
                 </div>
-                <div class="text-btn-refuse">{{ $t('BUTTON.REFUSE') }}</div>
+                <div class="text-btn-refuse">{{ $t("BUTTON.REFUSE") }}</div>
               </div>
               <div class="btn-approve">
                 <div class="icon-btn-approve">
@@ -98,7 +100,7 @@
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                   </svg>
                 </div>
-                <div class="text-btn-approve">{{ $t('BUTTON.APPROVE') }}</div>
+                <div class="text-btn-approve">{{ $t("BUTTON.APPROVE") }}</div>
               </div>
               <div class="btn-export">
                 <div class="icon-btn-export">
@@ -119,7 +121,7 @@
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                   </svg>
                 </div>
-                <div class="text-btn-export">{{ $t('BUTTON.EXPORT') }}</div>
+                <div class="text-btn-export">{{ $t("BUTTON.EXPORT") }}</div>
               </div>
               <div
                 class="btn-delete"
@@ -144,13 +146,15 @@
                     ></path>
                   </svg>
                 </div>
-                <div class="text-btn-delete">{{ $t('BUTTON.DELETE') }}</div>
+                <div class="text-btn-delete">{{ $t("BUTTON.DELETE") }}</div>
               </div>
             </div>
           </div>
           <div class="content-center-header-right">
             <div class="content-center-header-status">
-              <div class="title-status">{{ $t('BUSINESSDETAIL.TITLEFORM.STATUS') }}:</div>
+              <div class="title-status">
+                {{ $t("BUSINESSDETAIL.TITLEFORM.STATUS") }}:
+              </div>
               <m-dropdown
                 id="status"
                 :entity="status"
@@ -203,11 +207,12 @@
             @rowClick="onClickRow"
             @selectedList="selectAll"
             :isShowSelectedRows="isShowSelected"
+            :isEditColumn="isShowEditColumn"
           ></m-data-grid>
         </div>
         <div class="content-footer">
           <div class="total-recort">
-           {{ $t('BUSINESSFORM.TOTALRECORD') }}
+            {{ $t("BUSINESSFORM.TOTALRECORD") }}
             <span style="font-weight: 600">{{ totalRecord }}</span>
           </div>
           <div class="paging-content-footer">
@@ -223,8 +228,11 @@
             </div>
             <div class="paging">
               <div class="recort">
-                {{ $t('BUSINESSFORM.PAGING.FROM') }} <span style="font-weight: 600">{{ startPage }}</span> {{ $t('BUSINESSFORM.PAGING.TO') }}
-                <span style="font-weight: 600">{{ endPage }}</span>{{ $t('BUSINESSFORM.PAGING.RECORD') }}
+                {{ $t("BUSINESSFORM.PAGING.FROM") }}
+                <span style="font-weight: 600">{{ startPage }}</span>
+                {{ $t("BUSINESSFORM.PAGING.TO") }}
+                <span style="font-weight: 600">{{ endPage }}</span
+                >{{ $t("BUSINESSFORM.PAGING.RECORD") }}
               </div>
               <div class="icon icon-prevent" @click="preventPage"></div>
               <div class="icon icon-next" @click="nextPage"></div>
@@ -235,7 +243,9 @@
       <div class="high-filter" v-if="isShowListFilter">
         <div class="high-filter-header">
           <div class="filter-header-top">
-            <div class="high-filter-header-title">{{ $t('BUTTON.FILTER') }}</div>
+            <div class="high-filter-header-title">
+              {{ $t("BUTTON.FILTER") }}
+            </div>
             <div
               class="icon icon-close-high-filter"
               @click="toggleListFilter"
@@ -295,7 +305,10 @@
           </div>
         </div>
         <div class="high-filter-footer">
-          <m-button class="btn-save-filter" :label="$t('BUTTON.APPLY')"></m-button>
+          <m-button
+            class="btn-save-filter"
+            :label="$t('BUTTON.APPLY')"
+          ></m-button>
           <m-button
             class="btn-cancel-filter"
             :label="$t('BUTTON.FILTER')"
@@ -312,7 +325,9 @@
         >
           <div class="high-filter-header">
             <div class="filter-header-top">
-              <div class="high-filter-header-title">{{ $t('BUTTON.SETCOLUMN') }}</div>
+              <div class="high-filter-header-title">
+                {{ $t("BUTTON.SETCOLUMN") }}
+              </div>
               <div
                 class="icon icon-close-high-filter"
                 @click="toggleEditColumn"
@@ -334,7 +349,7 @@
               <div
                 class="high-filter-item"
                 id="high-item"
-                v-for="(item, index) in dataSearchFilter"
+                v-for="(item, index) in dataGridEmployee"
                 :key="index"
               >
                 <div class="label-high-filter">
@@ -343,7 +358,7 @@
                       <input
                         type="checkbox"
                         id="chkProdTomove"
-                        @click="toggleBoxHighFilter"
+                        v-model="item.visible"
                       />
                       <span class="check-box-effect"></span>
                     </label>
@@ -356,9 +371,14 @@
             </div>
           </div>
           <div class="edit-column-footer">
-            <m-button class="btn-save-edit-colummn" :label="$t('BUTTON.SAVE')"></m-button>
+            <m-button
+              class="btn-save-edit-colummn"
+              @click="saveEditColumn"
+              :label="$t('BUTTON.SAVE')"
+            ></m-button>
             <m-button
               class="btn-cancel btn-default-edit-colummn"
+              @click="setDeafaultColumn"
               :label="$t('BUTTON.DEFAULT')"
             ></m-button>
           </div>
@@ -394,13 +414,56 @@ export default {
   components: { MButton, MComboboxV3, BusinessDetail, MDialogV2, MNotify },
   props: ["rowClick"],
   created() {
-    this.dataSearchFilter = this.dataGridEmployee;
-
     this.getPaging(1, this.pageSize, "Missionallowances/");
 
     this.getEmployees("Employees/");
+
+    if (JSON.parse(localStorage.getItem("dataGridEmployee")) != null) {
+      this.dataGridEmployee = JSON.parse(
+        localStorage.getItem("dataGridEmployee")
+      );
+      this.dataSearchFilter = this.dataGridEmployee;
+    } else {
+      this.setLocalStorage(this.dataGridBussiness);
+      this.dataGridEmployee = this.dataGridBussiness;
+      this.dataSearchFilter = this.dataGridEmployee;
+    }
   },
   methods: {
+    /**
+     * Hàm set thứ tự cột mặc định
+     * CreatedBy: Bien (09/05/2023)
+     */
+    setDeafaultColumn() {
+      this.setLocalStorage(this.dataGridBussiness);
+      this.dataGridEmployee = JSON.parse(
+        localStorage.getItem("dataGridEmployee")
+      );
+      this.isShowEditColumn = false;
+    },
+    /**
+     * Hàm thực hiện lưu tùy chỉnh cột
+     * CreatedBy: Bien (09/05/2023)
+     */
+
+    saveEditColumn() {
+      /* eslint-disable */
+    // debugger
+
+      this.isShowEditColumn = false;
+      this.setLocalStorage(this.dataGridEmployee);
+      this.dataGridEmployee = JSON.parse(
+        localStorage.getItem("dataGridEmployee")
+      );
+    },
+    /**
+     * Hàm lưu biến trên localStorage
+     * @param {Đối tượng muốn lưu} listColumn
+     * CreatedBy: Bien (09/05/2023)
+     */
+    setLocalStorage(listColumn) {
+      localStorage.setItem("dataGridEmployee", JSON.stringify(listColumn));
+    },
     /**
      * Hàm xuất khẩu nhân viên
      * CreatedBy: Bien (03/05/2023)
@@ -432,7 +495,7 @@ export default {
       console.log(response);
 
       if (response.IsSuccess) {
-        this.labelNotify = this.$t('NOTIFY.DELETE');
+        this.labelNotify = this.$t("NOTIFY.DELETE");
         this.diy.showNotify();
         this.getPaging(1, this.pageSize, "Missionallowances/");
         this.diy.clearDialog();
@@ -445,7 +508,7 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     btnDeletedeleteMissionallowanceList() {
-      this.lableDialog = this.$t('CONTENTDIALOG.DELETES');
+      this.lableDialog = this.$t("CONTENTDIALOG.DELETES");
       this.diy.showDialog();
       this.selectedListIds = this.selectedList.map(
         (object) => object.MissionallowanceId
@@ -458,7 +521,7 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     btnDeleteBusiness(id) {
-      this.lableDialog = this.$t('CONTENTDIALOG.DELETE');
+      this.lableDialog = this.$t("CONTENTDIALOG.DELETE");
       this.diy.showDialog();
       this.businessId = id;
     },
@@ -471,7 +534,7 @@ export default {
       this.businessDetailId = business.MissionallowanceId;
       this.diy.showBusinessDetail();
       this.diy.showBusinessEdit();
-      this.labeBusinessDetail = this.$t('TITLEFORM.UPDATE');
+      this.labeBusinessDetail = this.$t("TITLEFORM.UPDATE");
       this.isEditBusiness = true;
     },
     /**
@@ -489,7 +552,7 @@ export default {
       console.log(response);
 
       if (response.IsSuccess) {
-        this.labelNotify = this.$t('NOTIFY.DELETE');
+        this.labelNotify = this.$t("NOTIFY.DELETE");
         this.diy.showNotify();
         this.getPaging(1, this.pageSize, "Missionallowances/");
         this.diy.clearDialog();
@@ -505,7 +568,7 @@ export default {
       this.diy.showBusinessDetail();
       this.diy.clearBusinessEdit();
       this.diy.clearIsAddBussiness();
-      this.labeBusinessDetail = this.$t('TITLEFORM.DETAIL');
+      this.labeBusinessDetail = this.$t("TITLEFORM.DETAIL");
     },
     /**
      * Hàm kiểm tra lấy danh sách nhân viên
@@ -718,7 +781,7 @@ export default {
      */
     btnAddEmployee() {
       this.businessDetailId = null;
-      this.labeBusinessDetail = this.$t('TITLEFORM.ADD');
+      this.labeBusinessDetail = this.$t("TITLEFORM.ADD");
       this.diy.showBusinessDetail();
       this.diy.showBusinessEdit();
       this.diy.showisAddBussiness();
@@ -751,11 +814,16 @@ export default {
     },
   },
   watch: {
+    isShowEditColumn:function(newValue){
+      if(!newValue){
+        this.businessListKey += 1;
+      }
+    },
     /**
      * Hàm lắng nghe sự thay đổi checkall
      * CreatedBy: Bien (18/1/2023)
      */
-     selectedList: function () {
+    selectedList: function () {
       /* eslint-disable */
       // debugger
       if (this.selectedList.length > 0) {
@@ -860,114 +928,133 @@ export default {
       // Danh sách tìm kiếm lọc nâng cao
       dataSearchFilter: {},
 
+      businessListKey:0,
+      // Danh sách tiêu đề bảng đơn
+      dataGridEmployee: [],
+
       // Danh sách tiêu đề bảng nhân viên
-      dataGridEmployee: [
+      dataGridBussiness: [
         {
-          caption: "Mã nhân viên",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEECODE"),
           dataField: "EmployeeCode",
           fixed: true,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Người đề nghị",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE"),
           dataField: "FullName",
           fixed: true,
           dataType: "string",
           width: "200",
           cellTemplate: "cell-name",
+          visible: true,
         },
         {
-          caption: "Vị trí công việc",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.POSITIONNAME"),
           dataField: "PositionName",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Đơn vị công tác",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME"),
           dataField: "DepartmentName",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Ngày đề nghị",
-          dataField: "FromDate",
-          fixed: false,
-          dataType: "date",
-          format: "dd/MM/yyyy hh:MM",
-        },
-        {
-          caption: "Ngày đi",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE"),
           dataField: "RequestDate",
           fixed: false,
           dataType: "date",
           format: "dd/MM/yyyy hh:MM",
+          visible: true,
         },
         {
-          caption: "Ngày về",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE"),
+          dataField: "FromDate",
+          fixed: false,
+          dataType: "date",
+          format: "dd/MM/yyyy hh:MM",
+          visible: true,
+        },
+        {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.TODATE"),
           dataField: "ToDate",
           fixed: false,
           dataType: "date",
           format: "dd/MM/yyyy hh:MM",
+          visible: true,
         },
         {
-          caption: "Số ngày đi công tác",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.LEAVEDAY"),
           dataField: "LeaveDay",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Địa điểm công tác",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.LOCATION"),
           dataField: "Location",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Lý do công tác",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.PURPOSE"),
           dataField: "Purpose",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Yêu cầu hỗ trợ",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.REQUEST"),
           dataField: "Request",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Người hỗ trợ",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.SUPPORT"),
           dataField: "SupportNames",
           fixed: false,
           dataType: "string",
           width: "300",
+          visible: true,
         },
         {
-          caption: "Người duyệt",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.APPROVAL"),
           dataField: "ApprovalNames",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Người liên quan",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.RELATIONSHIP"),
           dataField: "RelationShipNames",
           fixed: false,
           dataType: "string",
           width: "300",
+          visible: true,
         },
         {
-          caption: "Ghi chú",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.NOTES"),
           dataField: "Notes",
           fixed: false,
           dataType: "string",
+          visible: true,
         },
         {
-          caption: "Trạng thái",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.STATUS"),
           dataField: "StatusName",
           fixed: false,
           dataType: "string",
           cellTemplate: "cell-status",
+          visible: true,
         },
         {
-          caption: "Chức năng",
           type: "buttons",
           fixed: true,
           buttons: [
@@ -988,6 +1075,7 @@ export default {
               },
             },
           ],
+          visible: true,
         },
       ],
 

@@ -56,12 +56,12 @@
 import { DxColumn, DxDataGrid, DxSelection } from "devextreme-vue/data-grid";
 import MCustomColumVue from "./MCustomColum.vue";
 import MCustomColumnStatus from "./MCustomColumnStatus.vue";
-// import _ from "lodash";
+
 export default {
   inject: ["diy"],
   name: "MDataGrid",
   emits: ["selectedList", "rowClick"],
-  props: ["entity", "dataGrid", "isShowSelectedRows"],
+  props: ["entity", "dataGrid", "isShowSelectedRows","isEditColumn"],
   components: {
     DxDataGrid,
     MCustomColumVue,
@@ -70,11 +70,14 @@ export default {
     DxSelection,
   },
   created() {
+  
     if (this.entity) {
       this.entitis = this.entity;
     }
 
     this.dataSource = this.dataGrid;
+
+    this.isEditCol = this.isEditColumn;
 
     this.isChecked = this.isShowSelectedRows;
   },
@@ -85,6 +88,9 @@ export default {
     this.entitis = this.entity;
 
     this.isChecked = this.isShowSelectedRows;
+
+    this.isEditCol = this.isEditColumn;
+
   },
   methods: {
     /**
@@ -189,8 +195,12 @@ export default {
      */
     dataGrid: {
       handler() {
+        // debugger
         if (this.dataTable) {
-          this.dataTable.refresh();
+          if(!this.isEditColumn){
+            // const dataGrid = this.$refs.dataGrid.instance;
+            this.dataTable.refresh();
+          }
         }
       },
       deep: true,
@@ -216,6 +226,8 @@ export default {
 
       // Kiểm tra checkall
       isChecked: null,
+
+      isEditCol:null,
     };
   },
 };

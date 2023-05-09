@@ -119,7 +119,7 @@
           if (!this.textSelected) {
             this.$parent.validateList[`${this.nameInput}`].isStatus = true;
             this.$parent.validateList[`${this.nameInput}`].labelError =
-              this.$MISAResource.ERRORVALIDATE.REQUIRED(`${this.label}`);
+            this.$t('ERRORVALIDATE.REQUIRED', { item: this.label });
           } else {
             this.$parent.validateList[`${this.nameInput}`].isStatus = false;
           }

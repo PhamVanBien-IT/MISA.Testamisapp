@@ -91,9 +91,9 @@ export default {
         if (inputDate > dateNow) {
           this.$parent.validateList[`${this.nameInput}`].isStatus = true;
           this.$parent.validateList[`${this.nameInput}`].labelValidate =
-            this.$MISAResource.ERRORVALIDATE.INVALIDDATETIME(
-              `${this.labelValidate}`
-            );
+          this.$t("ERRORVALIDATE.INVALIDDATETIME", {
+              item: this.labelValidate,
+            });
         } else {
           this.$parent.validateList[`${this.nameInput}`].isStatus = false;
         }
@@ -110,9 +110,9 @@ export default {
         } else {
           this.$parent.validateList[`${this.nameInput}`].isStatus = true;
           this.$parent.validateList[`${this.nameInput}`].labelValidate =
-            this.$MISAResource.ERRORVALIDATE.INVALIDFORMAT(
-              `${this.labelValidate}`
-            );
+          this.$t("ERRORVALIDATE.INVALIDFORMAT", {
+              item: this.labelValidate,
+            });
         }
       } else {
         this.$parent.validateList[`${this.nameInput}`].isStatus = false;
@@ -127,7 +127,9 @@ export default {
         if (!this.modelValue) {
           this.$parent.validateList[`${this.nameInput}`].isStatus = true;
           this.$parent.validateList[`${this.nameInput}`].labelError =
-            this.$MISAResource.ERRORVALIDATE.REQUIRED(`${this.label}`);
+          this.$t("ERRORVALIDATE.REQUIRED", {
+              item: this.labelValidate,
+            });
         } else {
           this.$parent.validateList[`${this.nameInput}`].isStatus = false;
         }

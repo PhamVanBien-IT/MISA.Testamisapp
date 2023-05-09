@@ -12,7 +12,7 @@
         v-model="value"
         :id="idInput"
         class="text-form"
-        :class="{'bd-red':isValidate}"
+        :class="{ 'bd-red': isValidate }"
         :placeholder="placeholderText"
         :max="maxDateInput"
         @blur="hanldeBlurInput"
@@ -45,7 +45,7 @@ export default {
     "label",
     "required",
     "disabled",
-    "isValidate"
+    "isValidate",
   ],
   created() {
     // Nhận giá trị modelValue
@@ -90,9 +90,9 @@ export default {
         if (inputDate > dateNow) {
           this.$parent.validateList[`${this.nameInput}`].isStatus = true;
           this.$parent.validateList[`${this.nameInput}`].labelValidate =
-            this.$MISAResource.ERRORVALIDATE.INVALIDDATETIME(
-              `${this.labelValidate}`
-            );
+            this.$t("ERRORVALIDATE.INVALIDDATETIME", {
+              item: this.labelValidate,
+            });
         } else {
           this.$parent.validateList[`${this.nameInput}`].isStatus = false;
         }
@@ -109,27 +109,29 @@ export default {
         } else {
           this.$parent.validateList[`${this.nameInput}`].isStatus = true;
           this.$parent.validateList[`${this.nameInput}`].labelValidate =
-            this.$MISAResource.ERRORVALIDATE.INVALIDFORMAT(
-              `${this.labelValidate}`
-            );
+            this.$t("ERRORVALIDATE.INVALIDFORMAT", {
+              item: this.labelValidate,
+            });
         }
       } else {
         this.$parent.validateList[`${this.nameInput}`].isStatus = false;
       }
     },
-        /**
+    /**
      * Hàm validate khi blur
      * CreatedBy: Bien (04/04/2023)
      */
-     hanldeBlurInput() {
-      if(this.isValidate && this.labelValidate){
+    hanldeBlurInput() {
+      if (this.isValidate && this.labelValidate) {
         if (!this.modelValue) {
-        this.$parent.validateList[`${this.nameInput}`].isStatus = true;
-        this.$parent.validateList[`${this.nameInput}`].labelError =
-          this.$MISAResource.ERRORVALIDATE.REQUIRED(`${this.label}`);
-      }else {
-        this.$parent.validateList[`${this.nameInput}`].isStatus = false;
-      }
+          this.$parent.validateList[`${this.nameInput}`].isStatus = true;
+          this.$parent.validateList[`${this.nameInput}`].labelError =
+          this.$t("ERRORVALIDATE.REQUIRED", {
+              item: this.labelValidate,
+            });
+        } else {
+          this.$parent.validateList[`${this.nameInput}`].isStatus = false;
+        }
       }
     },
     /**

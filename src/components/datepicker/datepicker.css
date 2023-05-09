@@ -5,13 +5,14 @@
 }
 .dx-field-value{
     width: 70% !important;
+    border-radius: 4px;
 }
 .dx-field{
     margin-top: 15px !important;
 }
-#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.suggested-date > div > div.dx-field-value > div:hover{
+/* #app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.suggested-date > div > div.dx-field-value > div:hover{
     border: 1px solid #fa6000;
-}
+} */
 .dx-field-value:focus{
     border: 1px solid #fa6000;
 }

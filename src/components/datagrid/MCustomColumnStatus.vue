@@ -32,7 +32,7 @@
          /* eslint-disable */
         // debugger
         switch (statusKey.toString()) {
-          case this.$t('STATUS.PENDING'):
+          case this.$t('STATUSPENDING'):
             this.background = this.backgroundColors[0];
             this.colorText = this.colors[0];
             this.borderColor = this.borders[0];

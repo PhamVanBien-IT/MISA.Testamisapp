@@ -85,7 +85,9 @@
             >
             </m-input-text>
             <div class="base-combobox" v-else>
-              <div class="title-cbb">{{ $t('BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME') }}</div>
+              <div class="title-cbb">
+                {{ $t("BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME") }}
+              </div>
               <div class="combobox-value">
                 {{ business.DepartmentName }}
               </div>
@@ -95,13 +97,17 @@
             <m-datepicker
               :label="$t('BUSINESSDETAIL.TITLEFORM.REQUESDATE')"
               tabindex="3"
+              :name="'RequestDate'"
               required="*"
               v-model="business.RequestDate"
+              :labelValidate="this.validateList[`RequestDate`].labelError"
+              :isValidate="this.validateList[`RequestDate`].isStatus"
               v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.REQUESDATE') }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ this.$MISACommon.formatDate(business.RequestDate) }}
@@ -112,13 +118,17 @@
             <m-datepicker
               :label="$t('BUSINESSDETAIL.TITLEFORM.FORMDATE')"
               tabindex="4"
+              :name="'FromDate'"
               required="*"
               v-model="business.FromDate"
+              :labelValidate="this.validateList[`FromDate`].labelError"
+              :isValidate="this.validateList[`FromDate`].isStatus"
               v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.FORMDATE') }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ this.$MISACommon.formatDate(business.FromDate) }}
@@ -129,12 +139,16 @@
             <m-datepicker
               :label="$t('BUSINESSDETAIL.TITLEFORM.TODATE')"
               required="*"
+              :name="'ToDate'"
               v-model="business.ToDate"
+              :labelValidate="this.validateList[`ToDate`].labelError"
+              :isValidate="this.validateList[`ToDate`].isStatus"
               v-if="this.diy.state.isBusinessEdit"
             ></m-datepicker>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.TODATE') }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.TODATE")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ this.$MISACommon.formatDate(business.ToDate) }}
@@ -143,7 +157,7 @@
           </div>
           <div class="bussiness-day mg-t-7">
             <m-input-text
-              type="text"
+              type="number"
               tabindex="5"
               :label="$t('BUSINESSDETAIL.TITLEFORM.LEAVEDAY')"
               valueDefault="0"
@@ -154,7 +168,9 @@
             >
             </m-input-text>
             <div class="base-combobox" v-else>
-              <div class="title-cbb">{{ $t('BUSINESSDETAIL.TITLEFORM.LEAVEDAY') }}</div>
+              <div class="title-cbb">
+                {{ $t("BUSINESSDETAIL.TITLEFORM.LEAVEDAY") }}
+              </div>
               <div class="combobox-value">
                 {{ business.LeaveDay }}
               </div>
@@ -176,7 +192,8 @@
             </m-input-text>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.LOCATION') }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.LOCATION")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ business.Location }}
@@ -198,7 +215,8 @@
             </m-textarea>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.PURPOSE') }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.PURPOSE")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ business.Purpose }}
@@ -216,14 +234,18 @@
             >
             </m-textarea>
             <div class="base-combobox" v-else>
-              <div class="title-cbb">{{ $t('BUSINESSDETAIL.TITLEFORM.REQUEST') }}</div>
+              <div class="title-cbb">
+                {{ $t("BUSINESSDETAIL.TITLEFORM.REQUEST") }}
+              </div>
               <div class="combobox-value">
                 {{ business.Request }}
               </div>
             </div>
           </div>
           <div class="employee-support">
-            <div class="dx-field-label">{{ $t('BUSINESSDETAIL.TITLEFORM.SUPPORT') }}</div>
+            <div class="dx-field-label">
+              {{ $t("BUSINESSDETAIL.TITLEFORM.SUPPORT") }}
+            </div>
             <div class="dx-field-value">
               <DxTagBox
                 v-model:value="selectedSupportIds"
@@ -241,7 +263,11 @@
                 </template>
               </DxTagBox>
               <div class="base-combobox" v-else>
-                <div class="combobox-value" style="width: 100%" :title="business.SupportNames">
+                <div
+                  class="combobox-value"
+                  style="width: 100%"
+                  :title="business.SupportNames"
+                >
                   {{ business.SupportNames }}
                 </div>
               </div>
@@ -269,7 +295,8 @@
             ></m-combobox>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.APPROVAL') }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.APPROVAL")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 {{ business.ApprovalNames }}
@@ -277,12 +304,14 @@
             </div>
           </div>
           <div class="mg-t-7 employee-support">
-            <div class="dx-field-label">{{ $t('BUSINESSDETAIL.TITLEFORM.RELATIONSHIP')  }}</div>
+            <div class="dx-field-label">
+              {{ $t("BUSINESSDETAIL.TITLEFORM.RELATIONSHIP") }}
+            </div>
             <div class="dx-field-value">
               <DxTagBox
                 v-model:value="selectedRelationShipIds"
                 :data-source="this.$parent.employees"
-                value-field="EmployeeId"
+                value-expr="EmployeeId"
                 display-expr="FullName"
                 :search-enabled="true"
                 placeholder=""
@@ -294,7 +323,11 @@
                 </template>
               </DxTagBox>
               <div class="base-combobox" v-else>
-                <div class="combobox-value" style="width: 100%" :title="business.RelationShipNames">
+                <div
+                  class="combobox-value"
+                  style="width: 100%"
+                  :title="business.RelationShipNames"
+                >
                   {{ business.RelationShipNames }}
                 </div>
               </div>
@@ -320,7 +353,8 @@
             </m-combobox-v-4>
             <div class="base-combobox" v-else>
               <div class="title-cbb">
-                {{ $t('BUSINESSDETAIL.TITLEFORM.STATUS')  }}<sup style="color: red">*</sup>
+                {{ $t("BUSINESSDETAIL.TITLEFORM.STATUS")
+                }}<sup style="color: red">*</sup>
               </div>
               <div class="combobox-value">
                 <div
@@ -378,7 +412,7 @@
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
             </div>
-            {{ $t('BUSINESSDETAIL.ADDEMPLOYEE') }}
+            {{ $t("BUSINESSDETAIL.ADDEMPLOYEE") }}
           </div>
         </div>
         <div
@@ -400,7 +434,7 @@
             :dataGrid="dataGridEmployeeHeader"
           ></m-data-grid>
           <div class="total-epl">
-            {{ $t('BUSINESSFORM.TOTALRECORD')}}
+            {{ $t("BUSINESSFORM.TOTALRECORD") }}
             <span style="font-weight: 600">{{
               this.employees.length || 0
             }}</span>
@@ -410,24 +444,30 @@
       <div class="content-detail-center-footer"></div>
     </div>
     <div class="content-detail-center-note">
-      <div class="content-detail-center-note-title">{{ $t('BUSINESSDETAIL.NOTES') }}</div>
+      <div class="content-detail-center-note-title">
+        {{ $t("BUSINESSDETAIL.NOTES") }}
+      </div>
       <div class="content-detail-center-note-content">
         <div class="emloyee-text-note">
           <div class="logo-user" style="margin-right: 25px">BP</div>
           <div class="input-note">
-            <input type="text" class="text-form" :placeholder="$t('BUSINESSFORM.PLACEHOLDER.NOTES')" />
+            <input
+              type="text"
+              class="text-form"
+              :placeholder="$t('BUSINESSFORM.PLACEHOLDER.NOTES')"
+            />
           </div>
         </div>
         <div class="cancel-note">
-          {{ $t('BUSINESSDETAIL.ESC') }}
-          <span style="color: #fe6000; font-weight: 600; font-weight: 600"
-            >{{ $t('BUSINESSDETAIL.CANCEL') }}</span
-          >
+          {{ $t("BUSINESSDETAIL.ESC") }}
+          <span style="color: #fe6000; font-weight: 600; font-weight: 600">{{
+            $t("BUSINESSDETAIL.CANCEL")
+          }}</span>
         </div>
         <div class="nav-note">
-          <div class="all-note">{{ $t('BUSINESSDETAIL.ALL') }}</div>
-          <div class="text-note">{{ $t('BUSINESSDETAIL.TEXTNOTE') }}</div>
-          <div class="history-note">{{ $t('BUSINESSDETAIL.HISTORY') }}</div>
+          <div class="all-note">{{ $t("BUSINESSDETAIL.ALL") }}</div>
+          <div class="text-note">{{ $t("BUSINESSDETAIL.TEXTNOTE") }}</div>
+          <div class="history-note">{{ $t("BUSINESSDETAIL.HISTORY") }}</div>
         </div>
         <div class="list-no"></div>
       </div>
@@ -485,7 +525,7 @@ export default {
      * Hàm thực hiện thêm nhân viên công tác
      * CreatedBy: Bien (07/05/2023)
      */
-    btnAddBusiness(){
+    btnAddBusiness() {
       this.diy.showFormBusiness();
     },
     /**
@@ -513,7 +553,7 @@ export default {
      * CreatedBy: Bien (04/05/2023)
      */
     btnBusinessEdit() {
-      this.$parent.labeBusinessDetail = this.$t('TITLEFORM.UPDATE');
+      this.$parent.labeBusinessDetail = this.$t("TITLEFORM.UPDATE");
       this.diy.showBusinessEdit();
       this.diy.showisAddBussiness();
       this.isEdit = true;
@@ -543,25 +583,6 @@ export default {
       }
     },
     /**
-     * Lấy danh sách giá trị nhân viên hỗ trợ
-     * CreatedBy: Bien (30/04/2023)
-     */
-    onSelectionChanged() {
-      // this.selectedSupportIds = e.value;
-      /* eslint-disable */ 
-      // debugger
-      console.log(this.selectedSupportIds);
-    },
-
-    /**
-     * Lấy danh sách giá trị nhân viên hỗ trợ
-     * CreatedBy: Bien (30/04/2023)
-     */
-    onSelectionRelationShipIds() {
-      // this.selectedRelationShipIds = e.value;
-      console.log(this.selectedRelationShipIds);
-    },
-    /**
      * Hàm thay đổi kích thước khi scroll
      * CreatedBy: Bien (30/04/2023)
      */
@@ -585,22 +606,26 @@ export default {
      */
     selectedDxtagbox() {
       if (this.selectedSupportIds) {
-        this.business.SupportIds = this.selectedSupportIds.join(',');
-          // .map((object) => object.EmployeeId)
-          // .join(",");
-        this.business.SupportNames = this.$parent.employees.filter(item =>
-        this.selectedSupportIds.includes(item.EmployeeId)).map(item => item.FullName).join(',');
-        //  this.selectedSupportIds.join(',');
-          // .map((object) => object.FullName)
-          // .join(",");
+        // Chuyển mảng id thành chuỗi id
+        this.business.SupportIds = this.selectedSupportIds.join(",");
+
+        // Lấy tên tương ứng với id nhân viên
+        this.business.SupportNames = this.$parent.employees
+          .filter((item) => this.selectedSupportIds.includes(item.EmployeeId))
+          .map((item) => item.FullName)
+          .join(",");
       }
       if (this.selectedRelationShipIds) {
-        this.business.RelationShipIds = this.selectedRelationShipIds.join(',');
-          // .map((object) => object.EmployeeId)
-          // .join(",");
+        // Chuyển mảng id thành chuỗi id
+        this.business.RelationShipIds = this.selectedRelationShipIds.join(",");
 
-        this.business.RelationShipNames = this.$parent.employees.filter(item =>
-        this.selectedRelationShipIds.includes(item.EmployeeId)).map(item => item.FullName).join(',');
+        // Lấy tên tương ứng với id nhân viên
+        this.business.RelationShipNames = this.$parent.employees
+          .filter((item) =>
+            this.selectedRelationShipIds.includes(item.EmployeeId)
+          )
+          .map((item) => item.FullName)
+          .join(",");
       }
 
       if (this.business.ApprovalIds) {
@@ -619,9 +644,12 @@ export default {
         );
       }
 
-      let employeeFind = this.$parent.employees.find(item => item.EmployeeId === this.business.EmployeeId);
-      if(employeeFind != null){
+      let employeeFind = this.$parent.employees.find(
+        (item) => item.EmployeeId === this.business.EmployeeId
+      );
+      if (employeeFind != null) {
         this.business.DepartmentId = employeeFind.DepartmentId;
+        this.business.DepartmentName = employeeFind.DepartmentName;
       }
     },
     /**
@@ -630,19 +658,19 @@ export default {
      */
     btnSaveBusiness() {
       this.selectedDxtagbox();
-      
+      /* eslint-disable */
+      debugger;
       console.log(this.business);
-      // this.validateBusiness();
-      // if (this.isValidate) {
-      //   if (this.isEdit) {
-      //     this.updateBusiness();
-      //   } else {
-      //     this.createdBusiness("Missionallowances/", this.business);
-      //     this.employeeMissionallowances.EmployeeId =
-      //       this.business.EmployeeMissionallowances;
-      //   }
-      // }
-
+      this.validateBusiness();
+      if (this.isValidate) {
+        if (this.isEdit) {
+          this.updateBusiness();
+        } else {
+          this.createdBusiness("Missionallowances/", this.business);
+          this.employeeMissionallowances.EmployeeId =
+            this.business.EmployeeMissionallowances;
+        }
+      }
     },
     /**
      * Hàm cập nhập đơn công tác
@@ -656,7 +684,7 @@ export default {
       );
 
       if (response.IsSuccess) {
-        this.$parent.labelNotify = this.$t('NOTIFY.UPDATE');
+        this.$parent.labelNotify = this.$t("NOTIFY.UPDATE");
         this.diy.showNotify();
         this.$parent.getPaging(1, this.$parent.pageSize, "Missionallowances/");
         this.diy.clearBusinessDetail();
@@ -674,10 +702,31 @@ export default {
         this.validateList[nameInput].isStatus = false;
       } else {
         this.validateList[nameInput].isStatus = true;
-        this.validateList[nameInput].labelError =
-          this.$MISAResource.ERRORVALIDATE.REQUIRED(labelName);
-
+        this.validateList[nameInput].labelError = this.$t(
+          "ERRORVALIDATE.REQUIRED",
+          { item: labelName }
+        );
         this.isValidate = false;
+      }
+    },
+    /**
+     * Hàm kiểm tra ngày giờ
+     * CreatedBy: Bien (05/04/2023)
+     */
+    validateDateTime(nameInput, valueInput, labelName) {
+      const dateNow = new Date();
+
+      const inputDate = new Date(valueInput);
+
+      if (inputDate < dateNow) {
+        this.validateList[nameInput].isStatus = true;
+        this.validateList[nameInput].labelError = this.$t(
+          "ERRORVALIDATE.INVALIDDATETIME",
+          { item: labelName }
+        );
+        this.isValidate = false;
+      } else {
+        this.validateList[nameInput].isStatus = false;
       }
     },
     /**
@@ -685,24 +734,72 @@ export default {
      * CreatedBy: Bien (27/04/202)
      */
     validateBusiness() {
+      debugger;
       this.isValidate = true;
       this.validateRequired(
         "EmployeeId",
         this.business.EmployeeId,
-        "Nguời đề nghị"
+        this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE")
+      );
+      this.validateRequired(
+        "RequestDate",
+        this.business.RequestDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
+      );
+      this.validateRequired(
+        "FromDate",
+        this.business.FromDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
+      );
+      this.validateRequired(
+        "ToDate",
+        this.business.ToDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.TODATE")
       );
       this.validateRequired(
         "Location",
         this.business.Location,
-        "Địa điểm công tác"
+        this.$t("BUSINESSDETAIL.TITLEFORM.LOCATION")
       );
-      this.validateRequired("Purpose", this.business.Purpose, "Lý do công tác");
+      this.validateRequired(
+        "Purpose",
+        this.business.Purpose,
+        this.$t("BUSINESSDETAIL.TITLEFORM.PURPOSE")
+      );
       this.validateRequired(
         "ApprovalIds",
         this.business.ApprovalIds,
-        "Nguời duyệt"
+        this.$t("BUSINESSDETAIL.TITLEFORM.APPROVAL")
       );
-      this.validateRequired("Status", this.business.Status, "Trạng thái");
+      this.validateRequired(
+        "Status",
+        this.business.Status,
+        this.$t("BUSINESSDETAIL.TITLEFORM.STATUS")
+      );
+      this.validateDateTime(
+        "RequestDate",
+        this.business.RequestDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
+      );
+      this.validateDateTime(
+        "FromDate",
+        this.business.FromDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
+      );
+      this.validateDateTime(
+        "ToDate",
+        this.business.ToDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.TODATE")
+      );
+      if (this.business.FromDate < this.business.ToDate) {
+        this.validateList["FromDate"].isStatus = true;
+        this.validateList["FromDate"].labelError = this.$t(
+          "ERRORVALIDATE.FROMDATE"
+        );
+        this.isValidate = false;
+      } else {
+        this.validateList["FromDate"].isStatus = false;
+      }
     },
     /**
      * API thêm mới đơn công tác
@@ -717,7 +814,7 @@ export default {
 
       if (response.IsSuccess) {
         this.diy.clearBusinessDetail();
-        this.$parent.labelNotify = this.$t('NOTIFY.ADD');
+        this.$parent.labelNotify = this.$t("NOTIFY.ADD");
         this.diy.showNotify();
         this.$parent.getPaging(1, this.$parent.pageSize, "Missionallowances/");
       } else {
@@ -784,7 +881,7 @@ export default {
           this.business.RelationShipIds =
             this.business.RelationShipIds.split(",");
 
-            this.diy.clearLoading();
+          this.diy.clearLoading();
         }
       }
     },
@@ -841,15 +938,6 @@ export default {
         for (let i = 0; i < this.business.RelationShipIds?.length; i++) {
           this.selectedRelationShipIds.push(this.business.RelationShipIds[i]);
         }
-        // Hiển thị nút bỏ chọn nhân viên
-        // let endColum = this.dataGridEmployeeHeader.slice(-1);
-        // endColum.visible = true;
-        // this.dataGridEmployeeHeader[4] = endColum;
-      } else {
-        // Hiển ẩn nút bỏ chọn nhân viên
-        // let endColum = this.dataGridEmployeeHeader.slice(-1);
-        // endColum.visible = false;
-        // this.dataGridEmployeeHeader[4] = endColum;
       }
     },
     /**
@@ -961,7 +1049,7 @@ export default {
         {
           caption: "Họ và tên",
           dataField: "FullName",
-          cellTemplate:"cell-name"
+          cellTemplate: "cell-name",
         },
         {
           caption: "Vị trí công việc",
