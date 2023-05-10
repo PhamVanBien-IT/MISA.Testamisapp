@@ -6,6 +6,13 @@
 const MISAResource = {
 	messages: {
 		vi: {
+			KEYCODE:{
+				ENTER:"13",
+				DOWN:"40",
+				UP:"38",
+				TAB:"9"
+			},
+			COMBOBOXDEPARTMENT:"Hiển thị đơn vị ngừng theo dõi",
 			THENAV: {
 				APP: "Chấm công",
 				OVERVIEW: "Tổng quan",
@@ -62,12 +69,12 @@ const MISAResource = {
 				REQUIRED: "{item} không được để trống",
 				INVALIDFORMAT: `{item} không đúng định dạng`,
 				INVALIDDATETIME: `{item} nhỏ hơn ngày hiện tại`,
-				FROMDATE: 'Ngày đi nhỏ hơn ngày về'
+				FROMDATE: 'Ngày đi lớn hơn ngày về'
 			},
 			CONTENTDIALOG: {
 				DELETE: `Bạn có chắc muốn xóa đơn này không?`,
 				DELETES: `Bạn có chắc chắn muốn xóa các đơn đã chọn không?`,
-				SAVE: "Dữ liệu đã thay đổi. Bạn có muốn cất không?",
+				SAVE: "Thông tin đã được thay đổi. Bạn có muốn lưu lại không?",
 				DEVELOPING: "Chức năng đang phát triển."
 			},
 			TITLEFORM: {
@@ -80,7 +87,9 @@ const MISAResource = {
 			NOTIFY: {
 				ADD: `Thêm đơn mới thành công`,
 				DELETE: `Xóa thành công`,
-				UPDATE: `Cập nhập đơn thành công`
+				UPDATE: `Cập nhập đơn thành công`,
+				APPROVED:`Duyệt thành công`,
+				REFUSE:`Từ chối thành công`
 			},
 			DATA: {
 				NULL: 'Không có dữ liệu'
@@ -142,6 +151,7 @@ const MISAResource = {
 			}
 		},
 		en: {
+			COMBOBOXDEPARTMENT:"Show unit stop tracking",
 			THENAV: {
 				APP: "Timekeeping",
 				OVERVIEW: "Overview",

@@ -16,10 +16,12 @@ const state = reactive({
   isBusinessEdit:false,
   isAddBussiness:false,
   isShowDialog:false,
+  isShowDialogDetail:false,
   isShowNotify:false,
   isSearchBusiness:true,
   isShowLoading:false,
   isLaguage:false,
+  employeesBusiness:[],
   treeDepartment: [
     {
       id: "5e6695e2-5aad-3241-6c1a-bb545470e80c",
@@ -69,6 +71,14 @@ const state = reactive({
     },
   ],
 });
+/**
+ * Hàm gắn dữ liệu cho danh sách đơn
+ * @param {Danh sách đơn} data 
+ * CreatedBy: Bien (10/05/2023)
+ */
+const setDataBusiness = function(data){
+  state.employeesBusiness = data;
+};
 /**
  * Hàm ẩm chọn ngôn ngữ
  * CreatedBy: Bien (20/1/2023)
@@ -145,6 +155,20 @@ const clearDialog = function(){
   state.isShowDialog = false;
 }; 
 /**
+ * Hàm hiển thị dialog form chi tiết
+ * CreatedBy: Bien (20/1/2023)
+ */
+ const showDialogDetail = function(){
+  state.isShowDialogDetail = true;
+}; 
+/**
+ * Hàm ẩn dialog
+ * CreatedBy: Bien (20/1/2023)
+ */
+const clearDialogDetail = function(){
+  state.isShowDialogDetail = false;
+}; 
+/**
  * Hàm ẩn trang sửa đơn công tác
  * CreatedBy: Bien (20/1/2023)
  */
@@ -180,7 +204,7 @@ const showBusinessEdit = function(){
   state.isBusinessEdit = true;
 }; 
 /**
- * Hàm hiển thị danh sách nhân viên
+ * Hàm hiển thị form chi tiết
  * CreatedBy: Bien (01/05/2023)
  */
 const showBusinessDetail = function(){
@@ -291,7 +315,9 @@ export default {
   showLoading,
   showLaguage,
   clearLaguage,
-  toggleLaguage
-  
+  toggleLaguage,
+  setDataBusiness,
+  showDialogDetail,
+  clearDialogDetail
 
 };

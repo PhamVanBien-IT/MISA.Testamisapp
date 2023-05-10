@@ -86,7 +86,7 @@
     width: 100%;
     padding: 0px 16px;
     height: calc(100% - 152px - 12px);
-    overflow-x: auto;
+    overflow: hidden;
 }
 .label-high-filter {
     width: 100%;
@@ -241,6 +241,7 @@
     width: 190px;
     height: 36px;
     align-items: center;
+    min-width: 190px;
 }
 .custom-dropdown {
     width: 110px !important;
@@ -259,6 +260,7 @@
     width: 320px;
     height: 36px;
     margin-left: 20px;
+    min-width: 140px;
 }
 .btn-add {
     border: unset;
@@ -351,6 +353,7 @@
 .recort {
     margin-right: 8px;
     font-size: 14px;
+    width: 140px;
 }
 .icon-add-down {
     background: url("../../assets/images/Sprites.64af8f61.svg") no-repeat -1157px -28px;
@@ -395,6 +398,7 @@
     border-radius: 4px;
     margin-left: 8px;
     position: relative;
+    z-index: 98;
 }
 .icon-refresh:hover,
 .icon-filter:hover,
@@ -402,6 +406,8 @@
 .icon-setting:hover {
     border: 1px solid #ec5504;
     filter: invert(63%) sepia(100%) saturate(7493%) hue-rotate(355deg) brightness(100%) contrast(100%);
+    z-index: 98;
+
 }
 .icon-focus {
     border: 1px solid #e1e1e1 !important;

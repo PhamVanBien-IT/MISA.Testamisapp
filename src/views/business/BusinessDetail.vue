@@ -76,7 +76,6 @@
           <div class="department">
             <m-input-text
               type="text"
-              tabindex="2"
               class="text-form"
               :label="$t('BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME')"
               v-model="business.DepartmentName"
@@ -96,7 +95,7 @@
           <div class="suggested-date">
             <m-datepicker
               :label="$t('BUSINESSDETAIL.TITLEFORM.REQUESDATE')"
-              tabindex="3"
+              tabindex="2"
               :name="'RequestDate'"
               required="*"
               v-model="business.RequestDate"
@@ -117,7 +116,7 @@
           <div class="out-date">
             <m-datepicker
               :label="$t('BUSINESSDETAIL.TITLEFORM.FORMDATE')"
-              tabindex="4"
+              tabindex="3"
               :name="'FromDate'"
               required="*"
               v-model="business.FromDate"
@@ -137,6 +136,7 @@
           </div>
           <div class="comeback-date">
             <m-datepicker
+              tabindex="4"
               :label="$t('BUSINESSDETAIL.TITLEFORM.TODATE')"
               required="*"
               :name="'ToDate'"
@@ -243,6 +243,7 @@
             </div>
           </div>
           <div class="employee-support">
+            <div class="icon-dx"></div>
             <div class="dx-field-label">
               {{ $t("BUSINESSDETAIL.TITLEFORM.SUPPORT") }}
             </div>
@@ -250,6 +251,7 @@
               <DxTagBox
                 v-model:value="selectedSupportIds"
                 :data-source="this.$parent.employees"
+                :noDataText="$t('DATA.NULL')"
                 value-expr="EmployeeId"
                 display-expr="FullName"
                 :search-enabled="true"
@@ -304,6 +306,7 @@
             </div>
           </div>
           <div class="mg-t-7 employee-support">
+            <div class="icon-dx"></div>
             <div class="dx-field-label">
               {{ $t("BUSINESSDETAIL.TITLEFORM.RELATIONSHIP") }}
             </div>
@@ -314,6 +317,7 @@
                 value-expr="EmployeeId"
                 display-expr="FullName"
                 :search-enabled="true"
+                :noDataText="$t('DATA.NULL')"
                 placeholder=""
                 tabindex="11"
                 v-if="this.diy.state.isBusinessEdit"
@@ -395,7 +399,7 @@
             v-if="this.diy.state.isBusinessEdit"
             @click="btnAddBusiness"
           >
-            <div class="icon-add-detail">
+            <div class="icon-add-detail" tabindex="13">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -477,6 +481,7 @@
     v-if="diy.state.isFormBusiness"
     @employeesDetail="addEmployees"
   ></BusinessForm>
+  <m-dialog :label="labelDialog" v-if="diy.state.isShowDialogDetail" @funcSave="btnSaveBusiness"></m-dialog>
 </template>
 <script>
 import DxTagBox from "devextreme-vue/tag-box";
@@ -490,6 +495,7 @@ import BusinessForm from "./BusinessForm.vue";
 import MCustomItemVue from "@/components/combobox/MCustomItem.vue";
 import baseApi from "@/api/baseApi";
 import employeeMissionallowancesApi from "@/api/employeeMissionallowancesApi";
+import MDialog from "@/components/dialog/MDialog.vue";
 import _ from "lodash";
 
 export default {
@@ -505,6 +511,7 @@ export default {
     DxTagBox,
     MComboboxV4,
     MCustomItemVue,
+    MDialog,
   },
   props: ["businessDetailId", "isEditBusiness"],
   created() {
@@ -527,6 +534,7 @@ export default {
      */
     btnAddBusiness() {
       this.diy.showFormBusiness();
+      this.dataGridEmployeeHeader[4].visible = true;
     },
     /**
      * Hàm xóa nhân viên đi công tác
@@ -657,11 +665,11 @@ export default {
      * CreatedBy: Bien (25/04/2023)
      */
     btnSaveBusiness() {
+      // Lấy giá trị dữ liệu ô tagbox
       this.selectedDxtagbox();
-      /* eslint-disable */
-      debugger;
-      console.log(this.business);
+
       this.validateBusiness();
+
       if (this.isValidate) {
         if (this.isEdit) {
           this.updateBusiness();
@@ -734,7 +742,6 @@ export default {
      * CreatedBy: Bien (27/04/202)
      */
     validateBusiness() {
-      debugger;
       this.isValidate = true;
       this.validateRequired(
         "EmployeeId",
@@ -782,16 +789,11 @@ export default {
         this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
       );
       this.validateDateTime(
-        "FromDate",
-        this.business.FromDate,
-        this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
-      );
-      this.validateDateTime(
         "ToDate",
         this.business.ToDate,
         this.$t("BUSINESSDETAIL.TITLEFORM.TODATE")
       );
-      if (this.business.FromDate < this.business.ToDate) {
+      if (this.business.FromDate > this.business.ToDate) {
         this.validateList["FromDate"].isStatus = true;
         this.validateList["FromDate"].labelError = this.$t(
           "ERRORVALIDATE.FROMDATE"
@@ -800,6 +802,11 @@ export default {
       } else {
         this.validateList["FromDate"].isStatus = false;
       }
+      this.validateDateTime(
+        "FromDate",
+        this.business.FromDate,
+        this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
+      );
     },
     /**
      * API thêm mới đơn công tác
@@ -845,7 +852,7 @@ export default {
             }
           }
           break;
-        // case this.$MISAEnum.STATUSCODE.INTERNALSERVER:
+        // case this.$t(STATUSCODE.INTERNALSERVER:
         //   if (
         //     res.response.data.errorCode == this.$MISAEnum.ERRORCODE.UNKNOWNERROR
         //   ) {
@@ -864,6 +871,8 @@ export default {
      */
     async getBusinessById(baseUrl, id) {
       if (this.businessId) {
+        /* eslint-disable */
+        // debugger
         // Nhận dữ liệu sau khi lấy nhân viên theo id
         const response = await baseApi.getById(baseUrl, id);
 
@@ -881,6 +890,7 @@ export default {
           this.business.RelationShipIds =
             this.business.RelationShipIds.split(",");
 
+          this.businessClone = { ...this.business };
           this.diy.clearLoading();
         }
       }
@@ -914,15 +924,34 @@ export default {
       }
     },
     /**
-     * Hàm thực hiện khi click thêm đơn hàng
+     * Hàm thực hiện khi click hủy thêm mới đơn công tác
      * CreatedBy: Bien (28/04/2023)
      */
     btnCancelAddEmployee() {
-      this.diy.clearBusinessDetail();
-      this.diy.clearBusinessEdit();
+      if (this.isBusinessClone) {
+        this.diy.clearBusinessDetail();
+        this.diy.clearBusinessEdit();
+      } else {
+        this.labelDialog = this.$t("CONTENTDIALOG.SAVE");
+        this.diy.showDialogDetail();
+      }
     },
   },
   watch: {
+    business: {
+      handler(newValue) {
+        // debugger;
+
+        if (newValue && this.businessClone) {
+          if (JSON.stringify(newValue) == JSON.stringify(this.businessClone)) {
+            this.isBusinessClone = true;
+          } else {
+            this.isBusinessClone = false;
+          }
+        }
+      },
+      deep: true,
+    },
     /**
      * Lắng nghe có phải sự kiện sửa
      * CreatedBy: Bien (05/05/2023)
@@ -938,6 +967,9 @@ export default {
         for (let i = 0; i < this.business.RelationShipIds?.length; i++) {
           this.selectedRelationShipIds.push(this.business.RelationShipIds[i]);
         }
+        this.dataGridEmployeeHeader[4].visible = true;
+      } else {
+        this.dataGridEmployeeHeader[4].visible = false;
       }
     },
     /**
@@ -952,6 +984,17 @@ export default {
   },
   data() {
     return {
+      // Hiển thị thông báo
+      isShowDialog: false,
+
+      // Nội dung thông báo
+      labelDialog: "",
+
+      // Khai báo biến theo dõi sự thay đổi của business
+      isBusinessClone: true,
+      // Biến đơn clone
+      businessClone: {},
+
       // Random màu background
       backgroundColors: ["#ebe9fb", "#B9F8E4", "#fee8e7"],
 
@@ -962,7 +1005,7 @@ export default {
       borders: ["1px solid #6153DF", "1px solid #11aa7a", "1px solid #ef292f"],
 
       // Kiểm tra có phải form sửa hay không
-      isEdit: false,
+      isEdit: null,
 
       // Danh sách nhân viên liên quan đã chọn
       selectedEmployeesRelationShipIds: [],
@@ -1043,20 +1086,20 @@ export default {
       // Danh sách bảng nhân viên
       dataGridEmployeeHeader: [
         {
-          caption: "Mã nhân viên",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEECODE"),
           dataField: "EmployeeCode",
         },
         {
-          caption: "Họ và tên",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE"),
           dataField: "FullName",
           cellTemplate: "cell-name",
         },
         {
-          caption: "Vị trí công việc",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.POSITIONNAME"),
           dataField: "PositionName",
         },
         {
-          caption: "Đơn vị công tác",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME"),
           dataField: "DepartmentName",
         },
         {
@@ -1071,7 +1114,7 @@ export default {
               },
             },
           ],
-          visible: true,
+          visible: false,
         },
       ],
 

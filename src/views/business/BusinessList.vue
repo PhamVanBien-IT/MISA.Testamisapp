@@ -1,5 +1,10 @@
 <template>
-  <div :key="businessListKey" class="business-list" v-if="!diy.state.isShowBusinessDetail">
+  <business-detail
+    :businessDetailId="businessDetailId"
+    :isEditBusiness="isEditBusiness"
+    v-if="diy.state.isShowBusinessDetail"
+  ></business-detail>
+  <div :key="businessListKey" class="business-list" v-else>
     <div class="content-top">
       <div class="tittle-content-top">{{ $t("TITLEFORM.BUSSINESS") }}</div>
       <div class="add-content-top">
@@ -62,7 +67,11 @@
               <div class="un-select" @click="btnUnselectedList">
                 {{ $t("BUSINESSFORM.SELECTLIST.UNSELECTED") }}
               </div>
-              <div class="btn-refuse">
+              <div
+                class="btn-refuse"
+                @click="btnRefuseBusiness"
+                v-if="isRefuseList"
+              >
                 <div class="icon-btn-refuse">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +91,11 @@
                 </div>
                 <div class="text-btn-refuse">{{ $t("BUTTON.REFUSE") }}</div>
               </div>
-              <div class="btn-approve">
+              <div
+                class="btn-approve"
+                @click="btnApproveBusiness"
+                v-if="isApproveList"
+              >
                 <div class="icon-btn-approve">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +115,7 @@
                 </div>
                 <div class="text-btn-approve">{{ $t("BUTTON.APPROVE") }}</div>
               </div>
-              <div class="btn-export">
+              <div class="btn-export" @click="btnExportExcelSelected">
                 <div class="icon-btn-export">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -123,10 +136,7 @@
                 </div>
                 <div class="text-btn-export">{{ $t("BUTTON.EXPORT") }}</div>
               </div>
-              <div
-                class="btn-delete"
-                @click="btnDeletedeleteMissionallowanceList"
-              >
+              <div class="btn-delete" @click="btnDeleteMissionallowanceList">
                 <div class="icon-btn-delete">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -180,34 +190,48 @@
               >
               </m-combobox-v-2>
             </div>
-            <div class="icon icon-refresh" @click="btnReFresh"></div>
-            <!-- <div class="tags tooltip-refresh" data-gloss="Tải lại">
-              
-            </div> -->
             <div
-              class="icon icon-filter"
+              class="btn-refresh tags-refesh"
+              data-gloss="Tải lại"
+              @click="btnReFresh"
+            >
+              <div class="icon icon-refresh min-w"></div>
+            </div>
+            <div
+              class="btn-filter tags-filter"
+              data-gloss="Bộ lọc"
               @click="toggleListFilter"
-              :class="{ 'icon-focus': isShowListFilter }"
-            ></div>
+            >
+              <div
+                class="icon icon-filter min-w"
+                :class="{ 'icon-focus': isShowListFilter }"
+              ></div>
+            </div>
             <div
-              class="icon icon-export"
+              class="btn-export-list tags-export"
+              data-gloss="Xuất khẩu"
               @click="btnExportMissionllowances"
-            ></div>
-            <div
-              class="icon icon-setting"
-              @click="btnShowEditColumn($event)"
-              :class="{ 'icon-focus': isShowEditColumn }"
-            ></div>
+            >
+              <div class="icon icon-export min-w"></div>
+            </div>
+            <div class="btn-edit-col tags-edit" data-gloss="Tùy chỉnh cột">
+              <div
+                class="icon icon-setting min-w"
+                @click="btnShowEditColumn($event)"
+                :class="{ 'icon-focus': isShowEditColumn }"
+              ></div>
+            </div>
           </div>
         </div>
         <div class="content-center-content">
           <m-data-grid
-            :dataGrid="dataGridEmployee"
-            :entity="employeesBusiness"
+            :dataGrid="dataSearchFilter"
+            :entity="this.diy.state.employeesBusiness"
             @rowClick="onClickRow"
             @selectedList="selectAll"
             :isShowSelectedRows="isShowSelected"
             :isEditColumn="isShowEditColumn"
+            @Business="handleValueBusiness"
           ></m-data-grid>
         </div>
         <div class="content-footer">
@@ -231,8 +255,8 @@
                 {{ $t("BUSINESSFORM.PAGING.FROM") }}
                 <span style="font-weight: 600">{{ startPage }}</span>
                 {{ $t("BUSINESSFORM.PAGING.TO") }}
-                <span style="font-weight: 600">{{ endPage }}</span
-                >{{ $t("BUSINESSFORM.PAGING.RECORD") }}
+                <span style="font-weight: 600">{{ endPage }}</span>
+                {{ $t("BUSINESSFORM.PAGING.RECORD") }}
               </div>
               <div class="icon icon-prevent" @click="preventPage"></div>
               <div class="icon icon-next" @click="nextPage"></div>
@@ -346,28 +370,57 @@
           </div>
           <div class="high-filter-center list-edit-column">
             <div class="high-filter-data" style="height: 456px">
-              <div
-                class="high-filter-item"
-                id="high-item"
-                v-for="(item, index) in dataGridEmployee"
-                :key="index"
-              >
-                <div class="label-high-filter">
-                  <div class="checkbox-high-filter">
-                    <label>
-                      <input
-                        type="checkbox"
-                        id="chkProdTomove"
-                        v-model="item.visible"
-                      />
-                      <span class="check-box-effect"></span>
-                    </label>
+              <DxScrollView class="scrollable-list" show-scrollbar="always">
+                <DxSortable
+                  :data="dataGridEmployee"
+                  class="sortable-cards"
+                  group="tasksGroup"
+                  @drag-start="onTaskDragStart($event)"
+                  @reorder="onTaskDrop($event)"
+                  @add="onTaskDrop($event)"
+                >
+                  <div
+                    class="high-filter-item"
+                    id="high-item"
+                    v-for="(item, index) in dataGridEmployee"
+                    :key="index"
+                  >
+                    <div class="label-high-filter">
+                      <div class="checkbox-high-filter">
+                        <label>
+                          <input
+                            type="checkbox"
+                            id="chkProdTomove"
+                            v-model="item.visible"
+                          />
+                          <span class="check-box-effect"></span>
+                        </label>
+                      </div>
+                      <div class="label-value">
+                        {{ item.caption }}
+                      </div>
+                      <div class="icon-edit-column">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#686c7b"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-menu"
+                        >
+                          <line x1="3" y1="12" x2="21" y2="12"></line>
+                          <line x1="3" y1="6" x2="21" y2="6"></line>
+                          <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
-                  <div class="label-value">
-                    {{ item.caption }}
-                  </div>
-                </div>
-              </div>
+                </DxSortable>
+              </DxScrollView>
             </div>
           </div>
           <div class="edit-column-footer">
@@ -386,11 +439,7 @@
       </teleport>
     </div>
   </div>
-  <business-detail
-    :businessDetailId="businessDetailId"
-    v-if="diy.state.isShowBusinessDetail"
-    :isEditBusiness="isEditBusiness"
-  ></business-detail>
+
   <m-dialog-v2
     v-if="diy.state.isShowDialog"
     :label="lableDialog"
@@ -407,17 +456,26 @@ import _ from "lodash";
 import MDialogV2 from "@/components/dialog/MDialogV2.vue";
 import MNotify from "@/components/notify/MNotify.vue";
 import missionallowanceApi from "@/api/missionallowanceApi";
-
+import { DxSortable, DxScrollView } from "devextreme-vue";
 export default {
   inject: ["diy"],
   name: "BusinessList",
-  components: { MButton, MComboboxV3, BusinessDetail, MDialogV2, MNotify },
+  components: {
+    MButton,
+    MComboboxV3,
+    BusinessDetail,
+    MDialogV2,
+    MNotify,
+    DxSortable,
+    DxScrollView,
+  },
   props: ["rowClick"],
   created() {
     this.getPaging(1, this.pageSize, "Missionallowances/");
 
     this.getEmployees("Employees/");
 
+    // Gửi data lên localStorage
     if (JSON.parse(localStorage.getItem("dataGridEmployee")) != null) {
       this.dataGridEmployee = JSON.parse(
         localStorage.getItem("dataGridEmployee")
@@ -431,6 +489,52 @@ export default {
   },
   methods: {
     /**
+     * Hàm sự kiện khi kéo thả cột
+     * @param {Sự kiện} e
+     * CreatedBy: Bien (11/05/2023)
+     */
+    onTaskDragStart(e) {
+      e.itemData = e.fromData[e.fromIndex];
+    },
+    /**
+     * Hàm đổi vị trí các cột
+     * @param {Sự kiện} e
+     * CreatedBy: Bien (11/05/2023)
+     */
+    onTaskDrop(e) {
+      e.fromData.splice(e.fromIndex, 1);
+      e.toData.splice(e.toIndex, 0, e.itemData);
+    },
+    /**
+     * Hàm sửa khi click icon sửa trên bảng
+     * @param {Đối tượng muốn sửa} value
+     * CreatedBy: Bien (11/05/2023)
+     */
+    async handleValueBusiness(value) {
+      /* eslint-disable */
+      // debugger
+
+      // this.btnEditBusiness(value)
+      console.log(value);
+      this.businessDetailId = value.MissionallowanceId;
+      this.diy.showisAddBussiness();
+      await this.diy.showBusinessDetail();
+      this.diy.showBusinessEdit();
+      this.labeBusinessDetail = this.$t("TITLEFORM.UPDATE");
+      this.isEditBusiness = true;
+    },
+    /**
+     * Hàm thực hiện khi click icon sửa
+     * CreatedBy: Bien (03/05/2023)
+     */
+    btnEditBusiness(business) {
+      console.log(business.MissionallowanceId);
+      this.businessDetailId = business.MissionallowanceId;
+      this.diy.showBusinessDetail();
+      this.diy.showBusinessEdit();
+      this.isEditBusiness = true;
+    },
+    /**
      * Hàm set thứ tự cột mặc định
      * CreatedBy: Bien (09/05/2023)
      */
@@ -439,6 +543,7 @@ export default {
       this.dataGridEmployee = JSON.parse(
         localStorage.getItem("dataGridEmployee")
       );
+      this.dataSearchFilter = this.dataGridEmployee;
       this.isShowEditColumn = false;
     },
     /**
@@ -447,9 +552,6 @@ export default {
      */
 
     saveEditColumn() {
-      /* eslint-disable */
-    // debugger
-
       this.isShowEditColumn = false;
       this.setLocalStorage(this.dataGridEmployee);
       this.dataGridEmployee = JSON.parse(
@@ -468,8 +570,8 @@ export default {
      * Hàm xuất khẩu nhân viên
      * CreatedBy: Bien (03/05/2023)
      */
-    btnExportMissionllowances() {
-      const response = missionallowanceApi.exportMissionallowances(
+    async btnExportMissionllowances() {
+      const response = await missionallowanceApi.exportMissionallowances(
         this.textSearch
       );
       console.log(response);
@@ -480,16 +582,84 @@ export default {
      */
     handleFunctionDialog() {
       if (this.selectedList.length > 0) {
-        this.deletedeleteMissionallowanceList("Missionallowances");
-      } else {
-        this.deleteBusiness();
+        this.deleteMissionallowanceList("Missionallowances");
+      }
+    },
+    /**
+     * Hàm hỏi trước khi xóa nhiều đơn công tác
+     * CreatedBy: Bien (03/05/2023)
+     */
+    btnDeleteMissionallowanceList() {
+      this.lableDialog = this.$t("CONTENTDIALOG.DELETES");
+      this.diy.showDialog();
+      this.selectedListIds = this.selectedList.map(
+        (object) => object.MissionallowanceId
+      );
+    },
+    /**
+     * Nút từ chối danh sách đơn
+     * CreatedBy: Bien (10/05/2023)
+     */
+    btnRefuseBusiness() {
+      // debugger;
+      this.selectedListIds = this.selectedList.map(
+        (object) => object.MissionallowanceId
+      );
+      this.updateMissionallowanceList(this.status[3].key);
+    },
+    /**
+     * Nút duyệt danh sách đơn
+     * CreatedBy: Bien (10/05/2023)
+     */
+    btnApproveBusiness() {
+      this.selectedListIds = this.selectedList.map(
+        (object) => object.MissionallowanceId
+      );
+      this.updateMissionallowanceList(this.status[2].key);
+    },
+    /**
+     * Hàm xuất khẩu danh sách đơn đã chọn
+     * CreatedBy: Bien (10/05/2023)
+     */
+    async btnExportExcelSelected() {
+      this.selectedListIds = this.selectedList.map(
+        (object) => object.MissionallowanceId
+      );
+      const response =
+        await missionallowanceApi.exportMissionallowancesSelected(
+          this.selectedListIds
+        );
+
+      console.log(response);
+      this.selectedList = [];
+      this.isShowSelected = false;
+    },
+    /**
+     * API Cập nhật trạng thái 1 danh sách
+     * @param {Trạng thái muốn cập nhật} status
+     * CreatedBy: Bien (10/05/2023)
+     */
+    async updateMissionallowanceList(status) {
+      const response = await missionallowanceApi.updateStatusList(
+        this.selectedListIds,
+        status
+      );
+
+      console.log(response);
+      if (response.IsSuccess) {
+        this.labelNotify = this.$t("NOTIFY.APPROVED");
+        this.diy.showNotify();
+        this.getPaging(1, this.pageSize, "Missionallowances/");
+        this.diy.showSearchBusiness();
+        this.selectedList = [];
+        this.isShowSelected = false;
       }
     },
     /**
      * Hàm xóa nhiều đơn công tác
      * CreaetedBy: Bien (03/05/2023)
      */
-    async deletedeleteMissionallowanceList(baseUrl) {
+    async deleteMissionallowanceList(baseUrl) {
       const response = await baseApi.deleteList(baseUrl, this.selectedListIds);
 
       console.log(response);
@@ -503,61 +673,7 @@ export default {
         this.selectedList = [];
       }
     },
-    /**
-     * Hàm hỏi trước khi xóa nhiều đơn công tác
-     * CreatedBy: Bien (03/05/2023)
-     */
-    btnDeletedeleteMissionallowanceList() {
-      this.lableDialog = this.$t("CONTENTDIALOG.DELETES");
-      this.diy.showDialog();
-      this.selectedListIds = this.selectedList.map(
-        (object) => object.MissionallowanceId
-      );
 
-      console.log(this.selectedListIds);
-    },
-    /**
-     * Hàm thực hiện khi click icon xóa
-     * CreatedBy: Bien (03/05/2023)
-     */
-    btnDeleteBusiness(id) {
-      this.lableDialog = this.$t("CONTENTDIALOG.DELETE");
-      this.diy.showDialog();
-      this.businessId = id;
-    },
-    /**
-     * Hàm thực hiện khi click icon sửa
-     * CreatedBy: Bien (03/05/2023)
-     */
-    btnEditBusiness(business) {
-      console.log(business.MissionallowanceId);
-      this.businessDetailId = business.MissionallowanceId;
-      this.diy.showBusinessDetail();
-      this.diy.showBusinessEdit();
-      this.labeBusinessDetail = this.$t("TITLEFORM.UPDATE");
-      this.isEditBusiness = true;
-    },
-    /**
-     * API Xóa 1 đơn công tác
-     * @param {Đường dẫn API} baseUrl
-     * @param {Id đơn công tác muốn xóa} id
-     * CreatedBy: Bien (03/05/2023)
-     */
-    async deleteBusiness() {
-      const response = await baseApi.delete(
-        "Missionallowances/",
-        this.businessId
-      );
-
-      console.log(response);
-
-      if (response.IsSuccess) {
-        this.labelNotify = this.$t("NOTIFY.DELETE");
-        this.diy.showNotify();
-        this.getPaging(1, this.pageSize, "Missionallowances/");
-        this.diy.clearDialog();
-      }
-    },
     /**
      * Hàm lấy thông tin được chọn theo id
      * @param {Id được chọn} id
@@ -569,6 +685,7 @@ export default {
       this.diy.clearBusinessEdit();
       this.diy.clearIsAddBussiness();
       this.labeBusinessDetail = this.$t("TITLEFORM.DETAIL");
+      this.isEditBusiness = false;
     },
     /**
      * Hàm kiểm tra lấy danh sách nhân viên
@@ -623,7 +740,9 @@ export default {
       this.isShowSelected = false;
       this.selectedList = [];
     },
+    // showFuncApproved(isShow, statusKey){
 
+    // },
     /**
      * Hàm thêm nhân viên vào danh sách được chọn
      * @param {Danh sách chọn} selectedRows
@@ -631,9 +750,37 @@ export default {
      */
     selectAll(selectedRows) {
       /* eslint-disable */
-      debugger;
+      // debugger;
 
       this.selectedList = selectedRows;
+
+      // Ẩn hiện nút khi trạng thái là chờ duyệt
+      const listPending = this.selectedList.find(
+        (item) => item.Status == this.status[1].key
+      );
+      if (listPending) {
+        this.isRefuseList = true;
+        this.isApproveList = true;
+      } else {
+        // Ẩn hiện nút duyệt
+        const list = this.selectedList.find(
+          (item) => item.Status == this.status[3].key
+        );
+        if (list) {
+          this.isApproveList = true;
+        } else {
+          this.isApproveList = false;
+        }
+        // Ẩn hiện nút từ chối
+        const listApprove = this.selectedList.find(
+          (item) => item.Status == this.status[2].key
+        );
+        if (listApprove) {
+          this.isRefuseList = true;
+        } else {
+          this.isRefuseList = false;
+        }
+      }
 
       if (this.selectedList.length > 0) {
         this.diy.clearSearchBusiness();
@@ -712,7 +859,6 @@ export default {
     async getPaging(pageNumber, pageSize, baseUrl) {
       try {
         this.diy.showLoading();
-
         // Nhận dữ liệu khi tìm kiếm
         const response = await baseApi.getPaging(
           pageNumber,
@@ -723,7 +869,7 @@ export default {
           this.misaCode
         );
         this.indexPage = pageNumber;
-        this.employeesBusiness = response.Data;
+        this.diy.setDataBusiness(response.Data);
         this.totalPage = response.TotalPage;
         this.totalRecord = response.TotalRecord;
         this.diy.clearLoading();
@@ -816,11 +962,11 @@ export default {
   watch: {
     /**
      * Thay đổi cột trong bảng đơn khi lưu tùy chỉnh cột
-     * @param {Gía trị có thay đổi cột hay không} newValue 
+     * @param {Gía trị có thay đổi cột hay không} newValue
      * CreatedBy: Bien (09/05/2023)
      */
-    isShowEditColumn:function(newValue){
-      if(!newValue){
+    isShowEditColumn: function (newValue) {
+      if (!newValue) {
         this.businessListKey += 1;
       }
     },
@@ -840,8 +986,11 @@ export default {
   },
   data() {
     return {
-      // Hiển thị khi chọn nhiều
-      // isSelectList:true,
+      // Hiển thị từ chối
+      isRefuseList: false,
+
+      // Hiển thị duyệt
+      isApproveList: false,
 
       // Lọc theo đơn vị
       misaCode: "",
@@ -871,7 +1020,7 @@ export default {
       lableDialog: null,
 
       // Tiêu đề đơn chi tiết
-      labeBusinessDetail: null,
+      labeBusinessDetail: this.$t("TITLEFORM.UPDATE"),
 
       // Không cho chọn combobox
       isDisableCombobox: false,
@@ -933,7 +1082,9 @@ export default {
       // Danh sách tìm kiếm lọc nâng cao
       dataSearchFilter: {},
 
-      businessListKey:0,
+      // key danh sách đơn
+      businessListKey: 0,
+
       // Danh sách tiêu đề bảng đơn
       dataGridEmployee: [],
 
@@ -974,7 +1125,7 @@ export default {
           dataField: "RequestDate",
           fixed: false,
           dataType: "date",
-          format: "dd/MM/yyyy hh:MM",
+          format: "dd/MM/yyyy hh:mm",
           visible: true,
         },
         {
@@ -982,7 +1133,7 @@ export default {
           dataField: "FromDate",
           fixed: false,
           dataType: "date",
-          format: "dd/MM/yyyy hh:MM",
+          format: "dd/MM/yyyy hh:mm",
           visible: true,
         },
         {
@@ -990,7 +1141,7 @@ export default {
           dataField: "ToDate",
           fixed: false,
           dataType: "date",
-          format: "dd/MM/yyyy hh:MM",
+          format: "dd/MM/yyyy hh:mm",
           visible: true,
         },
         {
@@ -1058,28 +1209,11 @@ export default {
           dataType: "string",
           cellTemplate: "cell-status",
           visible: true,
+          width: "150",
         },
         {
-          type: "buttons",
           fixed: true,
-          buttons: [
-            {
-              name: "Edit",
-              text: "Edit",
-              icon: "edit",
-              onClick: (e) => {
-                this.btnEditBusiness(e.row.data);
-              },
-            },
-            {
-              name: "Delete",
-              text: "Delete",
-              icon: "trash",
-              onClick: (e) => {
-                this.btnDeleteBusiness(e.row.data.MissionallowanceId);
-              },
-            },
-          ],
+          cellTemplate: "cell-function",
           visible: true,
         },
       ],
@@ -1112,19 +1246,19 @@ export default {
       status: [
         {
           key: 0,
-          value: this.$t('STATUSNAME.ALL'),
+          value: this.$t("STATUSNAME.ALL"),
         },
         {
           key: 1,
-          value: this.$t('STATUSNAME.PENDING'),
+          value: this.$t("STATUSNAME.PENDING"),
         },
         {
           key: 2,
-          value: this.$t('STATUSNAME.APPROVED'),
+          value: this.$t("STATUSNAME.APPROVED"),
         },
         {
           key: 3,
-          value: this.$t('STATUSNAME.REFUSE'),
+          value: this.$t("STATUSNAME.REFUSE"),
         },
       ],
 

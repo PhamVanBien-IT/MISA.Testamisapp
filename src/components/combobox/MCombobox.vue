@@ -4,7 +4,9 @@
       {{ title }} <sup style="color: red">{{ required }}</sup>
     </div>
     <div class="combobox" @click="toggleComboboxList">
-      <div class="combobox-input">
+      <div class="combobox-input" 
+      :tabindex="tabindex"
+  >
         <input
           @keydown="keyDownSelectItem"
           @input="onSearchItem"
@@ -14,7 +16,6 @@
           class="text-form"
           type="text"
           :class="{ 'bd-red': this.isValidate }"
-          :tabindex="tabindex"
           :name="nameInput"
           :ref="nameInput"
           @blur="hanldeBlurInput"
@@ -254,87 +255,54 @@ export default {
      * Hàm bắt sự kiện keydown của input combobox
      * CreatedBy: Bien ( 11/1/2023)
      */
-    // keyDownSelectItem(event) {
-    //   const keyCode = event.keyCode;
-    //   switch (keyCode) {
-    //     case this.$MISAEnum.KEY_CODE.ENTER:
-    //       this.unUpIndexItemSelect = true;
-    //       // Xác định item đang chọn dựa vào index
-    //       // eslint-disable-next-line no-case-declarations
-    //       const item = this.entitySearch[this.indexItemSelect];
-    //       this.itemOnSelect(item);
-    //       break;
-    //     case this.$MISAEnum.KEY_CODE.ROW_UP:
-    //       //  Kiểm tra hiển thị
-    //       if (!this.isShowData) {
-    //         this.diy.showDataCombobox();
-    //       }
+    keyDownSelectItem(event) {
+      const keyCode = event.keyCode;
 
-    //       if (this.indexItemSelect > 0 && !this.unUpIndexItemSelect) {
-    //         this.indexItemSelect--;
-    //       } else {
-    //         this.unUpIndexItemSelect = false;
-    //       }
-    //       break;
-    //     case this.$MISAEnum.KEY_CODE.ROW_DOWN:
-    //       //  Kiểm tra hiển thị
-    //       if (!this.isShowData) {
-    //         this.diy.showDataCombobox();
-    //       }
-    //       // eslint-disable-next-line no-case-declarations
-    //       let maxLength = this.entitySearch.length;
-    //       if (
-    //         this.indexItemSelect < maxLength - 1 &&
-    //         !this.unUpIndexItemSelect
-    //       ) {
-    //         this.indexItemSelect++;
-    //       } else {
-    //         this.unUpIndexItemSelect = false;
-    //       }
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // },
+      switch (keyCode.toString()) {
+        case this.$t('KEYCODE.ENTER'):
+          this.unUpIndexItemSelect = true;
+          // Xác định item đang chọn dựa vào index
+          // eslint-disable-next-line no-case-declarations
+          const item = this.entitySearch[this.indexItemSelect];
+          this.itemOnSelect(item);
+          this.isShowDataList = false;
+          break;
+        case this.$t('KEYCODE.UP'):
+          //  Kiểm tra hiển thị
+          if (!this.isShowDataList) {
+            this.isShowDataList = true;
+          }
 
-    /**
-     * Hàm bắt sự kiện keydown của button hiển thị
-     * CreatedBy: Bien ( 11/1/2023)
-     */
-    // keyDownSelectItemBtn(event) {
-    //   const keyCode = event.keyCode;
-    //   switch (keyCode) {
-    //     case this.$MISAEnum.KEY_CODE.ENTER:
-    //       this.diy.clearDataCombobox();
-    //       // Xác định item đang chọn dựa vào index
-    //       // eslint-disable-next-line no-case-declarations
-    //       const item = this.entitySearch[this.indexItemSelect];
-    //       this.itemOnSelect(item);
-    //       break;
-    //     case this.$MISAEnum.KEY_CODE.ROW_UP:
-    //       //  Kiểm tra hiển thị
-    //       if (!this.diy.state.showDataCombobox) {
-    //         this.diy.showDataCombobox();
-    //       }
-    //       if (this.indexItemSelect > 0) {
-    //         this.indexItemSelect--;
-    //       }
-    //       break;
-    //     case this.$MISAEnum.KEY_CODE.ROW_DOWN:
-    //       //  Kiểm tra hiển thị
-    //       if (!this.diy.state.showDataCombobox) {
-    //         this.diy.showDataCombobox();
-    //       }
-    //       // eslint-disable-next-line no-case-declarations
-    //       let maxLength = this.entitySearch.length;
-    //       if (this.indexItemSelect < maxLength - 1) {
-    //         this.indexItemSelect++;
-    //       }
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // },
+          if (this.indexItemSelect > 0 && !this.unUpIndexItemSelect) {
+            this.indexItemSelect--;
+          } else {
+            this.unUpIndexItemSelect = false;
+          }
+          break;
+        case this.$t('KEYCODE.DOWN'):
+          //  Kiểm tra hiển thị
+          if (!this.isShowDataList) {
+            this.isShowDataList = true;
+          }
+          // eslint-disable-next-line no-case-declarations
+          let maxLength = this.entitySearch.length;
+          if (
+            this.indexItemSelect < maxLength - 1 &&
+            !this.unUpIndexItemSelect
+          ) {
+            this.indexItemSelect++;
+          } else {
+            this.unUpIndexItemSelect = false;
+          }
+          break;
+          case this.$t('KEYCODE.TAB'): 
+            this.isShowDataList = false;
+          break;
+          
+        default:
+          break;
+      }
+    },
   },
   computed: {
     /**

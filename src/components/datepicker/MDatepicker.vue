@@ -18,7 +18,8 @@
         :calendar-options="{ cellStyle: { backgroundColor: '#4CAF50' } }"
         :picker-type="'calendar'"
         :showDropDownButton="!this.isValidate"
-        :onValueChanged="handleDateTime"
+        :onApplyButtonClick="handleDateTime"
+        :tabindex="this.tabindex"
       />
       <div
         class="icon icon-validate-datepicker tags"
@@ -43,7 +44,8 @@ export default {
     "modelValue",
     "labelValidate",
     "isValidate",
-    "name"
+    "name",
+    "tabindex"
   ],
   components: {
     DxDateBox,
@@ -53,7 +55,11 @@ export default {
     if (this.modelValue) {
       this.value = this.modelValue;
     } else {
-      this.value = new Date(this.now.setHours(12, 0, 0));
+      if(new Date().getHours() < 12){
+        this.value = new Date(this.now.setHours(12, 0, 0));
+      }else{
+      this.value = new Date(this.now.setHours(18, 0, 0));
+      }
     }
 
     this.nameInput = this.name;
@@ -64,21 +70,21 @@ export default {
      * Hàm validate khi blur
      * CreatedBy: Bien (04/04/2023)
      */
-    // handleDateTime() {
-    //   /* eslint-disable */
-    //   debugger;
-    //     if (this.modelValue) {
-    //       this.$parent.validateList[`${this.nameInput}`].isStatus = true;
-    //       this.$parent.validateList[`${this.nameInput}`].labelError = this.$t(
-    //         "ERRORVALIDATE.REQUIRED",
-    //         {
-    //           item: this.labelValidate,
-    //         }
-    //       );
-    //     } else {
-    //       this.$parent.validateList[`${this.nameInput}`].isStatus = false;
-    //     }
-    // },
+    handleDateTime() {
+      /* eslint-disable */
+      // debugger;
+        if (!this.modelValue) {
+          this.$parent.validateList[`${this.nameInput}`].isStatus = true;
+          this.$parent.validateList[`${this.nameInput}`].labelError = this.$t(
+            "ERRORVALIDATE.REQUIRED",
+            {
+              item: this.labelValidate,
+            }
+          );
+        } else {
+          this.$parent.validateList[`${this.nameInput}`].isStatus = false;
+        }
+    },
   },
   watch: {
     /**

@@ -1,10 +1,9 @@
 <template>
   <div class="base-input">
-    <div class="input-container input-v2">
+    <div class="input-container input-v2" :tabindex="tabindexInput">
       <input
         :name="nameInput"
         :ref="nameInput"
-        :tabindex="tabindexInput"
         :type="typeInput"
         v-model="value"
         :id="idInput"

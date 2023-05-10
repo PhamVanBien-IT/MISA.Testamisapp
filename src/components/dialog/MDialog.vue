@@ -11,18 +11,18 @@
       <div class="dialog__btn">
         <MButtonVue
           label="Hủy"
-          class="btn-cancel"
+          class="btn-cancel-1-dialog"
           @click="btnCloseDialog"
         ></MButtonVue>
         <MButtonVue
           label="Không lưu"
           class="btn-cancel-dialog"
-          @click="btnCloseEPLDetailOnClick"
+          @click="btnNoSave"
         ></MButtonVue>
         <MButtonVue
           label="Lưu"
           class="btn-dialog"
-          @click="funcEditEmployee"
+          @click="btnSave"
         ></MButtonVue>
       </div>
     </div>
@@ -34,7 +34,7 @@ import MButtonVue from "../button/MButton.vue";
 export default {
   inject: ["diy"],
   name: "MDialog",
-  props: ["label", "func", "classIcon", "funcEPL","inputValidate"],
+  props: ["label", "classIcon", "funcEPL"],
   components: {
     MButtonVue,
   },
@@ -44,39 +44,29 @@ export default {
   },
   methods: {
     /**
-     * Sự kiện đóng EPLDetail
+     * Sự kiện click không lưu
      * CreatedBy: Bien (4/1/2023)
      */
-    btnCloseEPLDetailOnClick() {
-      this.diy.clearEPLDetail();
-      this.diy.clearDialogDeleteEmployees();
-      this.diy.clearDialog();
+     btnNoSave() {
+      this.diy.clearBusinessDetail();
+      this.diy.clearDialogDetail();
     },
 
     /**
-     * Sự kiện đóng Dialog
+     * Sự kiện click nút hủy
      * CreatedBy: Bien (4/1/2023)
      */
     btnCloseDialog() {
-      this.diy.clearDialog();
-      this.diy.clearDialogDeleteEmployees();
-      this.diy.clearDialogValidate();
-      this.diy.clearDialogDevelop();
-      if(this.inputValidate){
-        this.$parent.inputOnFocus(this.inputValidate);
-      }else{
-      this.$parent.inputOnFocus('EmployeeCode');
-      }
+      this.diy.clearDialogDetail();
     },
 
     /**
-     * Hàm truyền dữ liệu ra employeeDetail
+     * Sựu kiện click lưu
      * CreatedBy: Bien (2/1/2023)
      */
-    funcEditEmployee() {
-      this.$emit("EditEPL", this.funcEPL);
-      this.diy.clearFunctionAll();
-      this.$parent.isFunctionAll = false;
+     btnSave() {
+      this.$emit("funcSave", this.funcEPL);
+      this.diy.clearDialogDetail();
     },
   },
 

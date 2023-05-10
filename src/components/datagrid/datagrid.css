@@ -25,7 +25,9 @@
 #gridContainer > div > div.dx-datagrid-tracker.dx-state-invisible {
     display: none;
 }
-
+#gridContainer > div > div.dx-datagrid-headers.dx-datagrid-nowrap > div.dx-datagrid-scrollable-simulated.dx-datagrid-content.dx-datagrid-scroll-container.dx-datagrid-content-fixed > table > tbody > tr{
+    background-color: #F5F5F5;
+}
 #gridContainer
     > div
     > div.dx-datagrid-headers.dx-datagrid-nowrap.dx-state-focused
@@ -65,6 +67,10 @@
 }
 .dx-state-hover {
     outline: none;
+    background-color: #ffeee4 !important;
+}
+.dx-state-hover .container-function{
+    display: flex;
 }
 .dx-checkbox.dx-state-hover .dx-checkbox-icon {
     border: 2px solid #7e8392 !important;
@@ -113,7 +119,7 @@
     > table
     > tbody
     > tr {
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
     color: #212121;
     font-size: 14px;
     font-weight: 800;
@@ -139,10 +145,7 @@
     color: red;
 }
 
-.dx-widget .dx-checkbox .dx-select-checkbox .dx-datagrid-checkbox-size .dx-state-hover {
-    border: none;
-    background-color: aquamarine;
-}
+
 #dx-col-16,
 #dx-col-15,
 #dx-col-14,
@@ -160,12 +163,8 @@
     color: #212121 !important;
     font-size: 14px !important;
     font-weight: 800 !important;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5 !important;
 }
-
-/* .dx-datagrid .dx-row:hover{
-    background-color: #ffede2 !important;
-} */
 
 #gridContainer
     > div
@@ -176,21 +175,61 @@
     > tr{
         line-height: 36px;
     }
-/* #gridContainer
-    > div
-    > div.dx-datagrid-rowsview.dx-datagrid-nowrap.dx-fixed-columns.dx-scrollable.dx-visibility-change-handler.dx-scrollable-both.dx-scrollable-simulated
-    > div.dx-datagrid-content.dx-datagrid-content-fixed
-    > table
-    > tbody
-    > td:hover {
-    background-color: #ffede2;
-} */
-.my-datagrid .dx-datagrid-table .dx-row > td:hover{
-    background-color: #ffede2;
-}
+
 #gridContainer > div > div.dx-datagrid-headers.dx-datagrid-nowrap > div > table > tbody > tr{
-    background-color: #f5f5f5;
     color: #212121 !important;
     font-size: 14px !important;
     font-weight: 800 !important;
+}
+.container-function{
+    position: absolute;
+    margin-top: -7px;
+    padding-top: -30px;
+    right: 0px;
+    width: 100px;
+    height: 53px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+    display: none;
+}
+.func-edit{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 2px 2px rgba(153, 144, 144, 0.3);
+    cursor: pointer;
+
+}
+.func-delete{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 2px 2px rgba(156, 148, 148, 0.3);
+    cursor: pointer;
+}
+
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td, .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td, .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td, .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td {
+    background-color: #ffede2 !important;
+
+}
+.dx-datagrid-headers{
+    background-color: #f5f5f5;
+}
+.dx-datagrid-headers:hover{
+    background-color: #f5f5f5;
+}
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit-with-icons .dx-link{
+    box-shadow: 2px 2px 2px 2px rgba(153, 144, 144, 0.3);
+    color: #fe6000;
 }

@@ -368,52 +368,52 @@ export default {
       ],
       // Danh sách bảng nhân viên
       dataGridEmployees: [
-        {
-          caption: "Mã nhân viên",
+      {
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEECODE"),
           dataField: "EmployeeCode",
         },
         {
-          caption: "Họ và tên",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE"),
           dataField: "FullName",
           cellTemplate: "cell-name",
         },
         {
-          caption: "Vị trí công việc",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.POSITIONNAME"),
           dataField: "PositionName",
         },
         {
-          caption: "Đơn vị công tác",
+          caption: this.$t("BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME"),
           dataField: "DepartmentName",
         },
       ],
       // Tất cả phòng ban
-      treeDepartment: [
-        {
-          id: "1",
-          text: "Công ty Test (Dự án C&B)",
-          items: [
-            {
-              id: "1/1",
-              text: "Văn phòng",
-              items: [
-                {
-                  id: "1/1/1",
-                  text: "Ban giám đốc",
-                },
-                {
-                  id: "1/1/2",
-                  text: "Phòng kinh doanh",
-                },
-              ],
-            },
-            { id: "1/2", text: "Nhà máy" },
-          ],
-        },
-        {
-          id: "2",
-          text: "Công ty ROBOCAR",
-        },
-      ],
+      // treeDepartment: [
+      //   {
+      //     id: "1",
+      //     text: "Công ty Test (Dự án C&B)",
+      //     items: [
+      //       {
+      //         id: "1/1",
+      //         text: "Văn phòng",
+      //         items: [
+      //           {
+      //             id: "1/1/1",
+      //             text: "Ban giám đốc",
+      //           },
+      //           {
+      //             id: "1/1/2",
+      //             text: "Phòng kinh doanh",
+      //           },
+      //         ],
+      //       },
+      //       { id: "1/2", text: "Nhà máy" },
+      //     ],
+      //   },
+      //   {
+      //     id: "2",
+      //     text: "Công ty ROBOCAR",
+      //   },
+      // ],
     };
   },
 };

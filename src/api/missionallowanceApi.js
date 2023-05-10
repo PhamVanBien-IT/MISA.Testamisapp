@@ -1,9 +1,26 @@
 import axios from "axios";
+import axiosClient from "./axiosClient";
 /**
  * Các API liên quan đến đơn công tác
  * CreatedBy: Bien (25/01/2023)
  */
 const missionallowanceApi = {
+  /**
+   * API xóa hàng loạt 
+   * @param {*Danh sách id đơn công tác muốn cập nhật} Ids
+   * @returns
+   * 1: Nếu xóa thành công
+   * 0: Nếu xóa thất bại
+   * CreatedBy: Bien (20/01/2023)
+   */
+   updateStatusList:(ids, status) => {
+    try {
+      const data = ids;
+        return axiosClient.put(`Missionallowances?status=${status}`, data)
+    } catch (error) {
+        console.log("Lỗi cập nhập trạng thái nhiều đơn: "+ error);
+    }
+},
   /**
    * API xuất khẩu đơn công tác
    * CreatedBy: Bien (20/02/2023)
@@ -34,13 +51,12 @@ const missionallowanceApi = {
    */
   exportMissionallowancesSelected: (missionallowances) => {
     try {
+      const data = missionallowances;
       axios({
-        url: `https://localhost:7185/api/Missionallowances/ExportExcel`,
+        url: `https://localhost:7185/api/Missionallowances/ExportExcelSelected`,
         method: "POST",
         responseType: "blob",
-        data:{
-            missionallowances
-        }
+        data
       }).then((response) => {
         window.open();
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));

@@ -3,12 +3,13 @@
     <div class="label-input">
       {{ label }} <sup style="color: red">{{ required }}</sup>
     </div>
-    <div class="textarea-container">
+    <div class="textarea-container"
+    :tabindex="tabindexInput"
+    >
       <textarea
         class="col-8 text-textarea"
         :name="nameInput"
         :ref="nameInput"
-        :tabindex="tabindexInput"
         :type="typeInput"
         v-model="value"
         :id="idInput"

@@ -1,6 +1,7 @@
 <template>
-    <div>
+    <div class="overlay">
         <div class="loading" >
+            <img src="../../assets/images/loading.gif" class="img-loading" alt="">
    </div>
     </div>
 </template>

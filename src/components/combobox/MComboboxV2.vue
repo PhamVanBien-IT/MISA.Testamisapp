@@ -41,7 +41,7 @@
           />
         </div>
         <div class="combobox-data-v2-list">
-          <dx-tree-view :items="treeData" @itemClick="handleItemClick" />
+          <dx-tree-view :items="treeData" @itemClick="handleItemClick" :noDataText="$t('DATA.NULL')"/>
         </div>
         <div class="combobox-data-v2-footer" v-if="isShowFooter">
           <!-- <div class="combobox-v2-checkbox"> -->
@@ -49,7 +49,7 @@
             <input type="checkbox" id="chkProdTomove" />
             <span class="check-box-effect"></span>
           </label>
-          <div>Hiển thị đơn vị ngừng theo dõi</div>
+          <div>{{ $t('COMBOBOXDEPARTMENT') }}</div>
           <!-- </div> -->
         </div>
       </div>

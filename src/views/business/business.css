@@ -39,6 +39,7 @@
 }
 .request-help {
     margin-bottom: 15px;
+    min-width: 150px;
 }
 .tittle-employee {
     display: flex;
@@ -77,7 +78,7 @@
     width: 100%;
     height: 100%;
     /* flex-shrink: 0; */
-    min-width: 320px;
+    min-width: 260px;
 }
 .department {
     margin-top: 5px;
@@ -252,6 +253,7 @@
     cursor: pointer;
 }
 .employee-support {
+    position: relative;
     height: 27px;
     width: 100%;
     margin-bottom: 16px;
@@ -267,10 +269,12 @@
 }
 .number-select {
     margin-right: 24px;
+    min-width: 63px;
 }
 .un-select {
     color: #ff6161;
     margin-right: 24px;
+    min-width: 53px;
     cursor: pointer;
 }
 .btn-delete,
@@ -341,6 +345,64 @@
     left: 18px;
 }
 .tooltip-refresh {
-    width: 20px;
-    height: 20px;
+    width: 36px;
+    height: 36px;
+}
+.icon-dx{
+    background: url('../../assets/images/Icon.aecbe25.svg') no-repeat -104px -58px;
+	width: 8px;
+	height: 5px;
+    position: absolute;
+    right: 13px;
+    top: 16px;
+    filter: grayscale(100%) brightness(80%);
+    z-index: 99;
+    opacity: 0.4;
+}
+
+#cbxStatus:hover,
+#cbxEmployeeCensor:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-right > div.request-help > div > div.textarea-container > textarea:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.reason-bussiness.mg-t-7 > div > div.textarea-container > textarea:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.address.mg-t-7 > div > div.input-container > input:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.bussiness-day.mg-t-7 > div > div.input-container > input:hover,
+#cbxSupplier:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.comeback-date > div > div.dx-field-value > div:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.out-date > div > div.dx-field-value > div:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-right > div.mg-t-7.employee-support > div.dx-field-value > div > div > div > div.dx-texteditor-input-container.dx-tag-container:hover,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-right > div:nth-child(2) > div.dx-field-value > div > div > div > div.dx-texteditor-input-container.dx-tag-container:hover{
+    background-color: #fff !important;
+    border: 1px solid #ec5504 !important;
+    border-radius: 4px;
+}
+.dx-texteditor.dx-editor-outlined{
+    border: none;
+}
+#gridContainer > div > div.dx-datagrid-headers.dx-datagrid-nowrap > div > table > tbody > tr:hover{
+    background-color: #f5f5f5 !important;
+}
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected{
+    background-color: #ffeee4;
+}
+.btn-edit-col,
+.btn-export-list,
+.btn-filter,
+.btn-refresh{
+    position: relative;
+}
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-right > div.mg-t-7.employee-support > div.dx-field-value > div > div > div > div.dx-texteditor-input-container.dx-tag-container,
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-right > div:nth-child(2) > div.dx-field-value > div > div > div > div.dx-texteditor-input-container.dx-tag-container{
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.dx-texteditor-container{
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.icon-edit-column{
+    position: absolute;
+    right: 20px;
+    cursor: all-scroll;
 }

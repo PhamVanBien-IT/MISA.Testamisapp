@@ -4,7 +4,9 @@
         {{ title }} <sup style="color: red">{{ required }}</sup>
       </div>
       <div class="combobox" @click="toggleComboboxList">
-        <div class="combobox-input">
+        <div class="combobox-input"
+        :tabindex="tabindex"
+        >
           <input
             @keydown="keyDownSelectItem"
             @input="onSearchItem"
@@ -14,7 +16,6 @@
             class="text-form"
             type="text"
             :class="{ 'bd-red': this.isValidate }"
-            :tabindex="tabindex"
             :name="nameInput"
             :ref="nameInput"
             @blur="hanldeBlurInput"

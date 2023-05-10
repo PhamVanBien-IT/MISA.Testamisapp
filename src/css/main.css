@@ -42,6 +42,9 @@ body {
     top: 10px;
     right: 8px;
 }
+.icon-validate-datepicker:hover{
+    border: none;
+}
 .tags{
     display: inline;
     border-radius: 5px;
@@ -79,4 +82,76 @@ body {
     top: -14px;
     left: 2px;
 }
-
+.tags-edit,
+.tags-export,
+.tags-filter,
+.tags-refesh{
+    display: inline;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #fff;
+    content: attr(data-gloss);
+    /* position: absolute; */
+    z-index: 98;
+    text-align: center;
+}
+.tags-edit:hover:after,
+.tags-export:hover:after,
+.tags-filter:hover:after,
+.tags-refesh:hover:after{
+    background: #212121 !important;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #fff;
+    content: attr(data-gloss);
+    padding: 5px;
+    position: absolute;
+    z-index: 98;
+    text-align: center;
+    width: 60px;
+    height: 20px;
+    line-height: 20px;
+}
+.tags-edit:hover:after{
+    bottom: -38px;
+    right: -19px;
+}
+.tags-export:hover:after{
+    bottom: -38px;
+    right: -19px;
+}
+.tags-filter:hover:after{
+    bottom: -38px;
+    right: -19px;
+}
+.tags-refesh:hover:after{
+    bottom: -38px;
+    left: -7px;
+}
+.tags-edit:hover:before,
+.tags-export:hover:before,
+.tags-filter:hover:before,
+.tags-refesh:hover:before{
+    border: solid;
+    border-color: #212121 transparent;
+    border-width: 0px 6px 6px 6px;
+    content: "";
+    position: absolute;
+    z-index: 100;
+}
+.tags-edit:hover:before{
+    bottom: -9px;
+    left: 22px;
+}
+.tags-export:hover:before{
+    bottom: -9px;
+    left: 22px;
+}
+.tags-filter:hover:before{
+    bottom: -9px;
+    left: 22px;
+}
+.tags-refesh:hover:before{
+    bottom: -9px;
+    left: 48%;
+}

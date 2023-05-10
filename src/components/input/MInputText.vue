@@ -3,11 +3,12 @@
     <div class="label-input">
       {{ label }} <sup style="color: red">{{ required }}</sup>
     </div>
-    <div class="input-container">
+    <div class="input-container" 
+    :tabindex="this.tabindex"
+    >
       <input
         :name="nameInput"
         :ref="nameInput"
-        :tabindex="tabindexInput"
         :type="typeInput"
         v-model="value"
         :id="idInput"
@@ -55,7 +56,6 @@ export default {
     this.typeInput = this.type;
 
     // Nhận giá trị tabindex
-    this.tabindexInput = this.tabindex;
 
     // Nhận giá trị id truyền vào
     this.idInput = this.id;
@@ -164,9 +164,6 @@ export default {
 
       // Khai baso biến nhận type
       typeInput: null,
-
-      // Khai báo nhận biến tabindex
-      tabindexInput: null,
 
       // Khai báo biến nhận placeholder
       placeholderText: null,
