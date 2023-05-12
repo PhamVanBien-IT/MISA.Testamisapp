@@ -17,6 +17,7 @@ const state = reactive({
   isAddBussiness:false,
   isShowDialog:false,
   isShowDialogDetail:false,
+  isShowDialogDuplicate:false,
   isShowNotify:false,
   isShowNotifyError:false,
   isSearchBusiness:true,
@@ -169,6 +170,20 @@ const clearDialogDetail = function(){
   state.isShowDialogDetail = false;
 }; 
 /**
+ * Hàm hiển thị dialog form chi tiết
+ * CreatedBy: Bien (20/1/2023)
+ */
+const showDialogDuplicate = function(){
+  state.isShowDialogDuplicate = true;
+}; 
+/**
+ * Hàm ẩn dialog
+ * CreatedBy: Bien (20/1/2023)
+ */
+const clearDialogDuplicate = function(){
+  state.isShowDialogDuplicate = false;
+};
+/**
  * Hàm ẩn trang sửa đơn công tác
  * CreatedBy: Bien (20/1/2023)
  */
@@ -319,6 +334,7 @@ export default {
   setDataBusiness,
   showDialogDetail,
   clearDialogDetail,
-  showNotifyError
-
+  showNotifyError,
+  showDialogDuplicate,
+  clearDialogDuplicate
 };

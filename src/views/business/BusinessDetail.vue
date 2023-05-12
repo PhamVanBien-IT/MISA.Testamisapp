@@ -463,6 +463,12 @@
     v-if="diy.state.isShowDialogDetail"
     @funcSave="btnSaveBusiness"
   ></m-dialog>
+  <MDialogV3Vue
+    :label="labelDialogDuplicate"
+    v-if="diy.state.isShowDialogDuplicate"
+    @funcSave="this.diy.clearDialogDuplicate()"
+  >
+  </MDialogV3Vue>
 </template>
 <script>
 import DxTagBox from "devextreme-vue/tag-box";
@@ -479,6 +485,7 @@ import employeeMissionallowancesApi from "@/api/employeeMissionallowancesApi";
 import MDialog from "@/components/dialog/MDialog.vue";
 import _ from "lodash";
 import missionallowanceApi from "@/api/missionallowanceApi";
+import MDialogV3Vue from "@/components/dialog/MDialogV3.vue";
 
 export default {
   inject: ["diy"],
@@ -494,6 +501,7 @@ export default {
     MComboboxV4,
     MCustomItemVue,
     MDialog,
+    MDialogV3Vue,
   },
   props: ["businessDetailId", "isEditBusiness"],
   async created() {
@@ -725,6 +733,10 @@ export default {
         this.validateList[nameInput].isStatus = false;
       }
     },
+    /**
+     * Hàm lấy danh sách nhân viên đã thêm đơn ngày hôm nay
+     * CreatedBy: Bien (12/05/2023)
+     */
     async getAddMissionallowanceToDay() {
       const response = await missionallowanceApi.getAddMissionallowanceToDay();
 
@@ -741,8 +753,8 @@ export default {
       this.isValidate = true;
 
       if (this.employees.length < 1) {
-        this.diy.showNotifyError();
-        this.$parent.labelNotifyError = this.$t("ERRORVALIDATE.EMPLOYEEDETAIL");
+        this.diy.showDialogDuplicate();
+        this.labelDialogDuplicate = this.$t("ERRORVALIDATE.EMPLOYEEDETAIL");
         this.isValidate = false;
       }
 
@@ -792,13 +804,15 @@ export default {
 
       if (!this.isEdit) {
         if (
+          this.missionallowanceToDay &&
           this.missionallowanceToDay.indexOf(this.business.EmployeeId) !== -1
         ) {
           this.isValidate = false;
-          this.$parent.labelNotifyError = this.$t(
+          this.labelDialogDuplicate = this.$t(
             "ERRORVALIDATE.DUPLICATEBUSSINESS"
           );
-          this.diy.showNotifyError();
+          this.diy.showDialogDuplicate();
+
         }
 
         this.validateDateTime(
@@ -899,6 +913,7 @@ export default {
         console.log(response);
 
         if (response.IsSuccess) {
+          debugger;
           this.business = response.Data[0];
           this.employeeMissionallowances =
             response.Data[0].EmployeeMissionallowances;
@@ -954,6 +969,7 @@ export default {
      * CreatedBy: Bien (28/04/2023)
      */
     async getEmployeeMissionallowances(baseUrl, id) {
+      debugger;
       const response =
         await employeeMissionallowancesApi.getEmployeeMissionallowances(
           baseUrl,
@@ -1024,8 +1040,11 @@ export default {
   },
   data() {
     return {
+      // Nội dung thông báo
+      labelDialogDuplicate:null,
       // Danh sách đơn công tác thêm hôm nay
       missionallowanceToDay: {},
+
       // Load dữ liệu
       isLoadData: false,
 

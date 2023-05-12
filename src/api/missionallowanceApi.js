@@ -58,9 +58,9 @@ const missionallowanceApi = {
    * API xuất khẩu đơn công tác được chọn
    * CreatedBy: Bien (20/02/2023)
    */
-  exportMissionallowancesSelected: (missionallowances) => {
+  exportMissionallowancesSelected: (missionallowances, dataGrid) => {
     try {
-      const data = missionallowances;
+      const data = [missionallowances, dataGrid];
       axios({
         url: `https://localhost:7185/api/Missionallowances/ExportExcelSelected`,
         method: "POST",

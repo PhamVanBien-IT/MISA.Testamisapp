@@ -71,6 +71,20 @@
     margin-right: 8px;
     right: 104px;
 }
+.btn-cancel-v3{
+    position: absolute;
+    height: 36px;
+    width: 80px;
+    border:1px solid #E0E0E0;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    outline: none;
+    color: #111111;
+    margin-right: 8px;
+    right: 16px;
+}
 .btn-save-business:hover{
     background-color: #fa6000;
 
