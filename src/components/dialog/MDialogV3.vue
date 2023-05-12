@@ -12,6 +12,7 @@
           <MButtonVue
             label="Đóng"
             class="btn-cancel-v3"
+            style="background-color: #EC5504;color: #fff;"
             @click="btnCloseDialog"
           ></MButtonVue>
         </div>

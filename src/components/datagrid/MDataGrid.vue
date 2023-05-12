@@ -56,6 +56,12 @@
           @Business="handleEmitBusiness"
         ></MCustomFunction>
       </template>
+      <template #cell-edit="{ data }">
+        <MCustomEdit
+          :data="data"
+          @Business="handleEmitBusiness"
+        ></MCustomEdit>
+      </template>
     </DxDataGrid>
   </div>
 </template>
@@ -65,6 +71,7 @@ import { DxColumn, DxDataGrid, DxSelection } from "devextreme-vue/data-grid";
 import MCustomColumVue from "./MCustomColum.vue";
 import MCustomColumnStatus from "./MCustomColumnStatus.vue";
 import MCustomFunction from "./MCustomFunction.vue";
+import MCustomEdit from "./MCustomEdit.vue";
 export default {
   inject: ["diy"],
   name: "MDataGrid",
@@ -77,6 +84,7 @@ export default {
     DxColumn,
     DxSelection,
     MCustomFunction,
+    MCustomEdit
   },
   created() {
     if (this.entity) {

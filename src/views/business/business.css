@@ -68,6 +68,8 @@
 .tittle-epl {
     font-size: 16px;
     font-weight: 600;
+    display: flex;
+    column-gap: 20px;
 }
 .input-search:focus .content-center-header-left {
     border: 1px solid #ec5504;
@@ -412,4 +414,8 @@
 .dx-list-item-before-bag.dx-list-select-checkbox-container, .dx-list-item-before-bag.dx-list-select-radiobutton-container{
     width: 0px !important;
     display: none;
+}
+.func-list-detail{
+    display: flex;
+    column-gap: 24px;
 }

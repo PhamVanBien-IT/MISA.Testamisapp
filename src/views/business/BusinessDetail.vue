@@ -382,7 +382,29 @@
       </div>
       <div class="content-detail-center-center">
         <div class="tittle-employee">
-          <div class="tittle-epl">{{ $t("BUSINESSDETAIL.TITLETABLE") }}</div>
+          <div class="tittle-epl">
+            {{ $t("BUSINESSDETAIL.TITLETABLE") }}
+            <div class="func-list-detail" v-if="isShowSelectedLength">
+              <div class="select-row-length">
+                {{ $t("BUSINESSFORM.SELECTLIST.SELECTED") }}
+                <span style="font-weight: 600">{{
+                  this.selectedList.length
+                }}</span>
+              </div>
+
+              <div
+                class="select-row-unselect"
+                style="color: #7ba3f6"
+                @click="this.employees = []"
+              >
+                {{ $t("BUSINESSFORM.SELECTLIST.CLEAR") }}
+              </div>
+              <div class="select-row-unselect" @click="btnUnSelectEmployeeDetail">
+                {{ $t("BUSINESSFORM.SELECTLIST.UNSELECTED") }}
+              </div>
+            </div>
+            <!-- v-if="isShowSelectedLength" -->
+          </div>
           <div
             class="add-epl-detail"
             v-if="this.diy.state.isBusinessEdit"
@@ -408,11 +430,13 @@
             {{ $t("BUSINESSDETAIL.ADDEMPLOYEE") }}
           </div>
         </div>
-
         <div class="list-employee">
           <m-data-grid
             :entity="employees"
             :dataGrid="dataGridEmployeeHeader"
+            @selectedList="selectAll"
+            :isShowSelectedRows="isShowSelectedLength"
+            @Business="btnDeleteEmployeeMissionallowance"
           ></m-data-grid>
           <div class="total-epl">
             {{ $t("BUSINESSFORM.TOTALRECORD") }}
@@ -522,6 +546,24 @@ export default {
     this.getAddMissionallowanceToDay();
   },
   methods: {
+    btnUnSelectEmployeeDetail(){
+      this.selectedList = []
+      this.isShowSelectedLength = false;
+    },
+    /**
+     * Hàm thêm nhân viên vào danh sách được chọn
+     * @param {Danh sách chọn} selectedRows
+     * CreatedBy: Bien (24/04/2023)
+     */
+    selectAll(selectedRows) {
+      this.selectedList = selectedRows;
+
+      if (this.selectedList.length > 0) {
+        this.isShowSelectedLength = true;
+      } else {
+        this.isShowSelectedLength = false;
+      }
+    },
     /**
      * Hàm thực hiện thêm nhân viên công tác
      * CreatedBy: Bien (07/05/2023)
@@ -536,10 +578,11 @@ export default {
      * CreatedBy: Bien (05/05/2023)
      */
     btnDeleteEmployeeMissionallowance(employee) {
+
       console.log(this.employees);
 
       const index = this.employees.findIndex(
-        (item) => item.EmployeeId === employee.row.data.EmployeeId
+        (item) => item.EmployeeId === employee.EmployeeId
       );
 
       if (index !== -1) {
@@ -693,7 +736,7 @@ export default {
         this.diy.clearBusinessDetail();
       }
     },
-    validateOnlyCreatedBussiness() {},
+
     /**
      * Hàm kiểm tra giá trị không được để trống
      * @param {Tên trường muốn kiểm tra} nameInput
@@ -812,7 +855,6 @@ export default {
             "ERRORVALIDATE.DUPLICATEBUSSINESS"
           );
           this.diy.showDialogDuplicate();
-
         }
 
         this.validateDateTime(
@@ -913,7 +955,7 @@ export default {
         console.log(response);
 
         if (response.IsSuccess) {
-          debugger;
+          // debugger;
           this.business = response.Data[0];
           this.employeeMissionallowances =
             response.Data[0].EmployeeMissionallowances;
@@ -969,7 +1011,7 @@ export default {
      * CreatedBy: Bien (28/04/2023)
      */
     async getEmployeeMissionallowances(baseUrl, id) {
-      debugger;
+      // debugger;
       const response =
         await employeeMissionallowancesApi.getEmployeeMissionallowances(
           baseUrl,
@@ -1040,8 +1082,10 @@ export default {
   },
   data() {
     return {
+      // Hiển thị số lượng nhân viên đã chọn
+      isShowSelectedLength: false,
       // Nội dung thông báo
-      labelDialogDuplicate:null,
+      labelDialogDuplicate: null,
       // Danh sách đơn công tác thêm hôm nay
       missionallowanceToDay: {},
 
@@ -1081,6 +1125,7 @@ export default {
       // Ngày hiện tại
       now: new Date(),
 
+      selectedList: {},
       // Tìm kiếm nhân viên đi công tác
       textSearchEmployeeMissionallowances: null,
 
@@ -1180,6 +1225,7 @@ export default {
             },
           ],
           visible: false,
+          cellTemplate: "cell-edit",
         },
       ],
 

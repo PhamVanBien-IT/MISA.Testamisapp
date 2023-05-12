@@ -60,7 +60,7 @@ const missionallowanceApi = {
    */
   exportMissionallowancesSelected: (missionallowances, dataGrid) => {
     try {
-      const data = [missionallowances, dataGrid];
+      const data = {ids: missionallowances ,dataGrid: dataGrid};
       axios({
         url: `https://localhost:7185/api/Missionallowances/ExportExcelSelected`,
         method: "POST",

@@ -126,12 +126,21 @@
     font-size: 14px;
     font-weight: 800;
 }
-
+.dx-datagrid-rowsview tr:hover .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit-with-icons .dx-link {
+    display: none;
+    color: yellow;
+  }
 .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit-with-icons .dx-link {
     height: 30px;
     width: 30px;
     line-height: 30px;
     border-radius: 50%;
+    color: #fe6000 !important;
+    display: block;
+    z-index: 99999;
+    background-color: #fff;
+    box-shadow: 2px 2px 2px 2px rgba(153, 144, 144, 0.3);
+    margin-top: 10px;
 }
 .dx-datagrid-content .dx-datagrid-table{
     border-collapse: unset !important;
@@ -231,10 +240,7 @@
 .dx-datagrid-headers:hover{
     background-color: #f5f5f5;
 }
-.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit-with-icons .dx-link{
-    box-shadow: 2px 2px 2px 2px rgba(153, 144, 144, 0.3);
-    color: #fe6000;
-}
+
 #app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.suggested-date > div > div.dx-field-value > div > div:hover{
     background-color: #fff;
     border: 1px solid #fe6000;

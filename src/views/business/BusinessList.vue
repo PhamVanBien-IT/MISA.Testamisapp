@@ -642,10 +642,12 @@ export default {
      * CreatedBy: Bien (10/05/2023)
      */
     async btnExportExcelSelected() {
+      // debugger
       this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
       this.selectedListIds = this.selectedList.map(
         (object) => object.MissionallowanceId
       );
+      // var stringListId = this.selectedListIds.join(",")
       const response =
         await missionallowanceApi.exportMissionallowancesSelected(
           this.selectedListIds,

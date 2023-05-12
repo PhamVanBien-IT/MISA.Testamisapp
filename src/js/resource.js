@@ -70,7 +70,7 @@ const MISAResource = {
 				INVALIDFORMAT: `{item} không đúng định dạng`,
 				INVALIDDATETIME: `{item} nhỏ hơn ngày hiện tại`,
 				FROMDATE: 'Ngày về nhỏ hơn ngày đi',
-				EMPLOYEEDETAIL:`Danh sách nhân viên ko được để trống`,
+				EMPLOYEEDETAIL:`Bạn phải chọn ít nhất 1 nhân viên đi công tác trên đơn. Vui lòng kiểm tra lại.`,
 				DUPLICATEBUSSINESS:`Người đề nghị không thể thêm đơn trong hôm nay`
 			},
 			CONTENTDIALOG: {
@@ -114,7 +114,8 @@ const MISAResource = {
 				},
 				SELECTLIST: {
 					SELECTED: "Đã chọn",
-					UNSELECTED: "Bỏ chọn"
+					UNSELECTED: "Bỏ chọn",
+					CLEAR:"Loại bỏ"
 				},
 				TOTALRECORD: "Tổng số bản ghi:",
 				PAGING: {
