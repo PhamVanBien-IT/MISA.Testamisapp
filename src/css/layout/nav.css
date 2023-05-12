@@ -20,7 +20,7 @@
     height: 100%;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
     .nav-center {
         display: none;
     }
@@ -68,8 +68,12 @@
 }
 
 .icon-nav {
-    background: url('../../assets/images/Sprites.64af8f61.svg') no-repeat -1157px -25px;
+    background: url('../../assets/images/Icon.aecbe25.svg') no-repeat -3px -124px;
     margin: 0px 16px;
+   z-index: 999;	
+   width: 17px;
+   height: 16px;
+
 }
 
 .icon-notify {

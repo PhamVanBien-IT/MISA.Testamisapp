@@ -43,7 +43,9 @@ export default {
     MDialogV2,
     MNotify,
   },
-  created() {},
+  created() {
+    /* eslint-disable */ 
+  },
   methods: {
     /**
      * Hàm sửa nhân viên
@@ -52,10 +54,7 @@ export default {
      */
     editBussiness(event) {
       event.stopPropagation();
-      // this.diy.showBusinessDetail();
-      console.log(this.data);
-      //   this.diy.showBusinessEdit();
-      //   this.diy.showBusinessDetail();
+      // debugger
       this.$emit("Business", this.data.data);
     },
     /**
@@ -64,8 +63,7 @@ export default {
      * CreaetedBy: Bien (09/05/2023)
      */
     btndeleteBussiness(event) {
-      /* eslint-disable */
-      //   debugger;
+      // debugger
       event.stopPropagation();
       this.isShowDialog = true;
       this.lableDialog = this.$t("CONTENTDIALOG.DELETE");
@@ -78,7 +76,6 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     async deleteBusiness() {
-      //   debugger;
       const response = await baseApi.delete(
         "Missionallowances/",
         this.missionallowanceId

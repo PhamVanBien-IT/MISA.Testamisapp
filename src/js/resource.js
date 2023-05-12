@@ -66,10 +66,10 @@ const MISAResource = {
 			ERRORVALIDATE: {
 				FORMATCODE: "Mã nhân viên không đúng định dạng <NV-XXXXX>",
 				EXISTEMPLOYEECODE: `Mã nhân viên <{{}}> đã tồn tại trong hệ thống.`,
-				REQUIRED: "{item} không được để trống",
+				REQUIRED: `{item} không được để trống`,
 				INVALIDFORMAT: `{item} không đúng định dạng`,
 				INVALIDDATETIME: `{item} nhỏ hơn ngày hiện tại`,
-				FROMDATE: 'Ngày đi lớn hơn ngày về'
+				FROMDATE: 'Ngày về nhỏ hơn ngày đi'
 			},
 			CONTENTDIALOG: {
 				DELETE: `Bạn có chắc muốn xóa đơn này không?`,
@@ -89,7 +89,8 @@ const MISAResource = {
 				DELETE: `Xóa thành công`,
 				UPDATE: `Cập nhập đơn thành công`,
 				APPROVED:`Duyệt thành công`,
-				REFUSE:`Từ chối thành công`
+				REFUSE:`Từ chối thành công`,
+				INTERNALSERVER:`Có lỗi khu vòng thử lại`
 			},
 			DATA: {
 				NULL: 'Không có dữ liệu'

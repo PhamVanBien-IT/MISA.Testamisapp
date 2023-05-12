@@ -40,7 +40,7 @@
       ></m-button>
     </div>
   </div>
-  <div class="content-detail-center">
+  <div class="content-detail-center" v-if="!isLoadData">
     <div class="content-detail-center-employee">
       <div class="content-detail-center-top">
         <div class="content-detail-center-top-left">
@@ -206,14 +206,14 @@
               :label="$t('BUSINESSDETAIL.TITLEFORM.PURPOSE')"
               required="*"
               v-model="business.Purpose"
-              :labelValidate="validateList[`Purpose`].labelError"
+            >
+            </m-textarea>
+            <!-- :labelValidate="validateList[`Purpose`].labelError"
               :isValidate="validateList[`Purpose`].isStatus"
               :ref="'Purpose'"
               :name="'Purpose'"
-              v-if="this.diy.state.isBusinessEdit"
-            >
-            </m-textarea>
-            <div class="base-combobox" v-else>
+              v-if="this.diy.state.isBusinessEdit" -->
+            <!-- <div class="base-combobox" >
               <div class="title-cbb">
                 {{ $t("BUSINESSDETAIL.TITLEFORM.PURPOSE")
                 }}<sup style="color: red">*</sup>
@@ -221,7 +221,7 @@
               <div class="combobox-value">
                 {{ business.Purpose }}
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="content-detail-center-top-right">
@@ -243,12 +243,13 @@
             </div>
           </div>
           <div class="employee-support">
-            <div class="icon-dx"></div>
+            <div class="icon-dx" v-if="this.diy.state.isBusinessEdit"></div>
             <div class="dx-field-label">
               {{ $t("BUSINESSDETAIL.TITLEFORM.SUPPORT") }}
             </div>
             <div class="dx-field-value">
               <DxTagBox
+                id="dxSupportIds"
                 v-model:value="selectedSupportIds"
                 :data-source="this.$parent.employees"
                 :noDataText="$t('DATA.NULL')"
@@ -306,7 +307,7 @@
             </div>
           </div>
           <div class="mg-t-7 employee-support">
-            <div class="icon-dx"></div>
+            <div class="icon-dx" v-if="this.diy.state.isBusinessEdit"></div>
             <div class="dx-field-label">
               {{ $t("BUSINESSDETAIL.TITLEFORM.RELATIONSHIP") }}
             </div>
@@ -419,19 +420,7 @@
             {{ $t("BUSINESSDETAIL.ADDEMPLOYEE") }}
           </div>
         </div>
-        <div
-          class="content-center-header-left mg-left"
-          v-if="!this.diy.state.isBusinessEdit"
-        >
-          <div class="icon icon-search-employee-missionallowances"></div>
-          <input
-            type="text"
-            class="input-search"
-            v-model="textSearchEmployeeMissionallowances"
-            :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
-            @input="searchEmployeeMissionallowances"
-          />
-        </div>
+
         <div class="list-employee">
           <m-data-grid
             :entity="employees"
@@ -481,7 +470,11 @@
     v-if="diy.state.isFormBusiness"
     @employeesDetail="addEmployees"
   ></BusinessForm>
-  <m-dialog :label="labelDialog" v-if="diy.state.isShowDialogDetail" @funcSave="btnSaveBusiness"></m-dialog>
+  <m-dialog
+    :label="labelDialog"
+    v-if="diy.state.isShowDialogDetail"
+    @funcSave="btnSaveBusiness"
+  ></m-dialog>
 </template>
 <script>
 import DxTagBox from "devextreme-vue/tag-box";
@@ -514,10 +507,12 @@ export default {
     MDialog,
   },
   props: ["businessDetailId", "isEditBusiness"],
-  created() {
+  async created() {
+    /* eslint-disable */
     if (this.businessDetailId) {
       this.businessId = this.businessDetailId;
-      this.getBusinessById("Missionallowances/", this.businessId);
+      this.isLoadData = true;
+      await this.getBusinessById("Missionallowances/", this.businessId);
       this.isDisabled = true;
       this.isEdit = this.isEditBusiness;
     } else {
@@ -665,6 +660,7 @@ export default {
      * CreatedBy: Bien (25/04/2023)
      */
     btnSaveBusiness() {
+      // debugger
       // Lấy giá trị dữ liệu ô tagbox
       this.selectedDxtagbox();
 
@@ -748,16 +744,19 @@ export default {
         this.business.EmployeeId,
         this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE")
       );
+
       this.validateRequired(
         "RequestDate",
         this.business.RequestDate,
         this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
       );
+
       this.validateRequired(
         "FromDate",
         this.business.FromDate,
         this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
       );
+
       this.validateRequired(
         "ToDate",
         this.business.ToDate,
@@ -783,30 +782,37 @@ export default {
         this.business.Status,
         this.$t("BUSINESSDETAIL.TITLEFORM.STATUS")
       );
-      this.validateDateTime(
-        "RequestDate",
-        this.business.RequestDate,
-        this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
-      );
-      this.validateDateTime(
-        "ToDate",
-        this.business.ToDate,
-        this.$t("BUSINESSDETAIL.TITLEFORM.TODATE")
-      );
-      if (this.business.FromDate > this.business.ToDate) {
-        this.validateList["FromDate"].isStatus = true;
-        this.validateList["FromDate"].labelError = this.$t(
-          "ERRORVALIDATE.FROMDATE"
+
+      if (!this.isEdit) {
+        this.validateDateTime(
+          "RequestDate",
+          this.business.RequestDate,
+          this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
         );
-        this.isValidate = false;
-      } else {
-        this.validateList["FromDate"].isStatus = false;
+        this.validateDateTime(
+          "ToDate",
+          this.business.ToDate,
+          this.$t("BUSINESSDETAIL.TITLEFORM.TODATE")
+        );
+        this.validateDateTime(
+          "FromDate",
+          this.business.FromDate,
+          this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
+        );
+        if (
+          this.business.FromDate &&
+          this.business.ToDate &&
+          this.business.FromDate > this.business.ToDate
+        ) {
+          this.validateList["ToDate"].isStatus = true;
+          this.validateList["ToDate"].labelError = this.$t(
+            "ERRORVALIDATE.FROMDATE"
+          );
+          this.isValidate = false;
+        } else {
+          this.validateList["ToDate"].isStatus = false;
+        }
       }
-      this.validateDateTime(
-        "FromDate",
-        this.business.FromDate,
-        this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
-      );
     },
     /**
      * API thêm mới đơn công tác
@@ -852,15 +858,14 @@ export default {
             }
           }
           break;
-        // case this.$t(STATUSCODE.INTERNALSERVER:
-        //   if (
-        //     res.response.data.errorCode == this.$MISAEnum.ERRORCODE.UNKNOWNERROR
-        //   ) {
-        //     // this.showErrorValidate(
-        //     //   this.$MISAResource.ERRORVALIDATE.REQUIRED("Đơn vị")
-        //     // );
-        //   }
-        //   break;
+        case this.$MISAEnum.STATUSCODE.INTERNALSERVER:
+          if (
+            res.response.data.errorCode == this.$MISAEnum.ERRORCODE.UNKNOWNERROR
+          ) {
+            this.$parent.labelNotify = this.$t("NOTIFY.INTERNALSERVER");
+            this.diy.showNotify();
+          }
+          break;
         default:
           break;
       }
@@ -871,8 +876,6 @@ export default {
      */
     async getBusinessById(baseUrl, id) {
       if (this.businessId) {
-        /* eslint-disable */
-        // debugger
         // Nhận dữ liệu sau khi lấy nhân viên theo id
         const response = await baseApi.getById(baseUrl, id);
 
@@ -886,11 +889,32 @@ export default {
             "EmployeeMissionallowances/",
             this.businessId
           );
-          this.business.SupportIds = this.business.SupportIds.split(",");
-          this.business.RelationShipIds =
-            this.business.RelationShipIds.split(",");
+
+          if (this.business.SupportIds) {
+            this.business.SupportIds = this.business.SupportIds.split(",");
+          } else {
+            this.business.SupportIds = [];
+          }
+
+          if (this.business.RelationShipIds) {
+            this.business.RelationShipIds =
+              this.business.RelationShipIds.split(",");
+          } else {
+            this.business.RelationShipIds = [];
+          }
 
           this.businessClone = { ...this.business };
+
+          for (let i = 0; i < this.business.SupportIds?.length; i++) {
+            this.selectedSupportIds.push(this.business.SupportIds[i]);
+          }
+
+          for (let i = 0; i < this.business.RelationShipIds?.length; i++) {
+            this.selectedRelationShipIds.push(this.business.RelationShipIds[i]);
+          }
+
+          this.isLoadData = false;
+
           this.diy.clearLoading();
         }
       }
@@ -938,9 +962,17 @@ export default {
     },
   },
   watch: {
+    /**
+     * Kiểm tra sự thay đổi đơn công tác
+     * CreatedBy: Bien (11/05/2023)
+     */
     business: {
       handler(newValue) {
         // debugger;
+
+        this.businessClone.RequestDate = newValue.RequestDate;
+        this.businessClone.FromDate = newValue.FromDate;
+        this.businessClone.ToDate = newValue.ToDate;
 
         if (newValue && this.businessClone) {
           if (JSON.stringify(newValue) == JSON.stringify(this.businessClone)) {
@@ -958,15 +990,6 @@ export default {
      */
     isEdit: function (newValue) {
       if (newValue) {
-        this.business.SupportNames = this.business.SupportNames?.split(",");
-        for (let i = 0; i < this.business.SupportIds?.length; i++) {
-          this.selectedSupportIds.push(this.business.SupportIds[i]);
-        }
-        this.business.RelationShipNames =
-          this.business.RelationShipNames?.split(",");
-        for (let i = 0; i < this.business.RelationShipIds?.length; i++) {
-          this.selectedRelationShipIds.push(this.business.RelationShipIds[i]);
-        }
         this.dataGridEmployeeHeader[4].visible = true;
       } else {
         this.dataGridEmployeeHeader[4].visible = false;
@@ -984,6 +1007,9 @@ export default {
   },
   data() {
     return {
+      // Load dữ liệu
+      isLoadData: false,
+
       // Hiển thị thông báo
       isShowDialog: false,
 
@@ -991,7 +1017,8 @@ export default {
       labelDialog: "",
 
       // Khai báo biến theo dõi sự thay đổi của business
-      isBusinessClone: true,
+      isBusinessClone: false,
+
       // Biến đơn clone
       businessClone: {},
 
@@ -1041,7 +1068,9 @@ export default {
       employeeMissionallowances: {},
 
       // Thông tin đơn công tác
-      business: {},
+      business: {
+        Purpose: "abc",
+      },
 
       // Id đơn công tác
       businessId: null,

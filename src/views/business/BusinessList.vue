@@ -357,16 +357,6 @@
                 @click="toggleEditColumn"
               ></div>
             </div>
-            <div class="high-filter-header-left">
-              <div class="icon icon-search"></div>
-              <input
-                type="text"
-                class="input-search"
-                v-model="textSearchHighFilter"
-                :placeholder="$t('BUSINESSFORM.PLACEHOLDER.SEARCH')"
-                @input="searchHighFilter"
-              />
-            </div>
           </div>
           <div class="high-filter-center list-edit-column">
             <div class="high-filter-data" style="height: 456px">
@@ -471,20 +461,31 @@ export default {
   },
   props: ["rowClick"],
   created() {
+    /* eslint-disable */
     this.getPaging(1, this.pageSize, "Missionallowances/");
 
     this.getEmployees("Employees/");
 
+    if (this.$i18n.locale == "vi") {
+      this.dataGridEmployee = JSON.parse(
+        localStorage.getItem("dataGridEmployee")
+      );
+    } else {
+      this.dataGridEmployee = JSON.parse(
+        localStorage.getItem("dataGridEmployeeEN")
+      );
+    }
     // Gửi data lên localStorage
     if (JSON.parse(localStorage.getItem("dataGridEmployee")) != null) {
       this.dataGridEmployee = JSON.parse(
         localStorage.getItem("dataGridEmployee")
       );
-      this.dataSearchFilter = this.dataGridEmployee;
+
+      this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
     } else {
       this.setLocalStorage(this.dataGridBussiness);
       this.dataGridEmployee = this.dataGridBussiness;
-      this.dataSearchFilter = this.dataGridEmployee;
+      this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
     }
   },
   methods: {
@@ -511,11 +512,6 @@ export default {
      * CreatedBy: Bien (11/05/2023)
      */
     async handleValueBusiness(value) {
-      /* eslint-disable */
-      // debugger
-
-      // this.btnEditBusiness(value)
-      console.log(value);
       this.businessDetailId = value.MissionallowanceId;
       this.diy.showisAddBussiness();
       await this.diy.showBusinessDetail();
@@ -543,7 +539,8 @@ export default {
       this.dataGridEmployee = JSON.parse(
         localStorage.getItem("dataGridEmployee")
       );
-      this.dataSearchFilter = this.dataGridEmployee;
+      this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
+
       this.isShowEditColumn = false;
     },
     /**
@@ -553,10 +550,14 @@ export default {
 
     saveEditColumn() {
       this.isShowEditColumn = false;
+
       this.setLocalStorage(this.dataGridEmployee);
       this.dataGridEmployee = JSON.parse(
         localStorage.getItem("dataGridEmployee")
       );
+      this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
+
+      // this.dataSearchFilter = [...this.dataGridEmployee];
     },
     /**
      * Hàm lưu biến trên localStorage
@@ -601,21 +602,37 @@ export default {
      * CreatedBy: Bien (10/05/2023)
      */
     btnRefuseBusiness() {
-      // debugger;
+      this.selectedList = this.selectedList.filter(
+        (item) => item.Status != this.status[3].key
+      );
+
       this.selectedListIds = this.selectedList.map(
         (object) => object.MissionallowanceId
       );
-      this.updateMissionallowanceList(this.status[3].key);
+      this.updateMissionallowanceList(
+        this.selectedListIds,
+        this.status[3].key,
+        this.$t("NOTIFY.REFUSE")
+      );
     },
     /**
      * Nút duyệt danh sách đơn
      * CreatedBy: Bien (10/05/2023)
      */
     btnApproveBusiness() {
+      this.selectedList = this.selectedList.filter(
+        (item) => item.Status != this.status[2].key
+      );
       this.selectedListIds = this.selectedList.map(
         (object) => object.MissionallowanceId
       );
-      this.updateMissionallowanceList(this.status[2].key);
+
+      // let selectedListRefuse = this.selectedListIds.filter(item => item.Status = this.status[2].key);
+      this.updateMissionallowanceList(
+        this.selectedListIds,
+        this.status[2].key,
+        this.$t("NOTIFY.APPROVED")
+      );
     },
     /**
      * Hàm xuất khẩu danh sách đơn đã chọn
@@ -639,15 +656,12 @@ export default {
      * @param {Trạng thái muốn cập nhật} status
      * CreatedBy: Bien (10/05/2023)
      */
-    async updateMissionallowanceList(status) {
-      const response = await missionallowanceApi.updateStatusList(
-        this.selectedListIds,
-        status
-      );
+    async updateMissionallowanceList(ids, status, labelNotify) {
+      const response = await missionallowanceApi.updateStatusList(ids, status);
 
       console.log(response);
       if (response.IsSuccess) {
-        this.labelNotify = this.$t("NOTIFY.APPROVED");
+        this.labelNotify = labelNotify;
         this.diy.showNotify();
         this.getPaging(1, this.pageSize, "Missionallowances/");
         this.diy.showSearchBusiness();
@@ -734,8 +748,6 @@ export default {
      * CreatedBy: Bien (24/04/2023)
      */
     btnUnselectedList() {
-      /* eslint-disable */
-      // debugger;
       this.diy.showSearchBusiness();
       this.isShowSelected = false;
       this.selectedList = [];
@@ -749,9 +761,6 @@ export default {
      * CreatedBy: Bien (24/04/2023)
      */
     selectAll(selectedRows) {
-      /* eslint-disable */
-      // debugger;
-
       this.selectedList = selectedRows;
 
       // Ẩn hiện nút khi trạng thái là chờ duyệt
@@ -975,8 +984,6 @@ export default {
      * CreatedBy: Bien (18/1/2023)
      */
     selectedList: function () {
-      /* eslint-disable */
-      // debugger
       if (this.selectedList.length > 0) {
         this.isShowSelected = true;
       } else {
@@ -1080,7 +1087,7 @@ export default {
       isShowPagesize: false,
 
       // Danh sách tìm kiếm lọc nâng cao
-      dataSearchFilter: {},
+      dataSearchFilter: [],
 
       // key danh sách đơn
       businessListKey: 0,
@@ -1096,6 +1103,7 @@ export default {
           fixed: true,
           dataType: "string",
           visible: true,
+          width: "120",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEE"),
@@ -1112,6 +1120,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "150",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.DEPARTMENTNAME"),
@@ -1119,6 +1128,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "150",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE"),
@@ -1127,6 +1137,8 @@ export default {
           dataType: "date",
           format: "dd/MM/yyyy hh:mm",
           visible: true,
+          width: "150",
+          alignment: "center",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE"),
@@ -1135,6 +1147,8 @@ export default {
           dataType: "date",
           format: "dd/MM/yyyy hh:mm",
           visible: true,
+          width: "150",
+          alignment: "center",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.TODATE"),
@@ -1143,6 +1157,8 @@ export default {
           dataType: "date",
           format: "dd/MM/yyyy hh:mm",
           visible: true,
+          width: "150",
+          alignment: "center",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.LEAVEDAY"),
@@ -1157,6 +1173,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "150",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.PURPOSE"),
@@ -1164,6 +1181,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "150",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.REQUEST"),
@@ -1171,6 +1189,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "150",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.SUPPORT"),
@@ -1186,6 +1205,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "150",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.RELATIONSHIP"),
@@ -1201,6 +1221,7 @@ export default {
           fixed: false,
           dataType: "string",
           visible: true,
+          width: "100",
         },
         {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.STATUS"),
@@ -1212,6 +1233,7 @@ export default {
           width: "150",
         },
         {
+          width: "10",
           fixed: true,
           cellTemplate: "cell-function",
           visible: true,

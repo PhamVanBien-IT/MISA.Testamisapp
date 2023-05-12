@@ -59,22 +59,24 @@ body {
 }
 
 .tags:hover:after{
-    background: #212121;
+    background: #444242;
     border-radius: 5px;
     font-size: 12px;
     color: #fff;
     content: attr(data-gloss);
     padding: 5px;
     position: absolute;
-    z-index: 98;
+    z-index: 9999;
     text-align: center;
     width: 230px;
-    top: -38px;
+    top: -44px;
     right: -80px;
+    line-height: 20px;
+    height: 20px;
 }
 .tags:hover:before{
     border: solid;
-    border-color: #212121 transparent;
+    border-color: #444242 transparent;
     border-width: 6px 6px 0px 6px;
     content: "";
     position: absolute;

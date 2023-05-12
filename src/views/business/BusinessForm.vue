@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="business-form">
       <div class="business-form-top">
-        <div class="tittle-business-form">{{ $t('TITLEFORM.HOME') }}</div>
+        <div class="tittle-business-form">{{ $t("TITLEFORM.HOME") }}</div>
         <div
           class="icon icon-close-business-form"
           @click="btnCloseFormBusiness"
@@ -22,20 +22,20 @@
           </div>
           <div class="cobobox-business-form">
             <m-combobox-v-2
-                id="cbxDepartments"
-                propName="text"
-                propValue="id"
-                v-model="this.diy.state.treeDepartment.id"
-                :entity="this.diy.state.treeDepartment"
-                :isShowCombobox="isShowDepartment"
-                :placeholderDefault="$t('BUSINESSFORM.PLACEHOLDER.DEPARTMENT')"
-                :isShowFooter="true"
-                @misaCode="getMisaCode"
-              >
-              </m-combobox-v-2>
+              id="cbxDepartments"
+              propName="text"
+              propValue="id"
+              v-model="this.diy.state.treeDepartment.id"
+              :entity="this.diy.state.treeDepartment"
+              :isShowCombobox="isShowDepartment"
+              :placeholderDefault="$t('BUSINESSFORM.PLACEHOLDER.DEPARTMENT')"
+              :isShowFooter="true"
+              @misaCode="getMisaCode"
+            >
+            </m-combobox-v-2>
           </div>
           <div class="select-row-length" v-if="isShowSelectedLength">
-            {{ $t('BUSINESSFORM.SELECTLIST.SELECTED') }}
+            {{ $t("BUSINESSFORM.SELECTLIST.SELECTED") }}
             <span style="font-weight: 600">{{ this.selectedList.length }}</span>
           </div>
           <div
@@ -43,7 +43,7 @@
             v-if="isShowSelectedLength"
             @click="btnUnselectedList"
           >
-          {{ $t('BUSINESSFORM.SELECTLIST.UNSELECTED') }}
+            {{ $t("BUSINESSFORM.SELECTLIST.UNSELECTED") }}
           </div>
         </div>
         <div class="business-form-center-table">
@@ -57,7 +57,7 @@
           </div>
           <div class="paging-table-form">
             <div class="total-recort">
-              {{ $t('BUSINESSFORM.TOTALRECORD') }}
+              {{ $t("BUSINESSFORM.TOTALRECORD") }}
 
               <span style="font-weight: 600">{{ this.totalRecord }}</span>
             </div>
@@ -74,8 +74,11 @@
               </div>
               <div class="paging">
                 <div class="recort">
-                  {{ $t('BUSINESSFORM.PAGING.FROM') }} <span style="font-weight: 600">{{ startPage }}</span> {{ $t('BUSINESSFORM.PAGING.TO') }}
-                  <span style="font-weight: 600">{{ endPage }}</span> {{ $t('BUSINESSFORM.PAGING.RECORD') }}
+                  {{ $t("BUSINESSFORM.PAGING.FROM") }}
+                  <span style="font-weight: 600">{{ startPage }}</span>
+                  {{ $t("BUSINESSFORM.PAGING.TO") }}
+                  <span style="font-weight: 600">{{ endPage }}</span>
+                  {{ $t("BUSINESSFORM.PAGING.RECORD") }}
                 </div>
                 <div class="icon icon-prevent" @click="preventPage"></div>
                 <div class="icon icon-next" @click="nextPage"></div>
@@ -114,14 +117,12 @@ export default {
     this.getEmployeePaging(1, this.pageSize, "Employees/");
   },
   methods: {
-      /**
+    /**
      * Hàm lọc theo đơn vị
      * @param {Đơn vị muốn lọc} value
      * CreatedBy: Bien (05/05/2023)
      */
-     getMisaCode(value) {
-       /* eslint-disable */ 
-      // debugger
+    getMisaCode(value) {
       this.misaCode = value;
       this.getEmployeePaging(1, this.pageSize, "Missionallowances/");
     },
@@ -130,7 +131,6 @@ export default {
      * CreatedBy: Bien (25/04/2023)
      */
     btnSelectEmployee() {
-  
       let newEmployees = this.$parent.employees;
       this.selectedList.forEach((item) => {
         newEmployees.push(item);
@@ -142,7 +142,7 @@ export default {
 
       this.$emit("employeesDetail", this.employeeBusiness);
     },
-    
+
     /**
      * Hàm xóa danh sách nhân viên đã chọn
      * @param {Id nhân viên đã chọn} employeeId
@@ -368,7 +368,7 @@ export default {
       ],
       // Danh sách bảng nhân viên
       dataGridEmployees: [
-      {
+        {
           caption: this.$t("BUSINESSDETAIL.TITLEFORM.EMPLOYEECODE"),
           dataField: "EmployeeCode",
         },

@@ -1,13 +1,9 @@
 <template>
-  <div class="dx-field">
+  <div class="dx-field" >
     <div class="dx-field-label">
       {{ label }}<sup style="color: red">{{ required }}</sup>
     </div>
-    <div
-      class="dx-field-value"
-      :class="{ 'bd-red': this.isValidate }"
-      @click="handleDateTime"
-    >
+    <div class="dx-field-value" :class="{ 'bd-red': this.isValidate }">
       <DxDateBox
         v-model="value"
         type="datetime"
@@ -18,13 +14,15 @@
         :calendar-options="{ cellStyle: { backgroundColor: '#4CAF50' } }"
         :picker-type="'calendar'"
         :showDropDownButton="!this.isValidate"
-        :onApplyButtonClick="handleDateTime"
+        :onValueChanged="handleDateTime"
         :tabindex="this.tabindex"
+        :placeholder="'DD/MM/YYYY HH:mm'"
       />
       <div
         class="icon icon-validate-datepicker tags"
         :data-gloss="this.labelValidate"
         v-if="this.isValidate"
+        style="border: none !important;"
       ></div>
     </div>
   </div>
@@ -45,7 +43,7 @@ export default {
     "labelValidate",
     "isValidate",
     "name",
-    "tabindex"
+    "tabindex",
   ],
   components: {
     DxDateBox,
@@ -55,35 +53,42 @@ export default {
     if (this.modelValue) {
       this.value = this.modelValue;
     } else {
-      if(new Date().getHours() < 12){
+      if (new Date().getHours() < 12) {
         this.value = new Date(this.now.setHours(12, 0, 0));
-      }else{
-      this.value = new Date(this.now.setHours(18, 0, 0));
+      } else {
+        this.value = new Date(this.now.setHours(18, 0, 0));
       }
     }
 
     this.nameInput = this.name;
 
+    this.textValidate = this.labelValidate;
   },
   methods: {
     /**
      * Hàm validate khi blur
      * CreatedBy: Bien (04/04/2023)
      */
-    handleDateTime() {
-      /* eslint-disable */
-      // debugger;
-        if (!this.modelValue) {
-          this.$parent.validateList[`${this.nameInput}`].isStatus = true;
-          this.$parent.validateList[`${this.nameInput}`].labelError = this.$t(
-            "ERRORVALIDATE.REQUIRED",
-            {
-              item: this.labelValidate,
-            }
-          );
-        } else {
-          this.$parent.validateList[`${this.nameInput}`].isStatus = false;
-        }
+    handleDateTime(event) {
+      if (!event.value) {
+        this.$parent.validateList[`${this.nameInput}`].isStatus = true;
+        this.$parent.validateList[`${this.nameInput}`].labelError = this.$t(
+          "ERRORVALIDATE.REQUIRED",
+          {
+            item: this.label,
+          }
+        );
+      } else if(event.value < this.now){
+        this.$parent.validateList[`${this.nameInput}`].isStatus = true;
+        this.$parent.validateList[`${this.nameInput}`].labelError = this.$t(
+          "ERRORVALIDATE.INVALIDDATETIME",
+          {
+            item: this.label,
+          }
+        );
+      }else{
+        this.$parent.validateList[`${this.nameInput}`].isStatus = false;
+      }
     },
   },
   watch: {
@@ -104,7 +109,10 @@ export default {
       value: null,
 
       // Lớp input
-      nameInput:null
+      nameInput: null,
+
+      // Nội dung lỗi
+      textValidate: null,
     };
   },
 };

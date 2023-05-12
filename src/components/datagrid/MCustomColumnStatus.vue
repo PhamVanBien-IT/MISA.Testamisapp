@@ -19,9 +19,6 @@
     created(){
       this.handleColor(this.data.data.Status);
     },
-    mounted() {
-    //   this.handleColor(this.data.data.Status);
-    },
     methods: {
       /**
        * Hàm thêm css tương ứng giá trị trạng thái
@@ -29,8 +26,7 @@
        * CreatedBy: Bien (08/05/2023) 
        */
       handleColor(statusKey) {
-         /* eslint-disable */
-        // debugger
+       
         switch (statusKey.toString()) {
           case this.$t('STATUSPENDING'):
             this.background = this.backgroundColors[0];

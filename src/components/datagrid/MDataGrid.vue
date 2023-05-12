@@ -9,7 +9,6 @@
       :show-borders="false"
       :hover-state-enabled="true"
       column-resizing-mode="widget"
-      :column-min-width="160"
       :show-column-lines="false"
       :show-row-lines="true"
       :noDataText="$t('DATA.NULL')"
@@ -32,6 +31,8 @@
         :cell-template="item.cellTemplate"
         :format="item.format"
         :visible="item.visible"
+        :fixed-position="item.fixedPosition"
+        :alignment="item.alignment"
       ></DxColumn>
 
       <DxSelection
@@ -42,7 +43,7 @@
         show-check-boxes-mode="always"
         width="10"
       />
-  
+
       <template #cell-name="{ data }">
         <MCustomColumVue :data="data"></MCustomColumVue>
       </template>
@@ -50,8 +51,9 @@
         <m-custom-column-status :data="data"></m-custom-column-status>
       </template>
       <template #cell-function="{ data }">
-        <MCustomFunction :data="data"
-        @Business="handleEmitBusiness"
+        <MCustomFunction
+          :data="data"
+          @Business="handleEmitBusiness"
         ></MCustomFunction>
       </template>
     </DxDataGrid>
@@ -98,25 +100,13 @@ export default {
   methods: {
     /**
      * Hàm truyền đối tượng muốn sửa
-     * @param {Đối tượng muốn sửa} value 
+     * @param {Đối tượng muốn sửa} value
      * CreatedBy: Bien (10/05/2023)
      */
-    handleEmitBusiness(value){
+    handleEmitBusiness(value) {
       this.$emit("Business", value);
     },
-  
-    /**
-     * Hàm gắn lại dữ liệu khi click cột chức năng
-     * @param {Danh sách dữ liệu mới} value
-     * CreatedBy: Bien (10/05/2023)
-     */
-    // handlerData(value){/* eslint-disable */
-    //   debugger
-    //   if(value.length > 0){
-    //     this.entitis = value;
-    //     this.dataTable.refresh();
-    //   }
-    // },
+
     /**
      * Hàm xem thông tin hàng khi click
      * @param {Sự kiện} event
@@ -127,46 +117,59 @@ export default {
 
       this.$emit("rowClick", selectedObject);
     },
-    /**
-     * Loại bỏ tất cả phần tử đã chọn
-     * CreatedBy: Bien (24/04/2023)
-     */
-    // clearSelection() {
-    //   const dataGrid = this.$refs.dataGrid.instance;
-
-    //   dataGrid.clearSelection();
-    //   // this.selectedRowKeys = [];
-    // },
     // /**
     //  * Hàm thêm nhân viên vào danh sách được chọn
     //  * @param {Thêm danh sách bản ghi đã chọn} selectedItems
     //  * CreatedBy: Bien (24/04/2023)
     //  */
     onSelectionChanged(e) {
-      /* eslint-disable */
-      // debugger;
-      // this.selectedRowKeys = this.$parent.selectedList;
-
       let selectRowKeys = e.selectedRowKeys;
-
-      // selectRowKeys.forEach((element) => {
-      //   let index = this.selectedRowKeys.findIndex((item) => {
-      //     JSON.stringify(item) == JSON.stringify(element);
-      //   });
-      //   if (!(index > -1)) {
-      //     this.selectedRowKeys.push(element);
-      //   }
-      // });
 
       this.$emit("selectedList", selectRowKeys);
     },
   },
   watch: {
-    isChecked:function(newValue){
+    /**
+     * Bỏ chọn danh sách
+     * @param {Gía trị mới} newValue
+     * CreatedBy: Bien (11/05/2023) 
+     */
+    isChecked: function (newValue) {
       console.log(newValue);
-      if(!newValue){
+      if (!newValue) {
         this.selectedRowKeys = [];
       }
+    },
+      /**
+     * Tải lại bảng khi dữ liệu trong bảng thay đổi
+     * CreatedBy: Bien (06/05/2023)
+     */
+     entity: {
+      handler() {
+        if (this.dataTable) {
+          this.dataTable.refresh();
+
+          this.diy.clearLoading();
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
+    /**
+     * Tải lại bảng khi dữ liệu cột tiêu đề thay đổi
+     * CreatedBy: Bien (06/05/2023)
+     */
+    dataSource: {
+      handler() {
+        if (this.dataTable) {
+          if (!this.isEditColumn) {
+            this.dataTable.refresh();
+          }
+          this.dataTable.refresh();
+        }
+      },
+      deep: true,
+      immediate: true,
     },
     // selectedRowKeys: {
     //   handler(newValue, oldValue) {
@@ -177,7 +180,6 @@ export default {
 
     //       let selectedNew = newValue.map((item) => item.MissionallowanceId);
     //       /* eslint-disable */
-    //       debugger;
 
     //       if (selectedNew.length != selectedEBusinessId.length) {
     //         selectedNew.forEach((item) => {
@@ -199,56 +201,7 @@ export default {
     //   },
     //   deep: true,
     // },
-    /**
-     * Tải lại bảng khi dữ liệu trong bảng thay đổi
-     * CreatedBy: Bien (06/05/2023)
-     */
-    entity: {
-      handler() {
-        // debugger
-        if (this.dataTable) {
   
-          this.dataTable.refresh();
-
-          this.diy.clearLoading();
-
-          // const dataGrid = this.$refs.dataGrid.instance;
-          // if (!this.isShowSelectedRows) {
-          //   this.selectedRowKeys = [];
-          // }
-          // if (this.selectedRowKeys.length > 0) {
-          //   this.selectedRowKeys.forEach((element) => {
-          //     let index = this.entity.findIndex((item) => {
-          //       JSON.stringify(item) === JSON.stringify(element);
-          //     });
-          //     if (index > -1) {
-          //       this.selectedRowKeys.push(element);
-          //     }
-          //   });
-          // }
-        }
-      },
-      deep: true,
-      immediate: true,
-    },
-    /**
-     * Tải lại bảng khi dữ liệu cột tiêu đề thay đổi
-     * CreatedBy: Bien (06/05/2023)
-     */
-    dataGrid: {
-      handler() {
-        // debugger
-        if (this.dataTable) {
-          if (!this.isEditColumn) {
-            this.dataTable.refresh();
-          }
-          this.dataTable.refresh();
-
-        }
-      },
-      deep: true,
-      immediate: true,
-    },
   },
   data() {
     return {

@@ -67,7 +67,9 @@
 }
 .dx-state-hover {
     outline: none;
-    background-color: #ffeee4 !important;
+    background-color: #ffede2 !important;
+    background: none;
+    
 }
 .dx-state-hover .container-function{
     display: flex;
@@ -232,4 +234,9 @@
 .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit-with-icons .dx-link{
     box-shadow: 2px 2px 2px 2px rgba(153, 144, 144, 0.3);
     color: #fe6000;
+}
+#app > div > div.content > div.content-detail-center > div.content-detail-center-employee > div.content-detail-center-top > div.content-detail-center-top-left > div.suggested-date > div > div.dx-field-value > div > div:hover{
+    background-color: #fff;
+    border: 1px solid #fe6000;
+    border-radius: 5px;
 }

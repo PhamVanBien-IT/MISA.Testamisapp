@@ -32,6 +32,7 @@ const state = reactive({
           id: "6207a9a7-3bf9-7288-8565-390639088226",
           text: "Phòng bảo vệ",
           misaCode:"1/1",
+          expanded:true,
           items: [
             {
               id: "4c95f543-d483-4989-b5d2-7039120b9e06",

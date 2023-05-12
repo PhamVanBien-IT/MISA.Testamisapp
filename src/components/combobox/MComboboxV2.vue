@@ -41,7 +41,7 @@
           />
         </div>
         <div class="combobox-data-v2-list">
-          <dx-tree-view :items="treeData" @itemClick="handleItemClick" :noDataText="$t('DATA.NULL')"/>
+          <dx-tree-view :items="treeData" @itemClick="handleItemClick" :noDataText="$t('DATA.NULL')" expandedExpr="expanded"/>
         </div>
         <div class="combobox-data-v2-footer" v-if="isShowFooter">
           <!-- <div class="combobox-v2-checkbox"> -->

@@ -15,7 +15,7 @@
           :id="id"
           class="text-form"
           type="text"
-          :class="{ 'bd-red': this.isValidate }"
+          :class="{ 'bd-red': this.isValidate, 'disable-input-cbb': disabled}"
           :name="nameInput"
           :ref="nameInput"
           @blur="hanldeBlurInput"
