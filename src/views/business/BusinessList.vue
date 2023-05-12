@@ -563,7 +563,6 @@ export default {
       );
       this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
 
-      // this.dataSearchFilter = [...this.dataGridEmployee];
     },
     /**
      * Hàm lưu biến trên localStorage
@@ -578,8 +577,11 @@ export default {
      * CreatedBy: Bien (03/05/2023)
      */
     async btnExportMissionllowances() {
+      this.dataSearchFilter = JSON.parse(JSON.stringify(this.dataGridEmployee));
+  
       const response = await missionallowanceApi.exportMissionallowances(
-        this.textSearch
+        this.textSearch,
+        this.dataSearchFilter 
       );
       console.log(response);
     },

@@ -32,12 +32,14 @@ const missionallowanceApi = {
    * API xuất khẩu đơn công tác
    * CreatedBy: Bien (20/02/2023)
    */
-  exportMissionallowances: (filter) => {
+  exportMissionallowances: (filter, dataGrid) => {
     try {
+      const data = dataGrid;
       axios({
         url: `https://localhost:7185/api/Missionallowances/ExportExcel?filter=${filter}`,
-        method: "GET",
+        method: "POST",
         responseType: "blob",
+        data
       }).then((response) => {
         window.open();
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
