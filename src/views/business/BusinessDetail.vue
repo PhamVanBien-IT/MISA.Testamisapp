@@ -208,20 +208,6 @@
               v-model="business.Purpose"
             >
             </m-textarea>
-            <!-- :labelValidate="validateList[`Purpose`].labelError"
-              :isValidate="validateList[`Purpose`].isStatus"
-              :ref="'Purpose'"
-              :name="'Purpose'"
-              v-if="this.diy.state.isBusinessEdit" -->
-            <!-- <div class="base-combobox" >
-              <div class="title-cbb">
-                {{ $t("BUSINESSDETAIL.TITLEFORM.PURPOSE")
-                }}<sup style="color: red">*</sup>
-              </div>
-              <div class="combobox-value">
-                {{ business.Purpose }}
-              </div>
-            </div> -->
           </div>
         </div>
         <div class="content-detail-center-top-right">
@@ -250,6 +236,7 @@
             <div class="dx-field-value">
               <DxTagBox
                 id="dxSupportIds"
+                :showSelectionControls="true"
                 v-model:value="selectedSupportIds"
                 :data-source="this.$parent.employees"
                 :noDataText="$t('DATA.NULL')"
@@ -315,6 +302,7 @@
               <DxTagBox
                 v-model:value="selectedRelationShipIds"
                 :data-source="this.$parent.employees"
+                :showSelectionControls="true"
                 value-expr="EmployeeId"
                 display-expr="FullName"
                 :search-enabled="true"
@@ -490,6 +478,7 @@ import baseApi from "@/api/baseApi";
 import employeeMissionallowancesApi from "@/api/employeeMissionallowancesApi";
 import MDialog from "@/components/dialog/MDialog.vue";
 import _ from "lodash";
+import missionallowanceApi from "@/api/missionallowanceApi";
 
 export default {
   inject: ["diy"],
@@ -521,6 +510,8 @@ export default {
     }
 
     this.getEmployeeCombobox(this.$parent.employees.length);
+
+    this.getAddMissionallowanceToDay();
   },
   methods: {
     /**
@@ -694,6 +685,7 @@ export default {
         this.diy.clearBusinessDetail();
       }
     },
+    validateOnlyCreatedBussiness() {},
     /**
      * Hàm kiểm tra giá trị không được để trống
      * @param {Tên trường muốn kiểm tra} nameInput
@@ -733,12 +725,27 @@ export default {
         this.validateList[nameInput].isStatus = false;
       }
     },
+    async getAddMissionallowanceToDay() {
+      const response = await missionallowanceApi.getAddMissionallowanceToDay();
+
+      console.log(response);
+      if (response.IsSuccess) {
+        this.missionallowanceToDay = response.Data;
+      }
+    },
     /**
      * Hàm kiểm tra giá trị nhập vào của đơn công tác
      * CreatedBy: Bien (27/04/202)
      */
     validateBusiness() {
       this.isValidate = true;
+
+      if (this.employees.length < 1) {
+        this.diy.showNotifyError();
+        this.$parent.labelNotifyError = this.$t("ERRORVALIDATE.EMPLOYEEDETAIL");
+        this.isValidate = false;
+      }
+
       this.validateRequired(
         "EmployeeId",
         this.business.EmployeeId,
@@ -784,6 +791,16 @@ export default {
       );
 
       if (!this.isEdit) {
+        if (
+          this.missionallowanceToDay.indexOf(this.business.EmployeeId) !== -1
+        ) {
+          this.isValidate = false;
+          this.$parent.labelNotifyError = this.$t(
+            "ERRORVALIDATE.DUPLICATEBUSSINESS"
+          );
+          this.diy.showNotifyError();
+        }
+
         this.validateDateTime(
           "RequestDate",
           this.business.RequestDate,
@@ -1007,6 +1024,8 @@ export default {
   },
   data() {
     return {
+      // Danh sách đơn công tác thêm hôm nay
+      missionallowanceToDay: {},
       // Load dữ liệu
       isLoadData: false,
 
@@ -1068,9 +1087,7 @@ export default {
       employeeMissionallowances: {},
 
       // Thông tin đơn công tác
-      business: {
-        Purpose: "abc",
-      },
+      business: {},
 
       // Id đơn công tác
       businessId: null,

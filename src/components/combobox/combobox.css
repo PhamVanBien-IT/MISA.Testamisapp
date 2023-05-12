@@ -273,3 +273,9 @@ button {
     background-color: #ffede2;
     color: #ee5504;
 }
+.icon-checked{
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+}

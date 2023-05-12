@@ -436,6 +436,10 @@
     @FuncDialog="handleFunctionDialog"
   ></m-dialog-v2>
   <m-notify v-if="diy.state.isShowNotify" :label="labelNotify"></m-notify>
+  <m-notify-error
+    v-if="diy.state.isShowNotifyError"
+    :label="labelNotifyError"
+  ></m-notify-error>
 </template>
 <script>
 import BusinessDetail from "@/views/business/BusinessDetail.vue";
@@ -447,6 +451,7 @@ import MDialogV2 from "@/components/dialog/MDialogV2.vue";
 import MNotify from "@/components/notify/MNotify.vue";
 import missionallowanceApi from "@/api/missionallowanceApi";
 import { DxSortable, DxScrollView } from "devextreme-vue";
+import MNotifyError from "@/components/notify/MNotifyError.vue";
 export default {
   inject: ["diy"],
   name: "BusinessList",
@@ -458,6 +463,7 @@ export default {
     MNotify,
     DxSortable,
     DxScrollView,
+    MNotifyError,
   },
   props: ["rowClick"],
   created() {
@@ -1019,6 +1025,10 @@ export default {
 
       // Thông báo kết quả thực hiện
       labelNotify: null,
+
+      // Thông báo lỗi kết quả thực hiện
+
+      labelNotifyError: null,
 
       // Id đơn công tác
       businessId: null,

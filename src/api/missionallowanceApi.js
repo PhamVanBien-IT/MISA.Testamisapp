@@ -5,6 +5,13 @@ import axiosClient from "./axiosClient";
  * CreatedBy: Bien (25/01/2023)
  */
 const missionallowanceApi = {
+  getAddMissionallowanceToDay() {
+    try {
+      return axiosClient.get("Missionallowances/MissionallowanceToDay");
+    } catch (error) {
+      console.log("Lỗi lấy danh sách đơn công tác tạo hôm nay: " + error);
+    }
+  },
   /**
    * API xóa hàng loạt 
    * @param {*Danh sách id đơn công tác muốn cập nhật} Ids
@@ -13,14 +20,14 @@ const missionallowanceApi = {
    * 0: Nếu xóa thất bại
    * CreatedBy: Bien (20/01/2023)
    */
-   updateStatusList:(ids, status) => {
+  updateStatusList: (ids, status) => {
     try {
       const data = ids;
-        return axiosClient.put(`Missionallowances?status=${status}`, data)
+      return axiosClient.put(`Missionallowances?status=${status}`, data)
     } catch (error) {
-        console.log("Lỗi cập nhập trạng thái nhiều đơn: "+ error);
+      console.log("Lỗi cập nhập trạng thái nhiều đơn: " + error);
     }
-},
+  },
   /**
    * API xuất khẩu đơn công tác
    * CreatedBy: Bien (20/02/2023)

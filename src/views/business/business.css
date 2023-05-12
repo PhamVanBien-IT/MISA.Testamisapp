@@ -406,3 +406,10 @@
     right: 20px;
     cursor: all-scroll;
 }
+.dx-list-select-all{
+    display: none;
+}
+.dx-list-item-before-bag.dx-list-select-checkbox-container, .dx-list-item-before-bag.dx-list-select-radiobutton-container{
+    width: 0px !important;
+    display: none;
+}

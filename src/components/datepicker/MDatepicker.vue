@@ -1,5 +1,5 @@
 <template>
-  <div class="dx-field" >
+  <div class="dx-field">
     <div class="dx-field-label">
       {{ label }}<sup style="color: red">{{ required }}</sup>
     </div>
@@ -22,7 +22,7 @@
         class="icon icon-validate-datepicker tags"
         :data-gloss="this.labelValidate"
         v-if="this.isValidate"
-        style="border: none !important;"
+        style="border: none !important"
       ></div>
     </div>
   </div>
@@ -54,9 +54,12 @@ export default {
       this.value = this.modelValue;
     } else {
       if (new Date().getHours() < 12) {
-        this.value = new Date(this.now.setHours(12, 0, 0));
+        this.value = new Date(this.now.setHours(8, 0, 0));
       } else {
-        this.value = new Date(this.now.setHours(18, 0, 0));
+        this.value = new Date(this.now.setHours(12, 0, 0));
+        if (this.name == "ToDate") {
+          this.value = new Date(this.now.setHours(17, 30, 0));
+        }
       }
     }
 
@@ -78,7 +81,7 @@ export default {
             item: this.label,
           }
         );
-      } else if(event.value < this.now){
+      } else if (event.value < this.now) {
         this.$parent.validateList[`${this.nameInput}`].isStatus = true;
         this.$parent.validateList[`${this.nameInput}`].labelError = this.$t(
           "ERRORVALIDATE.INVALIDDATETIME",
@@ -86,7 +89,7 @@ export default {
             item: this.label,
           }
         );
-      }else{
+      } else {
         this.$parent.validateList[`${this.nameInput}`].isStatus = false;
       }
     },

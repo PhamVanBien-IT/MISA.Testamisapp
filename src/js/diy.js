@@ -18,6 +18,7 @@ const state = reactive({
   isShowDialog:false,
   isShowDialogDetail:false,
   isShowNotify:false,
+  isShowNotifyError:false,
   isSearchBusiness:true,
   isShowLoading:false,
   isLaguage:false,
@@ -57,19 +58,7 @@ const state = reactive({
         }
       ]},
       ],
-    },
-    {
-      id: "60e226cb-63fb-4363-fc4d-8601bf3d85d8",
-      text: "Công ty Hoàng Minh",
-      misaCode:"2",
-      items:[
-        {
-          id:"d5f80067-1dcc-4477-bef5-386b5041dcd4",
-          text:"Phòng sản xuất",
-          misaCode:"2/1"
-        }
-      ]
-    },
+    }
   ],
 });
 /**
@@ -139,6 +128,16 @@ const showNotify = function(){
   state.isShowNotify = true;
   setTimeout(() => {
     state.isShowNotify = false;
+  }, 2000);
+}; 
+/**
+ * Hàm hiển thị kết quả thực hiện hành động
+ * CreatedBy: Bien (20/1/2023)
+ */
+ const showNotifyError = function(){
+  state.isShowNotifyError = true;
+  setTimeout(() => {
+    state.isShowNotifyError = false;
   }, 2000);
 }; 
 /**
@@ -319,6 +318,7 @@ export default {
   toggleLaguage,
   setDataBusiness,
   showDialogDetail,
-  clearDialogDetail
+  clearDialogDetail,
+  showNotifyError
 
 };

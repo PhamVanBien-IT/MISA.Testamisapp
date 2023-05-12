@@ -69,7 +69,9 @@ const MISAResource = {
 				REQUIRED: `{item} không được để trống`,
 				INVALIDFORMAT: `{item} không đúng định dạng`,
 				INVALIDDATETIME: `{item} nhỏ hơn ngày hiện tại`,
-				FROMDATE: 'Ngày về nhỏ hơn ngày đi'
+				FROMDATE: 'Ngày về nhỏ hơn ngày đi',
+				EMPLOYEEDETAIL:`Danh sách nhân viên ko được để trống`,
+				DUPLICATEBUSSINESS:`Người đề nghị không thể thêm đơn trong hôm nay`
 			},
 			CONTENTDIALOG: {
 				DELETE: `Bạn có chắc muốn xóa đơn này không?`,
