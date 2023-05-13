@@ -391,17 +391,16 @@
                   this.selectedList.length
                 }}</span>
               </div>
-
+              <div class="select-row-unselect"  style="color: #7ba3f6" @click="btnUnSelectEmployeeDetail">
+                {{ $t("BUSINESSFORM.SELECTLIST.UNSELECTED") }}
+              </div>
               <div
                 class="select-row-unselect"
-                style="color: #7ba3f6"
-                @click="this.employees = []"
+                @click="btnRemoveEmployeeDetail"
               >
                 {{ $t("BUSINESSFORM.SELECTLIST.CLEAR") }}
               </div>
-              <div class="select-row-unselect" @click="btnUnSelectEmployeeDetail">
-                {{ $t("BUSINESSFORM.SELECTLIST.UNSELECTED") }}
-              </div>
+            
             </div>
             <!-- v-if="isShowSelectedLength" -->
           </div>
@@ -546,6 +545,10 @@ export default {
     this.getAddMissionallowanceToDay();
   },
   methods: {
+    /**
+     * Loại bỏ danh sách nhân viên đã chọn
+     * 
+     */
     btnUnSelectEmployeeDetail(){
       this.selectedList = []
       this.isShowSelectedLength = false;
@@ -571,6 +574,21 @@ export default {
     btnAddBusiness() {
       this.diy.showFormBusiness();
       this.dataGridEmployeeHeader[4].visible = true;
+    },
+    /**
+     * Loại bỏ danh sách nhân viên đi công tác đã chọn
+     * CreatedBy: Bien (13/05/2023)
+     */
+    btnRemoveEmployeeDetail(){
+        let selectedListIds = this.selectedList.map(
+        (object) => object.EmployeeId
+      );
+
+      this.employees = this.employees.filter(item => !selectedListIds.includes(item.EmployeeId));
+
+      this.business.EmployeeMissionallowances = this.employees
+        .map((object) => object.EmployeeId)
+        .join(",");
     },
     /**
      * Hàm xóa nhân viên đi công tác
@@ -702,7 +720,6 @@ export default {
      * CreatedBy: Bien (25/04/2023)
      */
     btnSaveBusiness() {
-      // debugger
       // Lấy giá trị dữ liệu ô tagbox
       this.selectedDxtagbox();
 
@@ -756,26 +773,7 @@ export default {
         this.isValidate = false;
       }
     },
-    /**
-     * Hàm kiểm tra ngày giờ
-     * CreatedBy: Bien (05/04/2023)
-     */
-    validateDateTime(nameInput, valueInput, labelName) {
-      const dateNow = new Date();
-
-      const inputDate = new Date(valueInput);
-
-      if (inputDate < dateNow) {
-        this.validateList[nameInput].isStatus = true;
-        this.validateList[nameInput].labelError = this.$t(
-          "ERRORVALIDATE.INVALIDDATETIME",
-          { item: labelName }
-        );
-        this.isValidate = false;
-      } else {
-        this.validateList[nameInput].isStatus = false;
-      }
-    },
+   
     /**
      * Hàm lấy danh sách nhân viên đã thêm đơn ngày hôm nay
      * CreatedBy: Bien (12/05/2023)
@@ -856,22 +854,6 @@ export default {
           );
           this.diy.showDialogDuplicate();
         }
-
-        this.validateDateTime(
-          "RequestDate",
-          this.business.RequestDate,
-          this.$t("BUSINESSDETAIL.TITLEFORM.REQUESDATE")
-        );
-        this.validateDateTime(
-          "ToDate",
-          this.business.ToDate,
-          this.$t("BUSINESSDETAIL.TITLEFORM.TODATE")
-        );
-        this.validateDateTime(
-          "FromDate",
-          this.business.FromDate,
-          this.$t("BUSINESSDETAIL.TITLEFORM.FORMDATE")
-        );
         if (
           this.business.FromDate &&
           this.business.ToDate &&
@@ -955,7 +937,6 @@ export default {
         console.log(response);
 
         if (response.IsSuccess) {
-          // debugger;
           this.business = response.Data[0];
           this.employeeMissionallowances =
             response.Data[0].EmployeeMissionallowances;
@@ -1011,7 +992,6 @@ export default {
      * CreatedBy: Bien (28/04/2023)
      */
     async getEmployeeMissionallowances(baseUrl, id) {
-      // debugger;
       const response =
         await employeeMissionallowancesApi.getEmployeeMissionallowances(
           baseUrl,
@@ -1027,6 +1007,9 @@ export default {
      * CreatedBy: Bien (28/04/2023)
      */
     btnCancelAddEmployee() {
+      this.$parent.selectedList = [];
+      this.diy.showSearchBusiness();
+
       if (this.isBusinessClone) {
         this.diy.clearBusinessDetail();
         this.diy.clearBusinessEdit();
@@ -1043,8 +1026,6 @@ export default {
      */
     business: {
       handler(newValue) {
-        // debugger;
-
         this.businessClone.RequestDate = newValue.RequestDate;
         this.businessClone.FromDate = newValue.FromDate;
         this.businessClone.ToDate = newValue.ToDate;
@@ -1084,8 +1065,10 @@ export default {
     return {
       // Hiển thị số lượng nhân viên đã chọn
       isShowSelectedLength: false,
+
       // Nội dung thông báo
       labelDialogDuplicate: null,
+
       // Danh sách đơn công tác thêm hôm nay
       missionallowanceToDay: {},
 

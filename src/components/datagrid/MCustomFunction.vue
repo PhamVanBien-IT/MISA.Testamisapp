@@ -54,7 +54,6 @@ export default {
      */
     editBussiness(event) {
       event.stopPropagation();
-      // debugger
       this.$emit("Business", this.data.data);
     },
     /**
@@ -63,7 +62,6 @@ export default {
      * CreaetedBy: Bien (09/05/2023)
      */
     btndeleteBussiness(event) {
-      // debugger
       event.stopPropagation();
       this.isShowDialog = true;
       this.lableDialog = this.$t("CONTENTDIALOG.DELETE");

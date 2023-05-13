@@ -55,6 +55,9 @@ export default {
     } else {
       if (new Date().getHours() < 12) {
         this.value = new Date(this.now.setHours(8, 0, 0));
+        if (this.name == "ToDate") {
+          this.value = new Date(this.now.setHours(17, 30, 0));
+        }
       } else {
         this.value = new Date(this.now.setHours(12, 0, 0));
         if (this.name == "ToDate") {
